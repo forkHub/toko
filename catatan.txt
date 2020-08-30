@@ -1,0 +1,20 @@
+client login kirim password pakai md5
+pengecekan login di server pakai json sebagai ganti url-encoded
+implementasi process on sigterm 
+
+image on load set height intial
+tampilan admin terlalu lebar
+tampilan item lompat
+
+search dan indexing
+publish dan draft
+groupping
+caching tiap 24 jam
+
+algorithma
+	reset height
+	get max-height per row
+	set item height based on max-height groupped by row
+	item groupped per row
+	get item by row
+	

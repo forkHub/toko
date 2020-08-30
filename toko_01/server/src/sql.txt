@@ -1,0 +1,10 @@
+ALTER TABLE `barang` ADD `file_id` INT NOT NULL AFTER `wa`;
+
+ALTER TABLE `barang`
+  DROP `thumb_url`,
+  DROP `gbr_url`;
+
+SELECT BARANG.*, FILE.thumb_url, FILE.gbr_url 
+FROM BARANG
+LEFT JOIN FILE
+ON BARANG.file_id = FILE.id; 
