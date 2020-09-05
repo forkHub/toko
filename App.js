@@ -43,7 +43,7 @@ exports.server = app.listen(port, () => {
 });
 app.get("/admin", (_req, resp) => {
     try {
-        resp.sendFile(path_1.default.join(__dirname + '/public/admin.html'));
+        resp.sendFile(path_1.default.join(__dirname + '/public/admin_page.html'));
     }
     catch (e) {
         resp.status(500).send(e);
