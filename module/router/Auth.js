@@ -38,13 +38,13 @@ exports.router.post("/login", (req, resp) => {
         }).catch((e) => {
             req.session = null;
             console.log(e);
-            resp.status(500).send(e.message);
+            resp.status(501).send(e.message);
         });
     }
     catch (e) {
         req.session = null;
         console.log(e);
-        resp.status(500).send(e.message);
+        resp.status(502).send(e.message);
     }
 });
 exports.router.post("/login2", (req, resp) => {

@@ -15,7 +15,7 @@ class Auth {
         else {
             throw new Error('internal error');
         }
-        return true;
+        //return true;
     }
     logout() {
         return null;
