@@ -11,4 +11,8 @@ rd admin /s /q
 xcopy ..\..\..\..\toko\web\*.* . /s /i /y
 xcopy ..\..\..\client\web\*.*  . /s /i /y
 
+del login.html
+del admin.html
+del login.html
+
 pause
