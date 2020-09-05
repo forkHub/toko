@@ -20,8 +20,13 @@ class Connection {
             multipleStatements: true
         });
         Connection._connection.connect((error) => {
+            let msg = '';
+            msg += " ||HOST " + process.env.TOKO_DB_HOST;
+            msg += " ||USER " + process.env.TOKO_DB_USER;
+            msg += " ||PASS " + process.env.TOKO_DB_PASS;
+            msg += " ||DB " + process.env.TOKO_DB_DB;
             if (error) {
-                throw new Error(error.message + '|| HOST ' + process.env.TOKO_DB_HOST);
+                throw new Error(error.message + msg);
                 // console.log(error);
             }
             else {
