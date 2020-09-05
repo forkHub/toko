@@ -21,7 +21,8 @@ class Connection {
         });
         Connection._connection.connect((error) => {
             if (error) {
-                console.log(error);
+                throw new Error(error.message + '|| HOST ' + process.env.TOKO_DB_HOST);
+                // console.log(error);
             }
             else {
                 console.log('connected');
