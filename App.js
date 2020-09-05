@@ -16,7 +16,7 @@ const path_1 = __importDefault(require("path"));
 const app = express_1.default();
 const port = 3009;
 Connection_1.Connection.connect();
-app.use(express_1.default.static(__dirname + "\\public"));
+app.use(express_1.default.static(__dirname + "/public"));
 app.use(express_1.default.json({ limit: '5mb' }));
 app.use(cookie_session_1.default({
     name: 'toko_session',
@@ -54,13 +54,13 @@ app.get("/shutdown", (req, resp) => {
         console.log('shutdown');
         resp.status(200).end();
         // Connection.connection.destroy()
-        Connection_1.Connection.connection.end((err) => {
-            console.log('sql shutdown error');
-            console.log(err);
-        });
         exports.server.close((e) => {
             console.log('server close error');
             console.log(e);
+        });
+        Connection_1.Connection.connection.end((err) => {
+            console.log('sql shutdown error');
+            console.log(err);
         });
         //process.kill(process.pid, 'SIGTERM');
     }
