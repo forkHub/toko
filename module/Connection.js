@@ -17,6 +17,7 @@ class Connection {
             user: process.env.TOKO_DB_USER,
             password: process.env.TOKO_DB_PASS,
             database: process.env.TOKO_DB_DB,
+            port: 3306,
             multipleStatements: true
         });
         Connection._connection.connect((error) => {
