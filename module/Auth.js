@@ -9,13 +9,13 @@ class Auth {
         if (hasil.length == 0) {
             return false;
         }
-        else if (hasil.length == 1) {
-            return true;
-        }
-        else {
-            throw new Error('internal error');
-        }
-        //return true;
+        // else if (hasil.length == 1) {
+        // 	return true;
+        // }
+        // else {
+        // 	throw new Error('internal error');
+        // }
+        return true;
     }
     logout() {
         return null;
