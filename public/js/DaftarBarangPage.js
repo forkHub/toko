@@ -50,7 +50,7 @@ class DaftarBarangPage extends BaseComponent {
         let hasil = confirm("Hapus Data?");
         if (hasil) {
             console.log('hapus data');
-            Util.Ajax('get', '/barang/hapus/' + item.id, null).then((hasil) => {
+            Util.Ajax('post', '/barang/hapus/' + item.id, null).then((hasil) => {
                 console.log(hasil);
                 App.dialog.p.innerHTML = "Berhasil";
                 App.dialog.tampil();

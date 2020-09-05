@@ -8,11 +8,7 @@ rd gambar /s /q
 rd js /s /q
 rd admin /s /q
 
-rem md css
-rem gambar
-rem js
-
 xcopy ..\..\..\..\toko\web\*.* . /s /i /y
-xcopy ..\..\..\client\web\*.* admin /s /i /y
+xcopy ..\..\..\client\web\*.*  . /s /i /y
 
 pause

@@ -80,14 +80,7 @@ daftar-barang-cont item {
 	cursor: pointer;
 	background-color: white;
 	text-align: center;
-	/* border: 1px solid #333333; */
 }
-
-daftar-barang-cont item div.cont {
-	display: flex;
-	flex-direction: column;
-}
-
 
 daftar-barang-cont item img.kecil {
 	width: 80%;

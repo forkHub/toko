@@ -9,12 +9,12 @@ class Connection {
         return this._connection;
     }
     //TODO: setup withoud db on install
-    static connect(db = 'toko') {
+    static connect() {
         Connection._connection = mysql_1.default.createConnection({
-            host: 'localhost',
-            user: 'root',
-            password: '',
-            database: db,
+            host: process.env.DB_HOST,
+            user: process.env.DB_USER,
+            password: process.env.DB_PASS,
+            database: process.env.DB_DB,
             multipleStatements: true
         });
         Connection._connection.connect((error) => {

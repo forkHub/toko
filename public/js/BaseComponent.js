@@ -15,9 +15,12 @@ class BaseComponent {
     mulai(...params) {
         params;
     }
-    selesai() {
-    }
     destroy() {
+        this.detach();
+        while (this._elHtml.firstChild) {
+            this._elHtml.removeChild(this._elHtml.firstChild);
+        }
+        this._elHtml = null;
     }
     attach(parent) {
         parent.appendChild(this._elHtml);

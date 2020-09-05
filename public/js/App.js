@@ -1,46 +1,16 @@
 "use strict";
 class App {
     constructor() {
-        this.items = [];
-        let nodes = document.querySelectorAll('item');
-        let tinggi = 0;
-        nodes.forEach((node) => {
-            let item = new Item();
-            item.init(node);
-            this.items.push(item);
-            if (item.elHtml.clientHeight > tinggi) {
-                tinggi = item.elHtml.clientHeight;
-            }
-            ;
-        });
-        this.items.forEach((item) => {
-            item.elHtml.style.height = tinggi + 'px';
-        });
-        window.onresize = () => {
-            this.resize();
-        };
-        this.resize();
+        App.dialog.init();
+        App.form.init();
+        App.daftarBarang.init();
+        App.daftarBarang.attach(App.cont);
+        App.upload.init();
+        App.login.init();
+        App.daftarBarang.load2();
     }
-    hitungTinggi() {
-        return 0;
-    }
-    resize() {
-        let tinggi = 0;
-        this.items.forEach((item) => {
-            item.elHtml.style.height = 'initial';
-        });
-        for (let i = 0; i < 10000; i++) { }
-        this.items.forEach((item) => {
-            if (item.elHtml.clientHeight > tinggi) {
-                tinggi = item.elHtml.clientHeight;
-            }
-            ;
-        });
-        this.items.forEach((item) => {
-            item.elHtml.style.height = tinggi + 'px';
-        });
-        setTimeout(() => {
-        }, 100);
+    static get cont() {
+        return App.getEl('div.container');
     }
     static getEl(query) {
         let el;
@@ -55,62 +25,12 @@ class App {
         }
     }
 }
-class Item extends BaseComponent {
-    constructor() {
-        super();
-        this._ukuranKecil = 0;
-    }
-    init(el) {
-        this._elHtml = el;
-        this._elHtml.onclick = (e) => {
-            e.stopPropagation();
-            console.log('item on click');
-            this._ukuranKecil = this._elHtml.clientHeight;
-            this._elHtml.style.height = '100%';
-            this._elHtml.classList.add('fokus');
-            document.body.style.overflowY = 'hidden';
-            this.gbrBesar.onload = () => {
-                this.gbrBesar.style.maxHeight = 'initial';
-            };
-            this.gbrBesar.src = this.gbrBesar.getAttribute('gbr');
-        };
-        this.gbrKecil.onload = () => {
-            this.gbrKecil.style.maxHeight = 'initial';
-        };
-        this.gbrKecil.src = this.gbrKecil.getAttribute('gbr');
-        this.tutupTbl.onclick = (e) => {
-            e.stopPropagation();
-            this._elHtml.classList.remove('fokus');
-            document.body.style.overflowY = 'auto';
-            this._elHtml.style.height = this.ukuranKecil + 'px';
-        };
-        // this.chatTbl.onclick = (e: MouseEvent) => {
-        // 	e.stopPropagation();
-        // 	window.top.location.href = ''; 
-        // }
-    }
-    get ukuranKecil() {
-        return this._ukuranKecil;
-    }
-    set ukuranKecil(value) {
-        this._ukuranKecil = value;
-    }
-    get waP() {
-        return this.getEl('p.wa');
-    }
-    get chatTbl() {
-        return this.getEl('a.chat');
-    }
-    get tutupTbl() {
-        return this.getEl('p.tutup button');
-    }
-    get gbrKecil() {
-        return this.getEl('img.kecil');
-    }
-    get gbrBesar() {
-        return this.getEl('img.besar');
-    }
-}
+App.form = new FormBarangPage();
+App.dialog = new Dialog();
+App.daftarBarang = new DaftarBarangPage();
+App.upload = new PhotoUploadPage();
+App.login = new Login2();
 window.onload = () => {
+    console.log('window onload');
     new App();
 };

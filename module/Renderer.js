@@ -56,7 +56,7 @@ class Renderer {
         hasil = view.replace("{{content}}", hasil);
         return hasil;
     }
-    static async writeHtml(path, data) {
+    static async tulisKeFile(path, data) {
         return new Promise((resolve, reject) => {
             fs_1.default.writeFile(path, data, (err) => {
                 if (err) {

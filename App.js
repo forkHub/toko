@@ -6,11 +6,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const Connection_1 = require("./module/Connection");
 const Barang_1 = require("./module/router/Barang");
-const Renderer_1 = require("./module/Renderer");
+// import { Renderer } from "./module/Renderer";
 const File_1 = require("./module/router/File");
 const Auth_1 = require("./module/router/Auth");
 const Install_1 = require("./module/router/Install");
 const cookie_session_1 = __importDefault(require("cookie-session"));
+const Toko_1 = require("./module/Toko");
+const path_1 = __importDefault(require("path"));
 const app = express_1.default();
 const port = 3009;
 Connection_1.Connection.connect();
@@ -26,13 +28,10 @@ app.use("/auth", Auth_1.router);
 app.use("/sys", Install_1.router);
 app.get("/toko", (_req, _resp) => {
     try {
-        Renderer_1.Renderer.renderHtml()
-            .then((hasil) => {
-            return Renderer_1.Renderer.writeHtml("public/index.html", hasil);
-        }).then(() => {
-            _resp.status(200).redirect("/");
-        }).catch((err) => {
-            _resp.status(500).send(err);
+        Toko_1.toko.render().then(() => {
+            _resp.status(200).end();
+        }).catch((e) => {
+            _resp.status(500).send(e);
         });
     }
     catch (e) {
@@ -42,17 +41,28 @@ app.get("/toko", (_req, _resp) => {
 exports.server = app.listen(port, () => {
     console.log("app started at port " + port);
 });
+app.get("/admin", (_req, resp) => {
+    try {
+        resp.sendFile(path_1.default.join(__dirname + '/public/admin.html'));
+    }
+    catch (e) {
+        resp.status(500).send(e);
+    }
+});
 app.get("/shutdown", (req, resp) => {
     try {
         console.log('shutdown');
+        resp.status(200).end();
+        // Connection.connection.destroy()
         Connection_1.Connection.connection.end((err) => {
-            console.log(err.code + '/' + err.message);
+            console.log('sql shutdown error');
+            console.log(err);
         });
-        resp.status(200).send('');
-        exports.server.close(() => {
+        exports.server.close((e) => {
             console.log('server close error');
+            console.log(e);
         });
-        process.kill(process.pid, 'SIGTERM');
+        //process.kill(process.pid, 'SIGTERM');
     }
     catch (e) {
         console.log(e);
