@@ -4,17 +4,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mysql_1 = __importDefault(require("mysql"));
+// import { Config } from "./Config";
 class Connection {
     static get connection() {
         return this._connection;
     }
     //TODO: setup withoud db on install
     static connect() {
+        // console.log('connect ' + process.env.TOKO_DB_USER);
         Connection._connection = mysql_1.default.createConnection({
-            host: process.env.DB_HOST,
-            user: process.env.DB_USER,
-            password: process.env.DB_PASS,
-            database: process.env.DB_DB,
+            host: process.env.TOKO_DB_HOST,
+            user: process.env.TOKO_DB_USER,
+            password: process.env.TOKO_DB_PASS,
+            database: process.env.TOKO_DB_DB,
             multipleStatements: true
         });
         Connection._connection.connect((error) => {
