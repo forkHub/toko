@@ -10,7 +10,7 @@ const Auth_1 = require("./Auth");
 exports.router = express_1.default.Router();
 exports.router.post("/baca", Auth_1.checkAuth, (req, resp) => {
     //TODO:
-    Connection_1.Connection.connection;
+    Connection_1.Connection.pool;
     resp.status(200).send();
 });
 exports.router.get("/baca/:id", Auth_1.checkAuth, (req, resp) => {
