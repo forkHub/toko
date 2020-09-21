@@ -45,7 +45,7 @@ app.get("/shutdown", (req, resp) => {
             console.log('server close error');
             console.log(e);
         });
-        Connection_1.Connection.connection.end((err) => {
+        Connection_1.Connection.pool.end((err) => {
             console.log('sql shutdown error');
             console.log(err);
         });

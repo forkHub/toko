@@ -59,6 +59,20 @@ class Connection {
         // 	}
         // });
     }
+    static connect2() {
+        if (Connection._connection) {
+            console.log('already connected ');
+            return;
+        }
+        Connection._connection = mysql_1.default.createConnection({
+            host: process.env.TOKO_DB_HOST,
+            user: process.env.TOKO_DB_USER,
+            password: process.env.TOKO_DB_PASS,
+            database: process.env.TOKO_DB_DB,
+            port: 3306,
+            multipleStatements: true
+        });
+    }
 }
 exports.Connection = Connection;
 // export var connection: Conne

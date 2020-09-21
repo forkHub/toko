@@ -23,6 +23,39 @@ async function testRead(pool) {
         });
     });
 }
+async function testBaca() {
+    return new Promise((resolve, reject) => {
+        Connection_1.Connection.pool.query("select * from barang limit 1", (err, rows) => {
+            if (err) {
+                reject(err.sqlMessage + '/' + err.message);
+            }
+            else {
+                resolve(rows);
+            }
+        });
+    });
+}
+app.get("/connect", (_req, resp) => {
+    try {
+        Connection_1.Connection.connect2();
+        resp.status(200).send('ok');
+    }
+    catch (e) {
+        console.log(e);
+        resp.status(500).send(e.message);
+    }
+});
+app.get("/baca", (_req, resp) => {
+    try {
+        Connection_1.Connection.connect2();
+        testBaca().then().catch();
+        resp.status(200).send('ok');
+    }
+    catch (e) {
+        console.log(e);
+        resp.status(500).send(e.message);
+    }
+});
 app.get("/test1", (_req, resp) => {
     try {
         // console.log("test");

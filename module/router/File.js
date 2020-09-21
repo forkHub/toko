@@ -39,7 +39,7 @@ exports.router.post("/baru", Auth_1.checkAuth, (req, resp) => {
         console.log('file written ' + folderUnggah + gbrKecilNama);
         // console.log();
         //simpan ke database
-        Connection_1.Connection.connection.query(`INSERT INTO FILE SET ?
+        Connection_1.Connection.pool.query(`INSERT INTO FILE SET ?
 			`, {
             thumb: folderUrlUnggah + gbrKecilNama,
             gbr: folderUrlUnggah + gbrBesarNama

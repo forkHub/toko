@@ -17,7 +17,7 @@ var queryTabelFile = `CREATE TABLE IF NOT EXISTS FILE (
 function jalankanQuery(query, data = []) {
     console.log('jalankan query:');
     console.log(query);
-    Connection_1.Connection.connection.query(query, data, (_err, _rows) => {
+    Connection_1.Connection.pool.query(query, data, (_err, _rows) => {
         if (_err) {
             throw new Error(_err);
         }
@@ -28,7 +28,7 @@ function jalankanQuery(query, data = []) {
 }
 function createTableBarang() {
     console.log('buat table barang');
-    Connection_1.Connection.connection.query(`CREATE TABLE IF NOT EXISTS BARANG(
+    Connection_1.Connection.pool.query(`CREATE TABLE IF NOT EXISTS BARANG(
 			id INT NOT NULL AUTO_INCREMENT,
 			nama TINYTEXT,
 			deskripsi TEXT,
@@ -48,7 +48,7 @@ function createTableBarang() {
 }
 function createDb() {
     console.log('buat database');
-    Connection_1.Connection.connection.query(`
+    Connection_1.Connection.pool.query(`
 		CREATE DATABASE IF NOT EXISTS toko;
 		USE toko;
 	`, (_err, _rows) => {
@@ -96,7 +96,7 @@ exports.router.get("/backup", Auth_1.checkAuth, (req, resp) => {
 exports.router.get("/shutdown", (req, resp) => {
     try {
         console.log('shutdown');
-        Connection_1.Connection.connection.end((err) => {
+        Connection_1.Connection.pool.end((err) => {
             console.log(err.code + '/' + err.message);
         });
         resp.status(200).send('');

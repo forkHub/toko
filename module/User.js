@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const Connection_1 = require("./Connection");
 const GET_USER_SQL = `SELECT * FROM pengguna WHERE ID = ? && PASSWORD = ? LIMIT 1`;
-class User {
+class Anggota {
     async getUser2(pool, id, password) {
         return new Promise((resolve, reject) => {
             pool.query(GET_USER_SQL, [id, password], (_err, _rows) => {
@@ -21,4 +21,4 @@ class User {
         return await this.getUser2(pool, id, password);
     }
 }
-exports.user = new User();
+exports.user = new Anggota();

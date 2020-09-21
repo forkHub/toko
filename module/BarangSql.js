@@ -24,7 +24,7 @@ class BarangSql {
 		WHERE BARANG.id = ?`;
     }
     query(query, resolve, reject) {
-        Connection_1.Connection.connection.query(query, (_err, _rows) => {
+        Connection_1.Connection.pool.query(query, (_err, _rows) => {
             if (_err) {
                 reject(_err.message);
             }
@@ -45,7 +45,7 @@ class BarangSql {
     }
     async bacaId(id) {
         return new Promise((resolve, reject) => {
-            Connection_1.Connection.connection.query(this.bacaIdSql, [id], (_err, _rows) => {
+            Connection_1.Connection.pool.query(this.bacaIdSql, [id], (_err, _rows) => {
                 if (_err) {
                     reject(_err);
                 }
@@ -63,7 +63,7 @@ class BarangSql {
     }
     async hapus(id) {
         return new Promise((resolve, reject) => {
-            Connection_1.Connection.connection.query(this.hapusSql, [id], (_err, _rows) => {
+            Connection_1.Connection.pool.query(this.hapusSql, [id], (_err, _rows) => {
                 if (_err) {
                     reject(_err);
                 }
@@ -75,7 +75,7 @@ class BarangSql {
     }
     async update(data, id) {
         return new Promise((resolve, reject) => {
-            Connection_1.Connection.connection.query(this.updateSql, [
+            Connection_1.Connection.pool.query(this.updateSql, [
                 data,
                 id
             ], (_err, _rows) => {
@@ -90,7 +90,7 @@ class BarangSql {
     }
     async baru(data) {
         return new Promise((resolve, reject) => {
-            Connection_1.Connection.connection.query(this.baruSql, data, (_err, _rows) => {
+            Connection_1.Connection.pool.query(this.baruSql, data, (_err, _rows) => {
                 if (_err) {
                     reject(_err);
                 }
