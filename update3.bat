@@ -10,4 +10,9 @@ rem exit
 xcopy D:\xampp3\htdocs\proto\toko\toko_01\server\js\*.* . /s /i /y
 xcopy D:\xampp3\htdocs\proto\toko\toko_01\server\*.json . /y
 
+rem bersih-bersih
+del public\*.log
+del *.log
+
+
 pause
