@@ -9,6 +9,7 @@ const Barang_1 = require("./module/router/Barang");
 const File_1 = require("./module/router/File");
 const Auth_1 = require("./module/router/Auth");
 const Install_1 = require("./module/router/Install");
+const Log_1 = require("./module/Log");
 const cookie_session_1 = __importDefault(require("cookie-session"));
 const path_1 = __importDefault(require("path"));
 const app = express_1.default();
@@ -25,7 +26,7 @@ app.use("/file", File_1.router);
 app.use("/auth", Auth_1.router);
 app.use("/sys", Install_1.router);
 exports.server = app.listen(port, () => {
-    console.log("app started at port " + port);
+    Log_1.logW.info("app started at port " + port);
 });
 app.get("/toko", (_req, resp) => {
     try {
@@ -39,31 +40,41 @@ app.get("/toko", (_req, resp) => {
 });
 app.get("/shutdown", (req, resp) => {
     try {
-        console.log('shutdown');
+        Log_1.logW.info('shutdown');
         resp.status(200).end();
         exports.server.close((e) => {
-            console.log('server close error');
-            console.log(e);
+            if (e) {
+                Log_1.logW.info('server close error');
+                Log_1.logW.info(e.message);
+            }
+            else {
+                Log_1.logW.info('server tutup');
+            }
         });
         Connection_1.Connection.pool.end((err) => {
-            console.log('sql shutdown error');
-            console.log(err);
+            if (err) {
+                Log_1.logW.info('sql shutdown error');
+                Log_1.logW.info(err.sqlMessage);
+            }
+            else {
+                Log_1.logW.info('connection tutup');
+            }
         });
         //process.kill(process.pid, 'SIGTERM');
     }
     catch (e) {
-        console.log(e);
+        Log_1.logW.info(e);
         resp.status(500).send(e);
     }
 });
 app.use((_req, _resp, _next) => {
-    console.log(_req.path);
-    console.log('404');
+    Log_1.logW.info(_req.path);
+    Log_1.logW.info('404');
     _resp.status(404).send('Halaman Tidak Ditemukan');
 });
 process.on('SIGTERM', () => {
-    console.log('process on close');
+    Log_1.logW.info('process on close');
     exports.server.close(() => {
-        console.log('Process terminated');
+        Log_1.logW.info('Process terminated');
     });
 });

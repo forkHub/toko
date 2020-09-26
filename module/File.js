@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const Connection_1 = require("./Connection");
 const fs_1 = __importDefault(require("fs"));
+const Log_1 = require("./Log");
 class File {
     constructor() {
         this.qsemua = ``;
@@ -23,11 +24,11 @@ class File {
             //simpan gambar besar;
             buf = Buffer.from(gbrBesarData, 'base64');
             fs_1.default.writeFileSync(folderUnggah + gbrBesarNama, buf);
-            console.log('file written ' + folderUnggah + gbrBesarNama);
+            Log_1.logW.info('file written ' + folderUnggah + gbrBesarNama);
             //simpan gambar kecil
             buf = Buffer.from(gbrKecilData, 'base64');
             fs_1.default.writeFileSync(folderUnggah + gbrKecilNama, buf);
-            console.log('file written ' + folderUnggah + gbrKecilNama);
+            Log_1.logW.info('file written ' + folderUnggah + gbrKecilNama);
             //simpan ke database
             Connection_1.Connection.pool.query(`INSERT INTO FILE SET ?
 				`, {
@@ -35,11 +36,11 @@ class File {
                 gbr: folderUrlUnggah + gbrBesarNama
             }, (_err, _rows) => {
                 if (_err) {
-                    console.log(_err);
+                    Log_1.logW.info(_err.code + '/' + _err.message);
                     reject(_err);
                 }
                 else {
-                    console.log('ok');
+                    Log_1.logW.info('ok');
                     resolve(_rows);
                 }
             });

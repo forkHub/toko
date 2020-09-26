@@ -7,6 +7,7 @@ const express_1 = __importDefault(require("express"));
 const BarangSql_1 = require("../BarangSql");
 const Auth_1 = require("./Auth");
 const Toko_1 = require("../Toko");
+const Log_1 = require("../Log");
 exports.router = express_1.default.Router();
 exports.router.post("/hapus/:id", Auth_1.checkAuth, (req, resp) => {
     try {
@@ -15,7 +16,7 @@ exports.router.post("/hapus/:id", Auth_1.checkAuth, (req, resp) => {
         }).then(() => {
             resp.status(200).end();
         }).catch((e) => {
-            console.log(e);
+            Log_1.logW.log(e);
             resp.status(500).send(e);
         });
     }
@@ -39,7 +40,7 @@ exports.router.post("/baca", Auth_1.checkAuth, (req, resp) => {
             resp.status(200).send(rows);
         })
             .catch((e) => {
-            console.log(e);
+            Log_1.logW.log(e);
             resp.status(500).send(e);
         });
     }
@@ -64,7 +65,7 @@ exports.router.post("/baru", Auth_1.checkAuth, (req, resp) => {
         }).then(() => {
             resp.status(200).end();
         }).catch((e) => {
-            console.log(e);
+            Log_1.logW.log(e);
             resp.status(500).send(e);
         });
     }

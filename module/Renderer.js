@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs_1 = __importDefault(require("fs"));
 const BarangSql_1 = require("./BarangSql");
+const Log_1 = require("./Log");
 class Renderer {
     static getFile(file) {
         return new Promise((resolve, reject) => {
@@ -35,8 +36,8 @@ class Renderer {
         let barangData = await BarangSql_1.barangSql.bacaPublish();
         let hasil = '';
         barangData.forEach((item) => {
-            console.log(item.thumb);
-            console.log(item.gbr);
+            Log_1.logW.info(item.thumb);
+            Log_1.logW.info(item.gbr);
             let hasil2 = '';
             hasil2 = (view.replace("{{nama}}", item.nama));
             hasil2 = (hasil2.replace("{{deskripsi}}", item.deskripsi));

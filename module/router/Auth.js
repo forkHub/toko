@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const blueimp_md5_1 = __importDefault(require("blueimp-md5"));
 const Auth_1 = require("../Auth");
+const Log_1 = require("../Log");
 // import { Connection } from "../Connection";
 const user = 'auni';
 const password = 'Auni2020';
@@ -25,7 +26,7 @@ exports.checkAuth = checkAuth;
 exports.router = express_1.default.Router();
 exports.router.post("/login", (req, resp) => {
     try {
-        console.log('login');
+        Log_1.logW.info('login');
         Auth_1.auth.login(req.body.user_id, req.body.password).then((h) => {
             if (h) {
                 req.session.statusLogin = true;
@@ -37,13 +38,13 @@ exports.router.post("/login", (req, resp) => {
             }
         }).catch((e) => {
             req.session = null;
-            console.log(e);
+            Log_1.logW.log(e);
             resp.status(501).send(e.message);
         });
     }
     catch (e) {
         req.session = null;
-        console.log(e);
+        Log_1.logW.log(e);
         resp.status(502).send(e.message);
     }
 });
@@ -56,14 +57,15 @@ exports.router.post("/login2", (req, resp) => {
         else {
             req.session = null;
             resp.status(401).send('gagal');
-            console.log('login failed');
-            console.log("user id: " + req.body.user_id);
-            console.log("password: " + req.body.password);
-            console.log("password server: " + md5pass);
+            Log_1.logW.info('login failed');
+            Log_1.logW.info("user id: " + req.body.user_id);
+            Log_1.logW.info("password: " + req.body.password);
+            Log_1.logW.info("password server: " + md5pass);
         }
         ;
     }
     catch (e) {
+        Log_1.logW.error(e);
         resp.status(500).send(e.message);
     }
 });
@@ -73,6 +75,7 @@ exports.router.post("/logout", (req, resp) => {
         resp.status(200).send('ok');
     }
     catch (e) {
+        Log_1.logW.error(e);
         resp.status(500).send(e.message);
     }
 });

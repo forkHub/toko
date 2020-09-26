@@ -7,6 +7,7 @@ const express_1 = __importDefault(require("express"));
 const Connection_1 = require("../Connection");
 const fs_1 = __importDefault(require("fs"));
 const Auth_1 = require("./Auth");
+const Log_1 = require("../Log");
 exports.router = express_1.default.Router();
 exports.router.post("/baca", Auth_1.checkAuth, (req, resp) => {
     //TODO:
@@ -30,14 +31,14 @@ exports.router.post("/baru", Auth_1.checkAuth, (req, resp) => {
         data = req.body.gbr_besar.split(',')[1];
         buf = Buffer.from(data, 'base64');
         fs_1.default.writeFileSync(folderUnggah + gbrBesarNama, buf);
-        console.log('file written ' + folderUnggah + gbrBesarNama);
+        Log_1.logW.info('file written ' + folderUnggah + gbrBesarNama);
         //simpan gambar kecil
         gbrKecilNama = req.body.gbr_kecil_nama;
         data = req.body.gbr_kecil.split(',')[1];
         buf = Buffer.from(data, 'base64');
         fs_1.default.writeFileSync(folderUnggah + gbrKecilNama, buf);
-        console.log('file written ' + folderUnggah + gbrKecilNama);
-        // console.log();
+        Log_1.logW.info('file written ' + folderUnggah + gbrKecilNama);
+        // log.info();
         //simpan ke database
         Connection_1.Connection.pool.query(`INSERT INTO FILE SET ?
 			`, {
@@ -45,11 +46,11 @@ exports.router.post("/baru", Auth_1.checkAuth, (req, resp) => {
             gbr: folderUrlUnggah + gbrBesarNama
         }, (_err, _rows) => {
             if (_err) {
-                console.log(_err);
+                Log_1.logW.info(_err.sqlMessage);
                 resp.status(500).send(_err.message);
             }
             else {
-                console.log('ok');
+                Log_1.logW.info('ok');
                 resp.status(200).send({
                     gbr_url: folderUrlUnggah + gbrKecilNama,
                     baris_info: _rows
@@ -58,7 +59,7 @@ exports.router.post("/baru", Auth_1.checkAuth, (req, resp) => {
         });
     }
     catch (e) {
-        console.log(e);
+        Log_1.logW.info(e);
         resp.status(500).send(JSON.stringify(e));
     }
 });
