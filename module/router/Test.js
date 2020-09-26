@@ -13,5 +13,6 @@ exports.router.get("/logm/:msg", (req, resp) => {
     }
     catch (e) {
         console.log(e);
+        resp.status(200).send(e);
     }
 });
