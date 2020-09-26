@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const blueimp_md5_1 = __importDefault(require("blueimp-md5"));
 const Auth_1 = require("../Auth");
-const Log_1 = require("../Log");
+const TokoLog_1 = require("../TokoLog");
 // import { Connection } from "../Connection";
 const user = 'auni';
 const password = 'Auni2020';
@@ -26,7 +26,7 @@ exports.checkAuth = checkAuth;
 exports.router = express_1.default.Router();
 exports.router.post("/login", (req, resp) => {
     try {
-        Log_1.logW.info('login');
+        TokoLog_1.logT.log('login');
         Auth_1.auth.login(req.body.user_id, req.body.password).then((h) => {
             if (h) {
                 req.session.statusLogin = true;
@@ -38,13 +38,13 @@ exports.router.post("/login", (req, resp) => {
             }
         }).catch((e) => {
             req.session = null;
-            Log_1.logW.log(e);
+            TokoLog_1.logT.log(e);
             resp.status(501).send(e.message);
         });
     }
     catch (e) {
         req.session = null;
-        Log_1.logW.log(e);
+        TokoLog_1.logT.log(e);
         resp.status(502).send(e.message);
     }
 });
@@ -57,15 +57,15 @@ exports.router.post("/login2", (req, resp) => {
         else {
             req.session = null;
             resp.status(401).send('gagal');
-            Log_1.logW.info('login failed');
-            Log_1.logW.info("user id: " + req.body.user_id);
-            Log_1.logW.info("password: " + req.body.password);
-            Log_1.logW.info("password server: " + md5pass);
+            TokoLog_1.logT.log('login failed');
+            TokoLog_1.logT.log("user id: " + req.body.user_id);
+            TokoLog_1.logT.log("password: " + req.body.password);
+            TokoLog_1.logT.log("password server: " + md5pass);
         }
         ;
     }
     catch (e) {
-        Log_1.logW.error(e);
+        TokoLog_1.logT.log(e);
         resp.status(500).send(e.message);
     }
 });
@@ -75,7 +75,7 @@ exports.router.post("/logout", (req, resp) => {
         resp.status(200).send('ok');
     }
     catch (e) {
-        Log_1.logW.error(e);
+        TokoLog_1.logT.log(e);
         resp.status(500).send(e.message);
     }
 });

@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mysql_1 = __importDefault(require("mysql"));
-const Log_1 = require("./Log");
+const TokoLog_1 = require("./TokoLog");
 const Config_1 = require("./Config");
 class Connection {
     static get pool() {
@@ -14,11 +14,11 @@ class Connection {
         return this._connection;
     }
     static getPool() {
-        Log_1.logW.info('get pool');
+        TokoLog_1.logT.log('get pool');
         return new Promise((resolve, reject) => {
             Connection._pool.getConnection((err, connection) => {
                 if (err) {
-                    Log_1.logW.info(err.code + '/' + err.message);
+                    TokoLog_1.logT.log(err.code + '/' + err.message);
                     reject(err.message);
                 }
                 else {
@@ -29,7 +29,7 @@ class Connection {
     }
     //TODO: setup withoud db on install
     static connect() {
-        Log_1.logW.info('create connection');
+        TokoLog_1.logT.log('create connection');
         try {
             Connection._pool = mysql_1.default.createPool({
                 host: Config_1.config.host,
@@ -41,12 +41,12 @@ class Connection {
             });
         }
         catch (e) {
-            Log_1.logW.info(e);
+            TokoLog_1.logT.log(e);
         }
     }
     static connect2() {
         if (Connection._connection) {
-            Log_1.logW.info('already connected ');
+            TokoLog_1.logT.log('already connected ');
             return;
         }
         Connection._connection = mysql_1.default.createConnection({

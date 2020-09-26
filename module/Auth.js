@@ -2,13 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const User_1 = require("./User");
 const Connection_1 = require("./Connection");
-const Log_1 = require("./Log");
+const TokoLog_1 = require("./TokoLog");
 class Auth {
     async login(userName, password) {
-        Log_1.logW.info('Auth: login ' + userName + '/' + password);
+        TokoLog_1.logT.log('Auth: login ' + userName + '/' + password);
         let pool = await Connection_1.Connection.getPool();
         let hasil = await User_1.user.getUser2(pool, userName, password);
-        Log_1.logW.info(hasil + '');
+        TokoLog_1.logT.log(hasil + '');
         if (hasil.length == 0) {
             return false;
         }

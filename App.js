@@ -9,8 +9,8 @@ const Barang_1 = require("./module/router/Barang");
 const File_1 = require("./module/router/File");
 const Auth_1 = require("./module/router/Auth");
 const Install_1 = require("./module/router/Install");
-const Test_1 = require("./module/router/Test");
-const Log_1 = require("./module/Log");
+const TokoTest_1 = require("./module/router/TokoTest");
+const TokoLog_1 = require("./module/TokoLog");
 const cookie_session_1 = __importDefault(require("cookie-session"));
 const path_1 = __importDefault(require("path"));
 const app = express_1.default();
@@ -26,9 +26,9 @@ app.use("/barang", Barang_1.router);
 app.use("/file", File_1.router);
 app.use("/auth", Auth_1.router);
 app.use("/sys", Install_1.router);
-app.use("/test", Test_1.router);
+app.use("/toko_test", TokoTest_1.router);
 exports.server = app.listen(port, () => {
-    Log_1.logW.info("app started at port " + port);
+    TokoLog_1.logT.log("app started at port " + port);
 });
 app.get("/toko", (_req, resp) => {
     try {
@@ -42,41 +42,41 @@ app.get("/toko", (_req, resp) => {
 });
 app.get("/shutdown", (req, resp) => {
     try {
-        Log_1.logW.info('shutdown');
+        TokoLog_1.logT.log('shutdown');
         resp.status(200).end();
         exports.server.close((e) => {
             if (e) {
-                Log_1.logW.info('server close error');
-                Log_1.logW.info(e.message);
+                TokoLog_1.logT.log('server close error');
+                TokoLog_1.logT.log(e.message);
             }
             else {
-                Log_1.logW.info('server tutup');
+                TokoLog_1.logT.log('server tutup');
             }
         });
         Connection_1.Connection.pool.end((err) => {
             if (err) {
-                Log_1.logW.info('sql shutdown error');
-                Log_1.logW.info(err.sqlMessage);
+                TokoLog_1.logT.log('sql shutdown error');
+                TokoLog_1.logT.log(err.sqlMessage);
             }
             else {
-                Log_1.logW.info('connection tutup');
+                TokoLog_1.logT.log('connection tutup');
             }
         });
         //process.kill(process.pid, 'SIGTERM');
     }
     catch (e) {
-        Log_1.logW.info(e);
+        TokoLog_1.logT.log(e);
         resp.status(500).send(e);
     }
 });
 app.use((_req, _resp, _next) => {
-    Log_1.logW.info(_req.path);
-    Log_1.logW.info('404');
+    TokoLog_1.logT.log(_req.path);
+    TokoLog_1.logT.log('404');
     _resp.status(404).send('Halaman Tidak Ditemukan');
 });
 process.on('SIGTERM', () => {
-    Log_1.logW.info('process on close');
+    TokoLog_1.logT.log('process on close');
     exports.server.close(() => {
-        Log_1.logW.info('Process terminated');
+        TokoLog_1.logT.log('Process terminated');
     });
 });

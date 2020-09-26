@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const Connection_1 = require("./Connection");
-const Log_1 = require("./Log");
+const TokoLog_1 = require("./TokoLog");
 const GET_USER_SQL = `SELECT * FROM pengguna WHERE ID = ? && PASSWORD = ? LIMIT 1`;
 class Anggota {
     async getUser2(pool, id, password) {
@@ -17,7 +17,7 @@ class Anggota {
         });
     }
     async getUser(id, password) {
-        Log_1.logW.info('User: getUser');
+        TokoLog_1.logT.log('User: getUser');
         let pool = await Connection_1.Connection.getPool();
         return await this.getUser2(pool, id, password);
     }

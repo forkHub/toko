@@ -5,12 +5,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const Connection_1 = require("./module/Connection");
-const Log_1 = require("./module/Log");
+const TokoLog_1 = require("./module/TokoLog");
 const app = express_1.default();
 const port = 3009;
 Connection_1.Connection.connect();
 exports.server = app.listen(port, () => {
-    Log_1.logW.info("app started at port " + port);
+    TokoLog_1.logT.log("app started at port " + port);
 });
 async function testRead(pool) {
     return new Promise((resolve, reject) => {
@@ -42,7 +42,7 @@ app.get("/connect", (_req, resp) => {
         resp.status(200).send('ok');
     }
     catch (e) {
-        Log_1.logW.info(e);
+        TokoLog_1.logT.log(e);
         resp.status(500).send(e.message);
     }
 });
@@ -53,7 +53,7 @@ app.get("/baca", (_req, resp) => {
         resp.status(200).send('ok');
     }
     catch (e) {
-        Log_1.logW.info(e);
+        TokoLog_1.logT.log(e);
         resp.status(500).send(e.message);
     }
 });
@@ -68,23 +68,23 @@ app.get("/test1", (_req, resp) => {
         }).then(() => {
             resp.status(200).send('success');
         }).catch((e) => {
-            Log_1.logW.info(e);
+            TokoLog_1.logT.log(e);
             resp.status(200).send("error: " + e);
         });
     }
     catch (e) {
-        Log_1.logW.info(e);
+        TokoLog_1.logT.log(e);
         resp.status(500).send(e.message);
     }
 });
 app.use((_req, _resp, _next) => {
-    Log_1.logW.info(_req.path);
-    Log_1.logW.info('404');
+    TokoLog_1.logT.log(_req.path);
+    TokoLog_1.logT.log('404');
     _resp.status(404).send('Halaman Tidak Ditemukan ' + _req.path);
 });
 process.on('SIGTERM', () => {
-    Log_1.logW.info('process on close');
+    TokoLog_1.logT.log('process on close');
     exports.server.close(() => {
-        Log_1.logW.info('Process terminated');
+        TokoLog_1.logT.log('Process terminated');
     });
 });
