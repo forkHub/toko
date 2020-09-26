@@ -15,7 +15,7 @@ const cookie_session_1 = __importDefault(require("cookie-session"));
 const path_1 = __importDefault(require("path"));
 const app = express_1.default();
 const port = 3000;
-Connection_1.Connection.connect();
+// Connection.connect();
 app.use(express_1.default.static(__dirname + "/public"));
 app.use(express_1.default.json({ limit: '5mb' }));
 app.use(cookie_session_1.default({
