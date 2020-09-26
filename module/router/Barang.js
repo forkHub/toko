@@ -96,3 +96,13 @@ exports.router.post("/update/:id", Auth_1.checkAuth, (req, resp) => {
         resp.status(500).send(error);
     }
 });
+exports.router.get("/", (req, resp) => {
+    try {
+        TokoLog_1.logT.log('barang ok');
+        resp.status(200).send('barang ok');
+    }
+    catch (err) {
+        TokoLog_1.logT.log('barang error');
+        resp.status(500).send(err);
+    }
+});

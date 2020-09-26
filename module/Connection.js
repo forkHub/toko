@@ -29,8 +29,9 @@ class Connection {
     }
     //TODO: setup withoud db on install
     static connect() {
-        TokoLog_1.logT.log('create connection');
+        TokoLog_1.logT.log('create connection 1');
         try {
+            TokoLog_1.logT.log('create connection start');
             Connection._pool = mysql_1.default.createPool({
                 host: Config_1.config.host,
                 user: Config_1.config.user,
@@ -39,10 +40,13 @@ class Connection {
                 port: Config_1.config.port,
                 multipleStatements: true
             });
+            TokoLog_1.logT.log('create connection end');
         }
         catch (e) {
+            TokoLog_1.logT.log('create connection error');
             TokoLog_1.logT.log(e);
         }
+        TokoLog_1.logT.log('create connection 2');
     }
     static connect2() {
         if (Connection._connection) {

@@ -27,7 +27,6 @@ exports.logM = new LogM();
 class LogT {
     log(msg) {
         exports.logM.log(msg);
-        exports.logW.info(msg);
         console.log(msg);
     }
 }
