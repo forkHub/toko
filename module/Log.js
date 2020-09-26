@@ -4,13 +4,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const winston_1 = __importDefault(require("winston"));
-const path_1 = __importDefault(require("path"));
+// import path from "path";
 exports.logW = winston_1.default.createLogger({
     level: 'info',
     format: winston_1.default.format.simple(),
     transports: [
-        new winston_1.default.transports.File({ filename: path_1.default.join(__dirname + '/public/error.log'), level: 'error' }),
-        new winston_1.default.transports.File({ filename: path_1.default.join(__dirname + '/public/combined.log') })
+        new winston_1.default.transports.File({ filename: ('./public/error.log'), level: 'error' }),
+        new winston_1.default.transports.File({ filename: ('./public/combined.log') })
     ]
 });
 class LogM {

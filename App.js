@@ -9,6 +9,7 @@ const Barang_1 = require("./module/router/Barang");
 const File_1 = require("./module/router/File");
 const Auth_1 = require("./module/router/Auth");
 const Install_1 = require("./module/router/Install");
+const Test_1 = require("./module/router/Test");
 const Log_1 = require("./module/Log");
 const cookie_session_1 = __importDefault(require("cookie-session"));
 const path_1 = __importDefault(require("path"));
@@ -25,6 +26,7 @@ app.use("/barang", Barang_1.router);
 app.use("/file", File_1.router);
 app.use("/auth", Auth_1.router);
 app.use("/sys", Install_1.router);
+app.use("/test", Test_1.router);
 exports.server = app.listen(port, () => {
     Log_1.logW.info("app started at port " + port);
 });
