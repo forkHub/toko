@@ -15,7 +15,6 @@ const cookie_session_1 = __importDefault(require("cookie-session"));
 const path_1 = __importDefault(require("path"));
 const app = express_1.default();
 const port = 3000;
-// Connection.connect();
 app.use(express_1.default.static(__dirname + "/public"));
 app.use(express_1.default.json({ limit: '5mb' }));
 app.use(cookie_session_1.default({
@@ -27,6 +26,7 @@ app.use("/file", File_1.router);
 app.use("/auth", Auth_1.router);
 app.use("/sys", Install_1.router);
 app.use("/toko_test", TokoTest_1.router);
+Connection_1.Connection.connect();
 exports.server = app.listen(port, () => {
     TokoLog_1.logT.log("app started");
 });
