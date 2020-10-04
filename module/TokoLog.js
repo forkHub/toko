@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const winston_1 = __importDefault(require("winston"));
-exports.logW = winston_1.default.createLogger({
+const logW = winston_1.default.createLogger({
     level: 'info',
     format: winston_1.default.format.simple(),
     transports: [
@@ -22,12 +22,23 @@ class LogM {
     log(msg) {
         this._logs.push(msg);
     }
+    bersih() {
+        this._logs = [];
+    }
 }
 exports.logM = new LogM();
 class LogT {
+    constructor() {
+        this.logWStatus = false;
+    }
     log(msg) {
         exports.logM.log(msg);
+        if (this.logWStatus)
+            logW.info('test info');
         console.log(msg);
+    }
+    ambil() {
+        return exports.logM.logs;
     }
 }
 exports.logT = new LogT();
