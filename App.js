@@ -45,10 +45,10 @@ app.get("/item/:id", (_req, resp) => {
         resp.status(500).send('Error');
     }
 });
-app.get("/toko", (_req, resp) => {
+app.get("/admin", (_req, resp) => {
     try {
-        resp.sendFile(path_1.default.join('/admin_page.html'), {
-            root: __dirname + '/public'
+        resp.sendFile(path_1.default.join('index.html'), {
+            root: __dirname + '/public/admin'
         });
     }
     catch (e) {

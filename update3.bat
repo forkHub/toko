@@ -1,8 +1,11 @@
-call ./bersih.bat
+call bersih.bat
+call update.bat
 
-xcopy D:\xampp3\htdocs\proto\toko\toko_01\server\js\*.* . /s /i /y
-xcopy D:\xampp3\htdocs\proto\toko\toko_01\server\*.json . /y
+cd public
+call update.bat
 
-del public\*.log
+cd ..
+cd public\admin
+call update.bat
 
 pause
