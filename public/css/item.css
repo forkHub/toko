@@ -1,0 +1,56 @@
+daftar-barang-cont item {
+	width: 20%;
+	padding: 8px;
+	float: left;
+	cursor: pointer;
+	background-color: white;
+	text-align: center;
+}
+
+daftar-barang-cont item img.kecil {
+	width: 80%;
+	max-height: 100px;
+}
+
+daftar-barang-cont item img.besar {
+	width: 80%;
+}
+
+daftar-barang-cont item div.cont p.nama-barang {
+	flex-grow: 1;
+}
+
+daftar-barang-cont item p.harga {
+	color: orangered;
+	font-weight: bold;
+}
+
+daftar-barang-cont item p.wa,
+daftar-barang-cont item p.id {
+	display: none;
+}
+
+daftar-barang-cont item p.deskripsi-singkat {
+	display: none;
+}
+
+daftar-barang-cont item p.chat {
+	font-size: small;
+	display: none;
+}
+
+daftar-barang-cont item a.chat img {
+	width: 80%;
+}
+
+daftar-barang-cont item img.besar {
+	display: none;
+}
+
+daftar-barang-cont item div.deskripsi-panjang {
+	display: none;
+}
+
+daftar-barang-cont item div.cont p.tutup {
+	display: none;
+}

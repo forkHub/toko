@@ -1,0 +1,47 @@
+@media only screen and (max-width: 600px) {
+	daftar-barang-cont item {
+		width: 25%;
+		/* display: inline-flex; */
+		/* padding: 16px; */
+		float: left;
+	}	
+
+	header {
+		height: 150px;
+	}
+
+	header p.deskripsi {
+		font-size: small;
+	}
+
+}
+
+
+@media only screen and (max-width: 400px) {
+	daftar-barang-cont item {
+		width: 33%;
+		/* padding: 16px; */
+		float: left;
+	}
+
+	header {
+		text-align: center;
+	}
+
+	header p.deskripsi {
+		font-size: small;
+		text-align: center;
+		position: static;
+	}
+
+
+	header {
+		height: 100px;
+	}
+
+	div.footer h1 {
+		font-size: small;
+	}
+	
+	
+}
