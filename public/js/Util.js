@@ -50,6 +50,7 @@ class Util {
         return Util._resp;
     }
 }
+Util.urlToko = '/toko';
 Util._resp = {
     code: 0,
     message: ''

@@ -3,22 +3,25 @@
 
 <head>
 	<title>Auni Store </title>
-	<link rel='stylesheet' href="./css/css.css" />
-	<!-- <link rel='stylesheet' href="./css/item.css" /> -->
-	<!-- <link rel='stylesheet' href="./css/item-focus.css" /> -->
-	<!-- <link rel='stylesheet' href="./css/media.css" /> -->
+	<link rel='stylesheet' href="/css/css.css" />
+	<link rel='stylesheet' href="/css/item.css" />
+	<link rel='stylesheet' href="/css/hal-item.css" />
+	<link rel='stylesheet' href="/css/media.css" />
 </head>
 
 <body>
-	<header>
-		<p> </p>
-		<h1 class='judul-toko'>Auni Store</h1>
-		<p class='deskripsi'>Herbal, Vitamin dan kebutuhan sehari-hari</p>
-	</header>
+	<div class='header-cont'>
+		{{header}}
+	</div>
+
+	<div class='nav-cont'>
+		<a class='nav' href='/'>BERANDA</a>
+	</div>
 
 	<daftar-barang-cont>
 		{{content}}
 	</daftar-barang-cont>
+
 	<div class='clear'></div>
 	<br />
 	<br />
@@ -35,8 +38,7 @@
 				href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1779559">Pixabay</a></small>
 	</div>
 
-	<script src="./js/BaseComponent.js"></script>
-	<script src="./js/AppToko.js"></script>
+	{{js}}
 </body>
 
 </html>

@@ -45,7 +45,7 @@ class FormBarangPage {
             this.editFotoClick();
         };
         this.view.tutupTbl.onclick = () => {
-            window.top.location.href = '/admin';
+            window.top.location.href = '/toko';
         };
     }
     editKirim(publish) {
@@ -58,7 +58,7 @@ class FormBarangPage {
                 App.dialog.tampil(false);
                 App.dialog.okTbl.onclick = () => {
                     console.log('tombol on click');
-                    window.top.location.href = "/admin";
+                    window.top.location.href = Util.urlToko;
                 };
             })
                 .catch((_err) => {
@@ -81,7 +81,7 @@ class FormBarangPage {
                 App.dialog.p.innerText = 'Sukses';
                 App.dialog.tampil(false);
                 App.dialog.okTbl.onclick = () => {
-                    window.top.location.href = "/admin";
+                    window.top.location.href = Util.urlToko;
                 };
             })
                 .catch((_err) => {

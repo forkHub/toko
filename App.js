@@ -13,6 +13,7 @@ const TokoTest_1 = require("./module/router/TokoTest");
 const TokoLog_1 = require("./module/TokoLog");
 const cookie_session_1 = __importDefault(require("cookie-session"));
 const path_1 = __importDefault(require("path"));
+const Renderer_1 = require("./module/Renderer");
 const app = express_1.default();
 const port = 3000;
 app.use(express_1.default.static(__dirname + "/public"));
@@ -29,6 +30,20 @@ app.use("/toko_test", TokoTest_1.router);
 Connection_1.Connection.connect();
 exports.server = app.listen(port, () => {
     TokoLog_1.logT.log("app started");
+});
+app.get("/item/:id", (_req, resp) => {
+    try {
+        Renderer_1.render.renderHalBarang(_req.params.id).then((hasil) => {
+            resp.status(200).send(hasil);
+        }).catch((err) => {
+            TokoLog_1.logT.log(err);
+            resp.status(500).send('Error');
+        });
+    }
+    catch (err) {
+        TokoLog_1.logT.log(err);
+        resp.status(500).send('Error');
+    }
 });
 app.get("/toko", (_req, resp) => {
     try {

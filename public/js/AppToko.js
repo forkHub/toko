@@ -68,41 +68,34 @@ class Item extends BaseComponent {
     constructor() {
         super();
         this._ukuranKecil = 0;
+        this._id = '';
     }
     init(el) {
         this._elHtml = el;
         this._elHtml.onclick = (e) => {
             e.stopPropagation();
             console.log('item on click');
-            this._ukuranKecil = this._elHtml.clientHeight;
-            this._elHtml.style.height = '100%';
-            this._elHtml.classList.add('fokus');
-            document.body.style.overflowY = 'hidden';
-            this.gbrBesar.onload = () => {
-                this.gbrBesar.style.maxHeight = 'initial';
-            };
-            this.gbrBesar.src = this.gbrBesar.getAttribute('gbr');
+            window.top.location.href = '/barang/' + this.idP.innerHTML;
         };
         this.gbrKecil.onload = () => {
             this.gbrKecil.style.maxHeight = 'initial';
         };
         this.gbrKecil.src = this.gbrKecil.getAttribute('gbr');
-        this.tutupTbl.onclick = (e) => {
-            e.stopPropagation();
-            this._elHtml.classList.remove('fokus');
-            document.body.style.overflowY = 'auto';
-            this._elHtml.style.height = this.ukuranKecil + 'px';
-        };
-        // this.chatTbl.onclick = (e: MouseEvent) => {
-        // 	e.stopPropagation();
-        // 	window.top.location.href = ''; 
-        // }
     }
     get ukuranKecil() {
         return this._ukuranKecil;
     }
     set ukuranKecil(value) {
         this._ukuranKecil = value;
+    }
+    get id() {
+        return this._id;
+    }
+    set id(value) {
+        this._id = value;
+    }
+    get idP() {
+        return this.getEl('p.id');
     }
     get waP() {
         return this.getEl('p.wa');

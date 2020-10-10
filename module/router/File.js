@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const Connection_1 = require("../Connection");
 const fs_1 = __importDefault(require("fs"));
-const Auth_1 = require("./Auth");
+const Auth_1 = require("../Auth");
 const TokoLog_1 = require("../TokoLog");
 exports.router = express_1.default.Router();
 exports.router.post("/baca", Auth_1.checkAuth, (req, resp) => {

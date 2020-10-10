@@ -1,14 +1,8 @@
-del css\*.* /s /q
-del gambar\*.* /s /q
-del js\*.* /s /q
-del admin\*.* /s /q
+call bersih.bat
 
-rd css /s /q
-rd gambar /s /q
-rd js /s /q
-rd admin /s /q
-
-xcopy ..\..\..\..\toko\web\*.* . /s /i /y
+xcopy ..\..\..\..\toko\web\js\*.* .\js /s /i /y
+xcopy ..\..\..\..\toko\web\css\*.* .\css /s /i /y
+xcopy ..\..\..\..\toko\web\gambar\*.* .\gambar /s /i /y
 xcopy ..\..\..\client\web\*.*  . /s /i /y
 
 del login.html

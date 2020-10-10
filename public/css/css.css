@@ -15,6 +15,10 @@ h1.judul-toko {
 	color: white;
 }
 
+div.nav-cont {
+	margin: 8px;
+}
+
 body {
 	max-width: 960px;
 	margin: auto;
@@ -50,7 +54,6 @@ header p.deskripsi {
 	right: 32px;
 }
 
-
 div.footer {
 	width: 100%;
 	height: auto;
@@ -73,194 +76,7 @@ daftar-barang-cont {
 	text-align: center;
 }
 
-daftar-barang-cont item {
-	width: 20%;
-	padding: 8px;
-	float: left;
-	cursor: pointer;
-	background-color: white;
-	text-align: center;
-}
-
-daftar-barang-cont item img.kecil {
-	width: 80%;
-	max-height: 100px;
-}
-
-daftar-barang-cont item img.besar {
-	width: 80%;
-}
-
-daftar-barang-cont item div.cont p.nama-barang {
-	flex-grow: 1;
-}
-
-daftar-barang-cont item p.harga {
-	color: orangered;
-	font-weight: bold;
-}
-
-daftar-barang-cont item p.wa {
-	display: none;
-}
-
-daftar-barang-cont item p.deskripsi-singkat {
-	display: none;
-}
-
-daftar-barang-cont item p.chat {
-	font-size: small;
-	display: none;
-}
-
-daftar-barang-cont item a.chat img {
-	width: 80%;
-}
-
 div.clear {
 	float: none;
 	clear: both;
-}
-
-daftar-barang-cont img.besar {
-	display: none;
-}
-
-daftar-barang-cont div.deskripsi-panjang {
-	display: none;
-}
-
-daftar-barang-cont div.cont p.tutup {
-	display: none;
-}
-
-/* focused item */
-daftar-barang-cont item.fokus {
-	width: 100%;
-	height: 100%;
-	position: fixed;
-	top:0px;
-	right: 0px;
-	left:0px;
-	top:0px;
-	clear: both;
-	margin: 0px;
-	padding: 0px;
-	float: none;
-	display: block;
-	overflow-y: auto;
-	background-color: white;
-	padding: 8px;
-	text-align: center;
-}
-
-daftar-barang-cont item.fokus p.nama-barang {
-	color: chocolate;
-	font-weight: bold;
-	font-size: x-large;
-}
-
-
-daftar-barang-cont item.fokus div.cont {
-	background-color: white;
-	padding: 8px;
-	max-width: 900px;
-	margin: auto;
-}
-
-daftar-barang-cont item.fokus img.kecil {
-	display: none;
-}
-
-daftar-barang-cont item.fokus p.harga {
-	color: orangered;
-	font-weight: bold;
-	font-size: x-large;
-}
-
-
-daftar-barang-cont item.fokus img.besar {
-	display: inline-block;
-}
-
-daftar-barang-cont item.fokus p.deskripsi-singkat {
-	display: none;
-}
-
-daftar-barang-cont item.fokus div.deskripsi-panjang {
-	display: block;
-	text-align: left;
-}
-
-
-daftar-barang-cont item.fokus div.cont p.tutup {
-	text-align: right;
-	margin: 0px;
-	font-size: xx-large;
-	padding: 8px;
-	display: block;
-}
-
-daftar-barang-cont item.fokus div.cont p.tutup button {
-	text-align: right;
-	margin: 0px;
-	font-size: xx-large;
-	border: 0px;
-	background-color: white;
-}
-
-daftar-barang-cont item.fokus a.chat img {
-	width: 80%;
-	max-width: 400px;
-}
-
-
-
-
-@media only screen and (max-width: 600px) {
-	daftar-barang-cont item {
-		width: 25%;
-		/* display: inline-flex; */
-		/* padding: 16px; */
-		float: left;
-	}	
-
-	header {
-		height: 150px;
-	}
-
-	header p.deskripsi {
-		font-size: small;
-	}
-
-}
-
-
-@media only screen and (max-width: 400px) {
-	daftar-barang-cont item {
-		width: 33%;
-		/* padding: 16px; */
-		float: left;
-	}
-
-	header {
-		text-align: center;
-	}
-
-	header p.deskripsi {
-		font-size: small;
-		text-align: center;
-		position: static;
-	}
-
-
-	header {
-		height: 100px;
-	}
-
-	div.footer h1 {
-		font-size: small;
-	}
-	
-	
 }

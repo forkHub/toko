@@ -5,9 +5,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const BarangSql_1 = require("../BarangSql");
-const Auth_1 = require("./Auth");
 const Toko_1 = require("../Toko");
 const TokoLog_1 = require("../TokoLog");
+const Auth_1 = require("../Auth");
+const Renderer_1 = require("../Renderer");
 exports.router = express_1.default.Router();
 exports.router.post("/hapus/:id", Auth_1.checkAuth, (req, resp) => {
     try {
@@ -104,5 +105,20 @@ exports.router.get("/", (req, resp) => {
     catch (err) {
         TokoLog_1.logT.log('barang error');
         resp.status(500).send(err);
+    }
+});
+//TODO: next, belum dipakai dulu
+exports.router.get("/:id", (req, resp) => {
+    try {
+        Renderer_1.render.renderHalBarang(req.params.id).then((hasil) => {
+            resp.status(200).send(hasil);
+        }).catch((err) => {
+            TokoLog_1.logT.log(err);
+            resp.status(500).send('Error');
+        });
+    }
+    catch (err) {
+        TokoLog_1.logT.log(err);
+        resp.status(500).send('Error');
     }
 });

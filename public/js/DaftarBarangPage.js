@@ -55,7 +55,7 @@ class DaftarBarangPage extends BaseComponent {
                 App.dialog.p.innerHTML = "Berhasil";
                 App.dialog.tampil();
                 App.dialog.okTbl.onclick = () => {
-                    window.top.location.href = "/admin";
+                    window.top.location.href = Util.urlToko;
                 };
             }).catch((e) => {
                 App.dialog.p.innerHTML = e;

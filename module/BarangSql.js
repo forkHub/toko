@@ -17,7 +17,7 @@ class BarangSql {
         this.updateSql = `UPDATE BARANG SET ? WHERE ID = ?`;
         this.baruSql = `INSERT INTO BARANG SET ?`;
         this.bacaIdSql = `
-		SELECT BARANG.*, FILE.thumb_url, FILE.gbr_url 
+		SELECT BARANG.*, FILE.thumb, FILE.gbr 
 		FROM BARANG
 		LEFT JOIN FILE
 		ON BARANG.file_id = FILE.id
@@ -43,6 +43,7 @@ class BarangSql {
             }
         });
     }
+    //TODO: type buat return
     async bacaId(id) {
         return new Promise((resolve, reject) => {
             Connection_1.Connection.pool.query(this.bacaIdSql, [id], (_err, _rows) => {
@@ -50,7 +51,7 @@ class BarangSql {
                     reject(_err);
                 }
                 else {
-                    resolve(_rows);
+                    resolve(_rows[0]);
                 }
             });
         });
