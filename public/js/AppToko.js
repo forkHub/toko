@@ -3,24 +3,60 @@ class AppToko {
     constructor() {
         this.items = [];
         this.resizeInProgress = false;
-        let nodes = document.querySelectorAll('item');
-        let tinggi = 0;
+        let nodes = document.querySelectorAll('div.item');
+        // let tinggi: number = 0;
         nodes.forEach((node) => {
             let item = new Item();
             item.init(node);
             this.items.push(item);
-            if (item.elHtml.clientHeight > tinggi) {
-                tinggi = item.elHtml.clientHeight;
-            }
-            ;
+            // if (item.elHtml.clientHeight > tinggi) {
+            // 	tinggi = item.elHtml.clientHeight;
+            // };
         });
-        this.items.forEach((item) => {
-            item.elHtml.style.height = tinggi + 'px';
-        });
+        // this.items.forEach((item: Item) => {
+        // 	// item.elHtml.style.height = tinggi + 'px';
+        // })
         window.onresize = () => {
-            this.resize();
+            this.atur();
         };
-        this.resize();
+        this.atur();
+    }
+    jmlKolom() {
+        if (window.innerWidth > 600) {
+            return 5;
+        }
+        else if (window.innerWidth > 400) {
+            return 4;
+        }
+        else {
+            return 3;
+        }
+    }
+    atur() {
+        let jmlKolom = this.jmlKolom();
+        let jmlPerKolom = this.items.length / jmlKolom;
+        let items = this.items.slice();
+        let cont = AppToko.getEl('div.daftar-barang-cont');
+        // console.log('jml kolom ' + jmlKolom);
+        // console.log('jml per kolom ' + jmlPerKolom);
+        // console.log('jml item ' + items.length);
+        while (cont.children.length > 0) {
+            cont.removeChild(cont.children[0]);
+        }
+        for (let i = 0; i < jmlKolom; i++) {
+            let div = document.createElement('div');
+            div.classList.add('kolom');
+            for (let j = 0; j < jmlPerKolom; j++) {
+                let item = items.shift();
+                if (item) {
+                    item.attach(div);
+                }
+            }
+            cont.appendChild(div);
+        }
+        let div = document.createElement('div');
+        div.classList.add('clear');
+        cont.appendChild(div);
     }
     hitungTinggi() {
         return 0;
@@ -77,8 +113,13 @@ class Item extends BaseComponent {
             console.log('item on click');
             window.top.location.href = '/barang/' + this.idP.innerHTML;
         };
-        this.gbrKecil.onload = () => {
-            this.gbrKecil.style.maxHeight = 'initial';
+        // this.gbrKecil.onload = () => {
+        // 	this.gbrKecil.style.maxHeight = 'initial';
+        // }
+        this.gbrKecil.onerror = () => {
+            this.gbrKecil.onerror = null;
+            this.gbrKecil.src = 'gambar/kosong.png';
+            this.gbrKecil.style.minHeight = '100px';
         };
         this.gbrKecil.src = this.gbrKecil.getAttribute('gbr');
     }

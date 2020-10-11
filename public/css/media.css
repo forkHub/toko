@@ -1,14 +1,12 @@
+
 @media only screen and (max-width: 600px) {
-	daftar-barang-cont item {
+	div.daftar-barang-cont div.kolom {
 		width: 25%;
-		/* display: inline-flex; */
-		/* padding: 16px; */
-		float: left;
 	}	
 
-	header {
+	/* header {
 		height: 150px;
-	}
+	} */
 
 	header p.deskripsi {
 		font-size: small;
@@ -18,10 +16,8 @@
 
 
 @media only screen and (max-width: 400px) {
-	daftar-barang-cont item {
+	div.daftar-barang-cont div.kolom {
 		width: 33%;
-		/* padding: 16px; */
-		float: left;
 	}
 
 	header {
@@ -34,10 +30,9 @@
 		position: static;
 	}
 
-
-	header {
+	/* header {
 		height: 100px;
-	}
+	} */
 
 	div.footer h1 {
 		font-size: small;

@@ -1,56 +1,56 @@
-daftar-barang-cont item {
-	width: 20%;
-	padding: 8px;
-	float: left;
+div.daftar-barang-cont div.item {
+	/* width: 20%; */
+	font-size: 11px;
+	padding: 4px;
 	cursor: pointer;
+	float:none;
 	background-color: white;
 	text-align: center;
+	/* border: 1px solid gray; */
+	margin-bottom: 8px;
+	box-shadow: 0px 0px 0px 2px rgba(0,0,0,0.1);
 }
 
-daftar-barang-cont item img.kecil {
+div.daftar-barang-cont div.item img.kecil {
+	max-width: 80%;
+	/* max-height: 100px; */
+}
+
+div.daftar-barang-cont div.item img.besar {
 	width: 80%;
-	max-height: 100px;
 }
 
-daftar-barang-cont item img.besar {
-	width: 80%;
-}
-
-daftar-barang-cont item div.cont p.nama-barang {
-	flex-grow: 1;
-}
-
-daftar-barang-cont item p.harga {
+div.daftar-barang-cont div.item p.harga {
 	color: orangered;
 	font-weight: bold;
 }
 
-daftar-barang-cont item p.wa,
-daftar-barang-cont item p.id {
+div.daftar-barang-cont div.item p.wa,
+div.daftar-barang-cont div.item p.id {
 	display: none;
 }
 
-daftar-barang-cont item p.deskripsi-singkat {
+div.daftar-barang-cont div.item p.deskripsi-singkat {
 	display: none;
 }
 
-daftar-barang-cont item p.chat {
+div.daftar-barang-cont div.item p.chat {
 	font-size: small;
 	display: none;
 }
 
-daftar-barang-cont item a.chat img {
-	width: 80%;
+div.daftar-barang-cont div.item a.chat img {
+	max-width: 80%;
 }
 
-daftar-barang-cont item img.besar {
+div.daftar-barang-cont div.item img.besar {
 	display: none;
 }
 
-daftar-barang-cont item div.deskripsi-panjang {
+div.daftar-barang-cont div.item div.deskripsi-panjang {
 	display: none;
 }
 
-daftar-barang-cont item div.cont p.tutup {
+div.daftar-barang-cont div.item div.cont p.tutup {
 	display: none;
 }
