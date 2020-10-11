@@ -25,6 +25,9 @@ class Login2 extends BaseComponent {
                 }
                 else {
                     this.dialog.tampil2(Util.resp.message);
+                    this.dialog.okTbl.onclick = () => {
+                        window.top.location.reload();
+                    };
                 }
             });
         }

@@ -102,7 +102,6 @@ class FormBarangPage {
     }
     objToForm(data) {
         this.view.namaInput.value = data.nama;
-        // this.view.deskripsiBarangInput.value = data.deskripsi;
         this.view.deskripsiPanjangInput.value = data.deskripsi_panjang;
         this.view.hargaBarangInput.value = data.harga + '';
         this.view.wa.value = data.wa;
