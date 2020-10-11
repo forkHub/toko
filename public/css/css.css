@@ -61,6 +61,7 @@ div.daftar-barang-cont {
 	text-align: center;
 	display: table;
 	width: 100%;
+	visibility: hidden;
 }
 
 div.daftar-barang-cont div.kolom {
