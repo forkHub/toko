@@ -8,4 +8,5 @@ window.onload = () => {
         img.style.minHeight = '500px';
     };
     img.src = img.getAttribute('gbr');
+    document.body.querySelector('div.daftar-barang-cont').style.visibility = 'visible';
 };
