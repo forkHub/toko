@@ -58,7 +58,7 @@ class AppToko {
             let item = items.shift();
             koloms[kolom].appendChild(item.elHtml);
             kolom++;
-            if (kolom = koloms.length) {
+            if (koloms.length == kolom) {
                 kolom = 0;
             }
         }
