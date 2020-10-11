@@ -1,104 +1,63 @@
 "use strict";
-var BarangObj = /** @class */ (function () {
-    function BarangObj() {
+class BarangObj {
+    get publish() {
+        return this._publish;
     }
-    Object.defineProperty(BarangObj.prototype, "publish", {
-        get: function () {
-            return this._publish;
-        },
-        set: function (value) {
-            this._publish = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(BarangObj.prototype, "file_id", {
-        get: function () {
-            return this._file_id;
-        },
-        set: function (value) {
-            this._file_id = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(BarangObj.prototype, "id", {
-        get: function () {
-            return this._id;
-        },
-        set: function (value) {
-            this._id = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(BarangObj.prototype, "wa", {
-        get: function () {
-            return this._wa;
-        },
-        set: function (value) {
-            this._wa = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(BarangObj.prototype, "thumb", {
-        get: function () {
-            return this._thumb;
-        },
-        set: function (value) {
-            this._thumb = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(BarangObj.prototype, "gbr", {
-        get: function () {
-            return this._gbr;
-        },
-        set: function (value) {
-            this._gbr = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(BarangObj.prototype, "nama", {
-        get: function () {
-            return this._nama;
-        },
-        set: function (value) {
-            this._nama = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(BarangObj.prototype, "deskripsi_panjang", {
-        get: function () {
-            return this._deskripsi_panjang;
-        },
-        set: function (value) {
-            this._deskripsi_panjang = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(BarangObj.prototype, "harga", {
-        get: function () {
-            return this._harga;
-        },
-        set: function (value) {
-            this._harga = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return BarangObj;
-}());
-var BarangController = /** @class */ (function () {
-    function BarangController() {
+    set publish(value) {
+        this._publish = value;
     }
-    BarangController.responseToObj = function (data) {
-        var postObj = new BarangObj();
+    get file_id() {
+        return this._file_id;
+    }
+    set file_id(value) {
+        this._file_id = value;
+    }
+    get id() {
+        return this._id;
+    }
+    set id(value) {
+        this._id = value;
+    }
+    get wa() {
+        return this._wa;
+    }
+    set wa(value) {
+        this._wa = value;
+    }
+    get thumb() {
+        return this._thumb;
+    }
+    set thumb(value) {
+        this._thumb = value;
+    }
+    get gbr() {
+        return this._gbr;
+    }
+    set gbr(value) {
+        this._gbr = value;
+    }
+    get nama() {
+        return this._nama;
+    }
+    set nama(value) {
+        this._nama = value;
+    }
+    get deskripsi_panjang() {
+        return this._deskripsi_panjang;
+    }
+    set deskripsi_panjang(value) {
+        this._deskripsi_panjang = value;
+    }
+    get harga() {
+        return this._harga;
+    }
+    set harga(value) {
+        this._harga = value;
+    }
+}
+class BarangController {
+    static responseToObj(data) {
+        let postObj = new BarangObj();
         // postObj.deskripsi = data.deskripsi;
         postObj.deskripsi_panjang = data.deskripsi_panjang;
         postObj.file_id = data.file_id;
@@ -110,6 +69,5 @@ var BarangController = /** @class */ (function () {
         postObj.wa = data.wa;
         postObj.publish = data.publish;
         return postObj;
-    };
-    return BarangController;
-}());
+    }
+}

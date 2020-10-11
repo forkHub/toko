@@ -1,7 +1,7 @@
 "use strict";
-window.onload = function () {
-    var img = document.body.querySelector("div.item-fokus img.besar");
-    img.onerror = function () {
+window.onload = () => {
+    let img = document.body.querySelector("div.item-fokus img.besar");
+    img.onerror = () => {
         console.log('error');
         img.src = "/gambar/kosong.png";
         img.onerror = null;

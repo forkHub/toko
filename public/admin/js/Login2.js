@@ -1,46 +1,30 @@
 "use strict";
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var Login2 = /** @class */ (function (_super) {
-    __extends(Login2, _super);
-    function Login2() {
-        return _super.call(this) || this;
+class Login2 extends BaseComponent {
+    constructor() {
+        super();
     }
-    Login2.prototype.init = function () {
-        var _this = this;
+    init() {
         this._elHtml = this.getTemplate('div.form-login');
-        this.form.onsubmit = function () {
-            return _this.formOnSubmit();
+        this.form.onsubmit = () => {
+            return this.formOnSubmit();
         };
         this.dialog = App.dialog;
-    };
-    Login2.prototype.formOnSubmit = function () {
-        var _this = this;
+    }
+    formOnSubmit() {
         console.log(this.password.value);
         try {
-            var data = {
+            let data = {
                 user_id: this.userName.value,
                 password: md5(this.password.value)
             };
-            Util.Ajax("POST", "/auth/login", JSON.stringify(data)).then(function () {
+            Util.Ajax("POST", "/auth/login", JSON.stringify(data)).then(() => {
                 window.top.location.href = Util.urlToko;
-            }).catch(function (_e) {
+            }).catch((_e) => {
                 if (401 == Util.resp.code) {
-                    _this.dialog.tampil2('Username atau password salah');
+                    this.dialog.tampil2('Username atau password salah');
                 }
                 else {
-                    _this.dialog.tampil2(Util.resp.message);
+                    this.dialog.tampil2(Util.resp.message);
                 }
             });
         }
@@ -48,27 +32,14 @@ var Login2 = /** @class */ (function (_super) {
             this.dialog.tampil2(Util.resp.message);
         }
         return false;
-    };
-    Object.defineProperty(Login2.prototype, "form", {
-        get: function () {
-            return this.getEl('form');
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(Login2.prototype, "userName", {
-        get: function () {
-            return this.getEl('input.user-name');
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(Login2.prototype, "password", {
-        get: function () {
-            return this.getEl('input.password');
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return Login2;
-}(BaseComponent));
+    }
+    get form() {
+        return this.getEl('form');
+    }
+    get userName() {
+        return this.getEl('input.user-name');
+    }
+    get password() {
+        return this.getEl('input.password');
+    }
+}

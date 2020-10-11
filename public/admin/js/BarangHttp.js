@@ -1,23 +1,20 @@
 "use strict";
 //TODO: pindahin ke sini
-var BarangHttp = /** @class */ (function () {
-    function BarangHttp() {
+class BarangHttp {
+    baru(data) {
+        data;
+        //TODO:
     }
-    BarangHttp.prototype.baru = function (data) {
-        data;
-        //TODO:
-    };
-    BarangHttp.prototype.hapus = function (id) {
+    hapus(id) {
         id;
         //TODO:
-    };
-    BarangHttp.prototype.baca = function (id) {
+    }
+    baca(id) {
         id;
         //TODO:
-    };
-    BarangHttp.prototype.update = function (data) {
+    }
+    update(data) {
         data;
         //TODO:
-    };
-    return BarangHttp;
-}());
+    }
+}
