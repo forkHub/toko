@@ -1,33 +1,37 @@
 "use strict";
-class BaseComponent {
-    constructor() {
+var BaseComponent = /** @class */ (function () {
+    function BaseComponent() {
         this._template = '';
         this._elHtml = document.createElement('div');
     }
-    onRender() {
-    }
-    onAttach() {
-    }
-    onBuild() {
-    }
-    onDetach() {
-    }
-    mulai(...params) {
+    BaseComponent.prototype.onRender = function () {
+    };
+    BaseComponent.prototype.onAttach = function () {
+    };
+    BaseComponent.prototype.onBuild = function () {
+    };
+    BaseComponent.prototype.onDetach = function () {
+    };
+    BaseComponent.prototype.mulai = function () {
+        var params = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            params[_i] = arguments[_i];
+        }
         params;
-    }
-    destroy() {
+    };
+    BaseComponent.prototype.destroy = function () {
         this.detach();
         while (this._elHtml.firstChild) {
             this._elHtml.removeChild(this._elHtml.firstChild);
         }
         this._elHtml = null;
-    }
-    attach(parent) {
+    };
+    BaseComponent.prototype.attach = function (parent) {
         parent.appendChild(this._elHtml);
         this._parent = parent;
         this.onAttach();
-    }
-    detach() {
+    };
+    BaseComponent.prototype.detach = function () {
         if (this._elHtml.parentElement) {
             this._elHtml.parentElement.removeChild(this._elHtml);
             this.onDetach();
@@ -35,21 +39,21 @@ class BaseComponent {
         }
         this.onDetach();
         return false;
-    }
-    show(el) {
+    };
+    BaseComponent.prototype.show = function (el) {
         if (!el) {
             el = this._elHtml;
         }
         el.style.display = 'block';
-    }
-    hide(el) {
+    };
+    BaseComponent.prototype.hide = function (el) {
         if (!el) {
             el = this._elHtml;
         }
         el.style.display = 'none';
-    }
-    getEl(query) {
-        let el;
+    };
+    BaseComponent.prototype.getEl = function (query) {
+        var el;
         el = this._elHtml.querySelector(query);
         if (el) {
             return el;
@@ -59,29 +63,34 @@ class BaseComponent {
             console.log(query);
             throw new Error('query not found ');
         }
-    }
-    build() {
-        let div = document.createElement('div');
-        let el;
+    };
+    BaseComponent.prototype.build = function () {
+        var div = document.createElement('div');
+        var el;
         div.innerHTML = this._template;
         el = div.firstElementChild;
         this._elHtml = el;
         if (!this._elHtml)
             throw new Error('');
         this.onBuild();
-    }
-    getTemplate(query) {
-        let template = document.body.querySelector('template').content;
+    };
+    BaseComponent.prototype.getTemplate = function (query) {
+        var template = document.body.querySelector('template').content;
         return template.querySelector(query).cloneNode(true);
-    }
-    getElFromDoc(query) {
-        let el;
+    };
+    BaseComponent.prototype.getElFromDoc = function (query) {
+        var el;
         el = document.querySelector(query);
         if (!el)
             throw new Error();
         return el;
-    }
-    get elHtml() {
-        return this._elHtml;
-    }
-}
+    };
+    Object.defineProperty(BaseComponent.prototype, "elHtml", {
+        get: function () {
+            return this._elHtml;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return BaseComponent;
+}());

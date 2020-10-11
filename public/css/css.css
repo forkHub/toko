@@ -9,6 +9,10 @@ html, body, div, header {
 	color: #111111;
 }
 
+body {
+	max-width: 960px;
+}
+
 h1.judul-toko {
 	margin: 16px;
 	margin-top: 0px;
@@ -56,6 +60,7 @@ header p.deskripsi {
 div.daftar-barang-cont {
 	text-align: center;
 	display: table;
+	width: 100%;
 }
 
 div.daftar-barang-cont div.kolom {
