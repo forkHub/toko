@@ -37,9 +37,9 @@ class AppToko {
         let jmlPerKolom = this.items.length / jmlKolom;
         let items = this.items.slice();
         let cont = AppToko.getEl('div.daftar-barang-cont');
-        // console.log('jml kolom ' + jmlKolom);
-        // console.log('jml per kolom ' + jmlPerKolom);
-        // console.log('jml item ' + items.length);
+        console.log('jml kolom ' + jmlKolom);
+        console.log('jml per kolom ' + jmlPerKolom);
+        console.log('jml item ' + items.length);
         while (cont.children.length > 0) {
             cont.removeChild(cont.children[0]);
         }
