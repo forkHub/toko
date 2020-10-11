@@ -45,7 +45,7 @@ class FormBarangPage {
             this.editFotoClick();
         };
         this.view.tutupTbl.onclick = () => {
-            window.top.location.href = '/toko';
+            window.top.location.href = Util.urlToko;
         };
     }
     editKirim(publish) {
@@ -96,10 +96,9 @@ class FormBarangPage {
     }
     default() {
         this.view.namaInput.value = 'nama';
-        // this.view.deskripsiBarangInput.value = 'deskripsi';
-        this.view.deskripsiPanjangInput.value = 'deskripsi2';
-        this.view.hargaBarangInput.value = '1000';
-        this.view.wa.value = '12345';
+        this.view.deskripsiPanjangInput.value = 'Deskripsi Barang';
+        this.view.hargaBarangInput.value = 'Rp. 1000';
+        this.view.wa.value = '6281219753619'; //https://wa.me/6281219753619?text=Assalamualaikum
     }
     objToForm(data) {
         this.view.namaInput.value = data.nama;
