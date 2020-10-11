@@ -37,6 +37,8 @@ class AppToko {
         let jmlPerKolom = this.items.length / jmlKolom;
         let items = this.items.slice();
         let cont = AppToko.getEl('div.daftar-barang-cont');
+        let koloms = [];
+        jmlPerKolom = Math.floor(jmlPerKolom);
         console.log('jml kolom ' + jmlKolom);
         console.log('jml per kolom ' + jmlPerKolom);
         console.log('jml item ' + items.length);
@@ -53,6 +55,17 @@ class AppToko {
                 }
             }
             cont.appendChild(div);
+            koloms.push(div);
+        }
+        //sisa
+        let kolom = 0;
+        while (items.length > 0) {
+            let item = items.shift();
+            koloms[kolom].appendChild(item.elHtml);
+            kolom++;
+            if (kolom = koloms.length) {
+                kolom = 0;
+            }
         }
         let div = document.createElement('div');
         div.classList.add('clear');
