@@ -10,6 +10,7 @@ const File_1 = require("./module/router/File");
 const Auth_1 = require("./module/router/Auth");
 const Install_1 = require("./module/router/Install");
 const TokoTest_1 = require("./module/router/TokoTest");
+const Anggota_1 = require("./module/router/Anggota");
 const TokoLog_1 = require("./module/TokoLog");
 const cookie_session_1 = __importDefault(require("cookie-session"));
 const path_1 = __importDefault(require("path"));
@@ -27,6 +28,7 @@ app.use("/file", File_1.router);
 app.use("/auth", Auth_1.router);
 app.use("/sys", Install_1.router);
 app.use("/toko_test", TokoTest_1.router);
+app.use("/anggota", Anggota_1.router);
 Connection_1.Connection.connect();
 exports.server = app.listen(port, () => {
     TokoLog_1.logT.log("app started");
@@ -90,8 +92,10 @@ app.use((_req, _resp, _next) => {
     _resp.status(404).send('Halaman Tidak Ditemukan');
 });
 process.on('SIGTERM', () => {
-    TokoLog_1.logT.log('process on close');
-    exports.server.close(() => {
-        TokoLog_1.logT.log('Process terminated');
-    });
+    try {
+        Connection_1.Connection.pool.end((err) => {
+        });
+    }
+    catch (e) {
+    }
 });

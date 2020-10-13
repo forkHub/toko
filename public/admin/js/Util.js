@@ -9,6 +9,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 class Util {
+    static Login(nama, pass) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let data = JSON.stringify({ user_id: nama, password: md5(pass) });
+            yield Util.Ajax("POST", Util.urlLogin, data);
+        });
+    }
+    static LoginStatus() {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield Util.Ajax("POST", Util.urlLoginStatus, "");
+            console.log('login ok ' + Util.resp.code);
+            if (401 == Util._resp.code)
+                throw Error('');
+            return Util._resp.message;
+        });
+    }
     static Ajax(type, url, data) {
         return __awaiter(this, void 0, void 0, function* () {
             return new Promise((resolve, reject) => {
@@ -19,16 +34,19 @@ class Util {
                     let xhr = new XMLHttpRequest();
                     xhr.onload = () => {
                         if (200 == xhr.status) {
+                            Util._resp.code = 200;
                             resolve(xhr.responseText);
                         }
                         else {
+                            console.log('response error');
                             Util._resp.code = xhr.status;
                             Util._resp.message = xhr.statusText;
                             reject(new Error('(' + xhr.status + ') ' + xhr.statusText));
                         }
                     };
                     xhr.onerror = () => {
-                        Util._resp.code = 0;
+                        console.log('xhr error');
+                        Util._resp.code = 500;
                         Util._resp.message = 'Error';
                         reject(new Error('Error'));
                     };
@@ -39,7 +57,7 @@ class Util {
                 catch (e) {
                     console.log('Util error');
                     console.log(e);
-                    Util._resp.code = 0;
+                    Util._resp.code = 500;
                     Util._resp.message = 'Error';
                     reject(new Error('Error'));
                 }
@@ -51,6 +69,11 @@ class Util {
     }
 }
 Util.urlToko = '/admin';
+Util.urlAnggotaDaftar = "/anggota/baca";
+Util.urlAnggotaBaru = "/anggota/baru";
+Util.urlAnggotaHapus = "/anggota/hapus";
+Util.urlLoginStatus = '/auth/status';
+Util.urlLogin = '/auth/login';
 Util._resp = {
     code: 0,
     message: ''

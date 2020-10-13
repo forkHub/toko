@@ -35,11 +35,11 @@ class PhotoUploadPage extends BaseComponent {
         return hasil;
     }
     init() {
-        console.group("photo upload");
+        // console.group("photo upload");
         this._elHtml = this.getTemplate('div.foto-page');
-        console.group('el html');
-        console.log(this._elHtml);
-        console.groupEnd();
+        // console.group('el html');
+        // console.log(this._elHtml);
+        // console.groupEnd();
         // this.canvasImg2.width = 800;
         // this.canvasImg2.height = 600;
         // this.canvasThumb2.width = 128;

@@ -13,13 +13,13 @@ class Login2 extends BaseComponent {
     formOnSubmit() {
         console.log(this.password.value);
         try {
-            let data = {
-                user_id: this.userName.value,
-                password: md5(this.password.value)
-            };
-            Util.Ajax("POST", "/auth/login", JSON.stringify(data)).then(() => {
+            // let data: any = {
+            // 	user_id: this.userName.value,
+            // 	password: md5(this.password.value)
+            // }
+            Util.Login(this.userName.value, this.password.value).then(() => {
                 window.top.location.href = Util.urlToko;
-            }).catch((_e) => {
+            }).catch(() => {
                 if (401 == Util.resp.code) {
                     this.dialog.tampil2('Username atau password salah');
                 }
@@ -30,6 +30,19 @@ class Login2 extends BaseComponent {
                     };
                 }
             });
+            // Util.Ajax("POST", "/auth/login", JSON.stringify(data)).then(() => {
+            // 	window.top.location.href = Util.urlToko;
+            // }).catch((_e) => {
+            // 	if (401 == Util.resp.code) {
+            // 		this.dialog.tampil2('Username atau password salah');
+            // 	}
+            // 	else {
+            // 		this.dialog.tampil2(Util.resp.message);
+            // 		this.dialog.okTbl.onclick = () => {
+            // 			window.top.location.reload();
+            // 		}
+            // 	}
+            // })
         }
         catch (e) {
             this.dialog.tampil2(Util.resp.message);
