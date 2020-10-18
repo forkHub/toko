@@ -16,6 +16,7 @@ const cookie_session_1 = __importDefault(require("cookie-session"));
 const path_1 = __importDefault(require("path"));
 const Renderer_1 = require("./module/Renderer");
 const BarangSql_1 = require("./module/BarangSql");
+const Auth_2 = require("./module/Auth");
 const app = express_1.default();
 const port = 3000;
 app.use(express_1.default.static(__dirname + "/public"));
@@ -34,7 +35,7 @@ Connection_1.Connection.connect();
 exports.server = app.listen(port, () => {
     TokoLog_1.logT.log("app started");
 });
-app.get("/lapak/:lapak", (_req, resp) => {
+app.get("/lapak/:lapak", Auth_2.setCache, (_req, resp) => {
     try {
         TokoLog_1.logT.log("rendar beranda lapak " + _req.params.lapak);
         BarangSql_1.barangSql.bacalapakPublish(_req.params.lapak)
@@ -43,7 +44,7 @@ app.get("/lapak/:lapak", (_req, resp) => {
             return Renderer_1.render.renderBeranda(data, _req.params.lapak, false);
         })
             .then((data) => {
-            resp.status(200).send(data);
+            resp.status(200).header("Cache-Control", "max-age=7200").send(data);
         })
             .catch((err) => {
             TokoLog_1.logT.log(err);
@@ -55,7 +56,7 @@ app.get("/lapak/:lapak", (_req, resp) => {
         resp.status(500).send('Error');
     }
 });
-app.get("/", (_req, resp) => {
+app.get("/", Auth_2.setCache, (_req, resp) => {
     try {
         BarangSql_1.barangSql.bacaPublish()
             .then((data) => {

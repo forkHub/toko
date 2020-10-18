@@ -32,6 +32,11 @@ function checkAuth(req, resp, next) {
     }
 }
 exports.checkAuth = checkAuth;
+function setCache(_req, resp, next) {
+    resp.header("Cache-Control", "max-age=7201");
+    next();
+}
+exports.setCache = setCache;
 function checkSystem(req, resp, next) {
     // auth.default(req);
     if (SessionData_1.session(req).statusLogin) {
