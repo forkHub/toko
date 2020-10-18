@@ -5,7 +5,9 @@ window.onload = () => {
         console.log('error');
         img.src = "/gambar/kosong.png";
         img.onerror = null;
+        img.onload = null;
         img.style.height = '512px';
+        img.style.minHeight = '512px';
     };
     img.onload = () => {
         img.style.minHeight = 'initial';

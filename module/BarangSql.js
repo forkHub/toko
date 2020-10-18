@@ -9,6 +9,17 @@ class BarangSql {
 											LEFT JOIN FILE
 											ON BARANG.file_id = FILE.id
 											WHERE BARANG.publish = 1`;
+        this.bacaBaranglapakPulish = `SELECT BARANG.*, FILE.thumb, FILE.gbr 
+											FROM BARANG
+											LEFT JOIN FILE
+											ON BARANG.file_id = FILE.id
+											WHERE BARANG.publish = 1
+											AND BARANG.lapak = ?;`;
+        this.bacaBaranglapak = `SELECT BARANG.*, FILE.thumb, FILE.gbr 
+											FROM BARANG
+											LEFT JOIN FILE
+											ON BARANG.file_id = FILE.id
+											WHERE BARANG.lapak = ?;`;
         this.bacaBarangSemua = `SELECT BARANG.*, FILE.thumb, FILE.gbr 
 											FROM BARANG
 											LEFT JOIN FILE
@@ -61,6 +72,30 @@ class BarangSql {
     }
     async bacaPublish() {
         return this.queryBaca(this.bacaBarangPulish);
+    }
+    async bacalapakPublish(lapak) {
+        return new Promise((resolve, reject) => {
+            Connection_1.Connection.pool.query(this.bacaBaranglapakPulish, [lapak], (_err, _rows) => {
+                if (_err) {
+                    reject(_err);
+                }
+                else {
+                    resolve(_rows);
+                }
+            });
+        });
+    }
+    async bacalapak(lapak) {
+        return new Promise((resolve, reject) => {
+            Connection_1.Connection.pool.query(this.bacaBaranglapak, [lapak], (_err, _rows) => {
+                if (_err) {
+                    reject(_err);
+                }
+                else {
+                    resolve(_rows);
+                }
+            });
+        });
     }
     async hapus(id) {
         return new Promise((resolve, reject) => {

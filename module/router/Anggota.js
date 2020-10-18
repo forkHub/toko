@@ -21,28 +21,46 @@ exports.router.post("/baca", (req, resp) => {
 });
 exports.router.post("/hapus", (req, resp) => {
     try {
-        resp.status(200).send(req.params.msg);
+        Anggota_1.anggota.hapus(req.params.id).then(() => {
+            resp.status(200).end();
+        }).catch((e) => {
+            resp.status(500).send(e);
+        });
     }
-    catch (e) {
-        console.log(e);
-        resp.status(200).send(e);
+    catch (err) {
+        resp.status(500).send(err);
     }
 });
 exports.router.post("/baru", (req, resp) => {
     try {
-        resp.status(200).send(req.params.msg);
+        let data = {
+            id: req.body.id,
+            password: req.body.password,
+            level: req.body.level,
+        };
+        Anggota_1.anggota.baru(data)
+            .then(() => {
+            resp.status(200).end();
+        }).catch((e) => {
+            resp.status(500).send(e);
+        });
     }
     catch (e) {
-        console.log(e);
-        resp.status(200).send(e);
+        resp.status(500).send(e);
     }
 });
-exports.router.post("/update", (req, resp) => {
+exports.router.post("/update/:id", (req, resp) => {
     try {
-        resp.status(200).send(req.params.msg);
+        Anggota_1.anggota.update({
+            password: req.body.password,
+            level: req.body.level,
+        }, req.params.id).then(() => {
+            resp.status(200).end();
+        }).catch((e) => {
+            resp.status(500).send(e);
+        });
     }
-    catch (e) {
-        console.log(e);
-        resp.status(200).send(e);
+    catch (error) {
+        resp.status(500).send(error);
     }
 });

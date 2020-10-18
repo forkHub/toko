@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const Auth_1 = require("../Auth");
+const SessionData_1 = require("../SessionData");
 const TokoLog_1 = require("../TokoLog");
 exports.router = express_1.default.Router();
 exports.router.post("/login", (req, resp) => {
@@ -12,8 +13,8 @@ exports.router.post("/login", (req, resp) => {
         TokoLog_1.logT.log('login');
         Auth_1.auth.login(req.body.user_id, req.body.password).then((h) => {
             if (h) {
-                Auth_1.auth.session(req).level = h.level;
-                Auth_1.auth.session(req).statusLogin = true;
+                SessionData_1.session(req).level = h.level;
+                SessionData_1.session(req).statusLogin = true;
                 resp.status(200).send(h);
             }
             else {
@@ -34,7 +35,7 @@ exports.router.post("/login", (req, resp) => {
 });
 exports.router.post("/status", (req, resp) => {
     try {
-        if (Auth_1.auth.session(req).statusLogin) {
+        if (SessionData_1.session(req).statusLogin) {
             resp.status(200).send('ok');
         }
         else {
@@ -47,7 +48,7 @@ exports.router.post("/status", (req, resp) => {
         resp.status(500).send(e.message);
     }
 });
-exports.router.post("/logout", (req, resp) => {
+exports.router.get("/logout", (req, resp) => {
     try {
         req.session = null;
         resp.status(200).send('ok');

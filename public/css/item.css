@@ -26,6 +26,7 @@ div.daftar-barang-cont div.item p.harga {
 }
 
 div.daftar-barang-cont div.item p.wa,
+div.daftar-barang-cont div.item p.lapak,
 div.daftar-barang-cont div.item p.id {
 	display: none;
 }

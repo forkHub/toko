@@ -4,7 +4,6 @@ class AppToko {
         this.items = [];
         this.resizeInProgress = false;
         let nodes = document.querySelectorAll('div.item');
-        // let tinggi: number = 0;
         nodes.forEach((node) => {
             let item = new Item();
             item.init(node);
@@ -120,14 +119,17 @@ class Item extends BaseComponent {
         this._elHtml.onclick = (e) => {
             e.stopPropagation();
             console.log('item on click');
-            window.top.location.href = '/barang/' + this.idP.innerHTML;
+            if ('' == this.lapakP.innerHTML) {
+                window.top.location.href = '/barang/' + this.idP.innerHTML;
+            }
+            else {
+                window.top.location.href = '/barang/lapak/' + this.lapakP.innerHTML + '/' + this.idP.innerHTML;
+            }
         };
-        // this.gbrKecil.onload = () => {
-        // 	this.gbrKecil.style.maxHeight = 'initial';
-        // }
         this.gbrKecil.onerror = () => {
             this.gbrKecil.onerror = null;
-            this.gbrKecil.src = 'gambar/kosong.png';
+            this.gbrKecil.onload = null;
+            this.gbrKecil.src = '/gambar/kosong.png';
             this.gbrKecil.style.minHeight = '100px';
         };
         this.gbrKecil.src = this.gbrKecil.getAttribute('gbr');
@@ -146,6 +148,9 @@ class Item extends BaseComponent {
     }
     get idP() {
         return this.getEl('p.id');
+    }
+    get lapakP() {
+        return this.getEl('p.lapak');
     }
     get waP() {
         return this.getEl('p.wa');

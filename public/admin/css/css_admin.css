@@ -6,8 +6,8 @@ div.dialog {
 	bottom: 0px;
 	right: 0px;;
 	background-color: rgba(0, 0, 0, .1);
-	/* display: none; */
 	z-index: 1000;
+	display:none;
 }
 
 div.dialog div.box {

@@ -1,5 +1,11 @@
 "use strict";
 class BarangObj {
+    get lapak() {
+        return this._lapak;
+    }
+    set lapak(value) {
+        this._lapak = value;
+    }
     get publish() {
         return this._publish;
     }
@@ -56,18 +62,4 @@ class BarangObj {
     }
 }
 class BarangController {
-    static responseToObj(data) {
-        let postObj = new BarangObj();
-        // postObj.deskripsi = data.deskripsi;
-        postObj.deskripsi_panjang = data.deskripsi_panjang;
-        postObj.file_id = data.file_id;
-        postObj.gbr = data.gbr;
-        postObj.harga = data.harga;
-        postObj.id = data.id;
-        postObj.nama = data.nama;
-        postObj.thumb = data.thumb;
-        postObj.wa = data.wa;
-        postObj.publish = data.publish;
-        return postObj;
-    }
 }

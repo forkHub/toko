@@ -9,9 +9,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 class Util {
+    //TODO:
+    static escape(str) {
+        return str;
+    }
     static Login(nama, pass) {
         return __awaiter(this, void 0, void 0, function* () {
-            let data = JSON.stringify({ user_id: nama, password: md5(pass) });
+            let data = JSON.stringify({ user_id: window.encodeURIComponent(nama), password: md5(pass) });
+            console.log("login " + data);
             yield Util.Ajax("POST", Util.urlLogin, data);
         });
     }
@@ -31,16 +36,19 @@ class Util {
                     console.group('send data');
                     console.log(data);
                     console.groupEnd();
+                    App.dialog.attach(App.cont);
                     let xhr = new XMLHttpRequest();
                     xhr.onload = () => {
                         if (200 == xhr.status) {
                             Util._resp.code = 200;
+                            App.dialog.detach();
                             resolve(xhr.responseText);
                         }
                         else {
                             console.log('response error');
                             Util._resp.code = xhr.status;
                             Util._resp.message = xhr.statusText;
+                            App.dialog.detach();
                             reject(new Error('(' + xhr.status + ') ' + xhr.statusText));
                         }
                     };
@@ -48,10 +56,13 @@ class Util {
                         console.log('xhr error');
                         Util._resp.code = 500;
                         Util._resp.message = 'Error';
+                        App.dialog.detach();
                         reject(new Error('Error'));
                     };
                     xhr.open(type, url, true);
                     xhr.setRequestHeader('Content-type', 'application/json');
+                    // data = window.encodeURIComponent(data);
+                    // console.log(data);
                     xhr.send(data);
                 }
                 catch (e) {
@@ -59,6 +70,7 @@ class Util {
                     console.log(e);
                     Util._resp.code = 500;
                     Util._resp.message = 'Error';
+                    App.dialog.detach();
                     reject(new Error('Error'));
                 }
             });
@@ -74,6 +86,7 @@ Util.urlAnggotaBaru = "/anggota/baru";
 Util.urlAnggotaHapus = "/anggota/hapus";
 Util.urlLoginStatus = '/auth/status';
 Util.urlLogin = '/auth/login';
+Util.urlBarangBacalapak = '/barang/baca/lapak/';
 Util._resp = {
     code: 0,
     message: ''

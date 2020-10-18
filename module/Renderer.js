@@ -5,22 +5,25 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs_1 = __importDefault(require("fs"));
 const BarangSql_1 = require("./BarangSql");
+const Config_1 = require("./Config");
 class HalDepan {
-    async render() {
+    async render(barangData, lapak) {
         console.log('render beranda');
         let index = await Util.getFile("view/index.html");
         let header = await Util.getFile("view/header.html");
         let js = await Util.getFile("view/js.html");
-        let barang = await this.renderBerandaBarang();
-        let hasil = '';
-        hasil = index.replace("{{header}}", header);
+        let barang = await this.renderBerandaBarang(barangData, lapak);
+        header = header.replace("{{nama_toko}}", Config_1.config.namaToko);
+        header = header.replace("{{motto}}", Config_1.config.moto);
+        let hasil = index;
+        hasil = hasil.replace("{{nav_src}}", (("" == lapak) ? "/" : ("/lapak/" + lapak)));
+        hasil = hasil.replace("{{header}}", header);
         hasil = hasil.replace("{{content}}", barang);
         hasil = hasil.replace("{{js}}", js);
         return hasil;
     }
-    async renderBerandaBarang() {
+    async renderBerandaBarang(barangData, lapak) {
         let view = await Util.getFile("view/item.html");
-        let barangData = await BarangSql_1.barangSql.bacaPublish();
         let hasil = '';
         barangData.forEach((item) => {
             let hasil2 = '';
@@ -33,32 +36,39 @@ class HalDepan {
             hasil2 = hasil2.replace("{{gbrThumb}}", item.thumb);
             hasil2 = hasil2.replace("{{gbrBesar}}", item.gbr);
             hasil2 = hasil2.replace("{{id}}", item.id);
+            hasil2 = hasil2.replace("{{lapak}}", lapak);
             hasil += hasil2;
         });
         return hasil;
     }
 }
 class HalBarang {
-    async render(id) {
+    async render(id, lapak) {
         console.log('render ' + id);
         let barang = await BarangSql_1.barangSql.bacaId(id);
         let index = await Util.getFile("view/index.html");
         let header = await Util.getFile("view/header.html");
         let barangStr = await this.renderBarangDetail(barang);
         let js = await Util.getFile("view/js_hal_item.html");
-        let hasil = index.replace("{{header}}", header);
+        header = header.replace("{{nama_toko}}", Config_1.config.namaToko);
+        header = header.replace("{{motto}}", Config_1.config.moto);
+        let hasil = "";
+        hasil = index.replace("{{header}}", header);
+        if (lapak) {
+            hasil = hasil.replace("{{nav_src}}", "/lapak/" + lapak);
+        }
+        else {
+            hasil = hasil.replace("{{nav_src}}", "/");
+        }
         hasil = hasil.replace("{{content}}", barangStr);
         hasil = hasil.replace("{{js}}", js);
         console.log('hasil');
-        console.log(hasil);
         return hasil;
     }
     async renderBarangDetail(barang) {
         let index = await Util.getFile("view/item-page.html");
         let hasil = '';
-        hasil = index.replace("{{gbrBesar}}", barang.gbr);
-        console.log('hasil 2');
-        console.log(hasil);
+        hasil = index.replace("{{gbrBesar}}", barang.gbr ? barang.gbr : "/");
         hasil = hasil.replace("{{nama}}", barang.nama);
         hasil = hasil.replace("{{harga}}", barang.harga);
         hasil = hasil.replace("{{deskripsiPanjang}}", barang.deskripsi_panjang);
@@ -71,14 +81,18 @@ class Renderer {
         this.halDepan = new HalDepan();
         this.halBarang = new HalBarang();
     }
-    async renderBeranda(tulis = true) {
-        let hasil = await this.halDepan.render();
+    async renderBeranda(barangData, lapak, tulis = true) {
+        let hasil = await this.halDepan.render(barangData, lapak);
         if (tulis)
             Util.tulisKeFile("public/index.html", hasil);
         return hasil;
     }
-    async renderHalBarang(id) {
-        return await this.halBarang.render(id);
+    // async renderHalBarang2(barang: any, lapak: string): Promise<string> {
+    // 	return await this.halBarang.render(barang, lapak);
+    // }
+    async renderHalBarang(id, lapak) {
+        console.log("render hal barang, id " + id);
+        return await this.halBarang.render(id, lapak);
     }
 }
 class Util {

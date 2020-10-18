@@ -1,5 +1,4 @@
 "use strict";
-// import { Session } from "inspector";
 Object.defineProperty(exports, "__esModule", { value: true });
 class SessionData {
     constructor() {
@@ -19,4 +18,10 @@ class SessionData {
         this._statusLogin = value;
     }
 }
-exports.SessionData = SessionData;
+function session(req) {
+    if (!req.session) {
+        req.session = new SessionData();
+    }
+    return req.session;
+}
+exports.session = session;

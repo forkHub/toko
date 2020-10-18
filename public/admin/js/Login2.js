@@ -8,17 +8,27 @@ class Login2 extends BaseComponent {
         this.form.onsubmit = () => {
             return this.formOnSubmit();
         };
+        if (!App.config.sofwan) {
+            this.lapakInput.value = 'auni';
+            this.lapakInput.readOnly = true;
+            this.lapakInput.type = 'hidden';
+        }
         this.dialog = App.dialog;
+        // this.rekoverTbl.onclick = () => {
+        // 	//TODO: rekover page
+        // }
+        // this.baruTbl.onclick = () => {
+        // 	//TODOL baru page
+        // }
     }
     formOnSubmit() {
-        console.log(this.password.value);
+        // console.log(this.password.value);
         try {
-            // let data: any = {
-            // 	user_id: this.userName.value,
-            // 	password: md5(this.password.value)
-            // }
             Util.Login(this.userName.value, this.password.value).then(() => {
-                window.top.location.href = Util.urlToko;
+                let config = App.config;
+                config.lapak = this.lapakInput.value;
+                App.config = config;
+                window.top.location.reload();
             }).catch(() => {
                 if (401 == Util.resp.code) {
                     this.dialog.tampil2('Username atau password salah');
@@ -30,19 +40,6 @@ class Login2 extends BaseComponent {
                     };
                 }
             });
-            // Util.Ajax("POST", "/auth/login", JSON.stringify(data)).then(() => {
-            // 	window.top.location.href = Util.urlToko;
-            // }).catch((_e) => {
-            // 	if (401 == Util.resp.code) {
-            // 		this.dialog.tampil2('Username atau password salah');
-            // 	}
-            // 	else {
-            // 		this.dialog.tampil2(Util.resp.message);
-            // 		this.dialog.okTbl.onclick = () => {
-            // 			window.top.location.reload();
-            // 		}
-            // 	}
-            // })
         }
         catch (e) {
             this.dialog.tampil2(Util.resp.message);
@@ -57,5 +54,14 @@ class Login2 extends BaseComponent {
     }
     get password() {
         return this.getEl('input.password');
+    }
+    // get rekoverTbl(): HTMLButtonElement {
+    // 	return this.getEl('button.rekover') as HTMLButtonElement;
+    // }
+    // get baruTbl(): HTMLButtonElement {
+    // 	return this.getEl('button.baru') as HTMLButtonElement;
+    // }
+    get lapakInput() {
+        return this.getEl('input.lapak');
     }
 }

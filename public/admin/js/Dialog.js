@@ -13,24 +13,24 @@ class Dialog extends BaseComponent {
         this.build();
     }
     init() {
+        this.detach();
     }
     tampil(def = true) {
         if (def) {
             this.okTbl.onclick = () => {
                 this.detach();
-                // this._elHtml.style.display = 'none';
             };
         }
         this.attach(document.body);
-        // this._elHtml.style.display = 'block';
+        this._elHtml.style.display = 'block';
     }
     tampil2(pesan, def = true) {
         this.p.innerHTML = pesan;
         this.tampil(def);
     }
-    sembunyi() {
-        this._elHtml.style.display = 'none';
-    }
+    // sembunyi(): void {
+    // 	this._elHtml.style.display = 'none';
+    // }
     get okTbl() {
         return this.getEl('button.ok');
     }

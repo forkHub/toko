@@ -42,4 +42,7 @@ class FormBarangView extends BaseComponent {
     get tutupTbl() {
         return this.getEl('button.tutup');
     }
+    get lapakInput() {
+        return this.getEl('input.lapak');
+    }
 }

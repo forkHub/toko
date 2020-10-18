@@ -71,8 +71,6 @@ class FormBarangPage {
             App.dialog.tampil();
         }
     }
-    draftKirim() {
-    }
     simpanKirim(publish) {
         try {
             Util.Ajax('post', '/barang/baru', JSON.stringify(this.formToObj(publish)))
@@ -98,7 +96,13 @@ class FormBarangPage {
         this.view.namaInput.value = 'nama';
         this.view.deskripsiPanjangInput.value = 'Deskripsi Barang';
         this.view.hargaBarangInput.value = 'Rp. 1000';
-        this.view.wa.value = '6281219753619'; //https://wa.me/6281219753619?text=Assalamualaikum
+        this.view.lapakInput.value = App.config.lapak;
+        if (App.config.lapak == 'auni') {
+            this.view.wa.value = '6281219753619'; //https://wa.me/6281219753619?text=Assalamualaikum
+        }
+        else {
+            this.view.wa.value = '62123456789';
+        }
     }
     objToForm(data) {
         this.view.namaInput.value = data.nama;
@@ -107,16 +111,22 @@ class FormBarangPage {
         this.view.wa.value = data.wa;
         this.id = data.id;
         this.view.inputFileId.value = data.file_id;
+        this.view.lapakInput.value = data.lapak;
+        console.group('obj to form');
+        console.log(data);
+        console.groupEnd();
     }
+    //TODO:validasi nomor wa
     formToObj(publish) {
         return {
             deskripsi_panjang: tinymce.activeEditor.getContent(),
             file_id: this.view.inputFileId.value,
-            harga: this.view.hargaBarangInput.value,
+            harga: (this.view.hargaBarangInput.value),
             id: this.view.postIdInput.value,
-            nama: this.view.namaInput.value,
-            wa: this.view.wa.value,
-            publish: publish
+            nama: (this.view.namaInput.value),
+            wa: (this.view.wa.value),
+            publish: publish,
+            lapak: (this.view.lapakInput.value)
         };
     }
     editFotoClick() {

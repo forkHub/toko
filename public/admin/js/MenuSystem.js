@@ -1,4 +1,5 @@
-export class MenuSystem extends BaseComponent {
+"use strict";
+class MenuSystem extends BaseComponent {
     constructor() {
         super();
         this._template = `
@@ -18,6 +19,8 @@ export class MenuSystem extends BaseComponent {
             App.anggotaDaftar.attach(App.cont);
             App.anggotaDaftar.load();
         };
+    }
+    init() {
     }
     get barangTbl() {
         return this.getEl('button.barang');

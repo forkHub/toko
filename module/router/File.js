@@ -10,12 +10,12 @@ const Auth_1 = require("../Auth");
 const TokoLog_1 = require("../TokoLog");
 exports.router = express_1.default.Router();
 exports.router.post("/baca", Auth_1.checkAuth, (req, resp) => {
-    //TODO:
+    //TODO: file admin
     Connection_1.Connection.pool;
     resp.status(200).send();
 });
 exports.router.get("/baca/:id", Auth_1.checkAuth, (req, resp) => {
-    //TODO:
+    //TODO: file admin
     resp.status(200).send();
 });
 exports.router.post("/baru", Auth_1.checkAuth, (req, resp) => {

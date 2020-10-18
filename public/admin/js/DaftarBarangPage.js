@@ -15,6 +15,7 @@ class DaftarBarangPage extends BaseComponent {
 			<div class='daftar-barang-page'>
 				<h1>Daftar Barang</h1>
 				<button type='button' class='btn btn-primary tambah'>Tambah Data</button>
+				<button type='button' class='btn btn-primary lihat'>Lihat Lapak</button>
 				<br/>
 				<br/>
 				<div class='cont'>
@@ -28,6 +29,14 @@ class DaftarBarangPage extends BaseComponent {
         this.form = App.form;
         this.tambahTbl.onclick = () => {
             this.tambahClick();
+        };
+        this.lihatTbl.onclick = () => {
+            if (App.config.sofwan) {
+                window.top.location.href = "/lapak/" + App.config.lapak;
+            }
+            else {
+                window.top.location.href = "/";
+            }
         };
     }
     tambahClick() {
@@ -65,7 +74,9 @@ class DaftarBarangPage extends BaseComponent {
     }
     load2() {
         return __awaiter(this, void 0, void 0, function* () {
-            Util.Ajax("post", "/barang/baca", null).then((str) => {
+            console.log('load barang ');
+            console.log(App.config);
+            Util.Ajax("post", Util.urlBarangBacalapak + App.config.lapak, "").then((str) => {
                 let barangAr = JSON.parse(str);
                 this.cont.innerHTML = '';
                 console.log('load ' + barangAr.length);
@@ -74,7 +85,7 @@ class DaftarBarangPage extends BaseComponent {
                 console.groupEnd();
                 barangAr.forEach((data) => {
                     let view = new ItemBarangView();
-                    let item = BarangController.responseToObj(data);
+                    let item = (data);
                     console.group('data');
                     console.log(data);
                     console.groupEnd();
@@ -102,52 +113,14 @@ class DaftarBarangPage extends BaseComponent {
             });
         });
     }
-    /*
-    async load(): Promise<void> {
-        let str: string = await App.Ajax("get", "/barang/baca", null);
-        let barangAr: BarangObj[] = JSON.parse(str);
-
-        this.cont.innerHTML = '';
-
-        console.log('load ' + barangAr.length);
-        console.group('load str');
-        console.log(str);
-        console.groupEnd();
-
-        barangAr.forEach((data: BarangObj) => {
-            let view: ItemBarangView = new ItemBarangView();
-            let item: BarangObj = BarangController.responseToObj(data);
-
-            console.group('data');
-            console.log(data);
-            console.groupEnd();
-
-            console.group('item');
-            console.log(item);
-            console.groupEnd();
-
-            view.namaP.innerHTML = item.nama;
-            // view.deskripsiP.innerHTML = item.deskripsi;
-            // view.hargaP.innerHTML = item.harga + '';
-            view.gbr.src = item.thumb;
-
-            view.attach(this.cont);
-
-            view.editTbl.onclick = () => {
-                this.barangEditlick(item);
-            }
-            view.hapusTbl.onclick = () => {
-                this.barangHapusClick(item);
-            }
-        })
-
-    }
-    */
     get tambahTbl() {
         return this.getEl('button.tambah');
     }
     get cont() {
         return this.getEl('div.cont');
+    }
+    get lihatTbl() {
+        return this.getEl('button.lihat');
     }
 }
 class ItemBarangView extends BaseComponent {

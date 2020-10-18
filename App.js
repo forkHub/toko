@@ -15,6 +15,7 @@ const TokoLog_1 = require("./module/TokoLog");
 const cookie_session_1 = __importDefault(require("cookie-session"));
 const path_1 = __importDefault(require("path"));
 const Renderer_1 = require("./module/Renderer");
+const BarangSql_1 = require("./module/BarangSql");
 const app = express_1.default();
 const port = 3000;
 app.use(express_1.default.static(__dirname + "/public"));
@@ -33,11 +34,18 @@ Connection_1.Connection.connect();
 exports.server = app.listen(port, () => {
     TokoLog_1.logT.log("app started");
 });
-app.get("/item/:id", (_req, resp) => {
+app.get("/lapak/:lapak", (_req, resp) => {
     try {
-        Renderer_1.render.renderHalBarang(_req.params.id).then((hasil) => {
-            resp.status(200).send(hasil);
-        }).catch((err) => {
+        TokoLog_1.logT.log("rendar beranda lapak " + _req.params.lapak);
+        BarangSql_1.barangSql.bacalapakPublish(_req.params.lapak)
+            .then((data) => {
+            TokoLog_1.logT.log(data);
+            return Renderer_1.render.renderBeranda(data, _req.params.lapak, false);
+        })
+            .then((data) => {
+            resp.status(200).send(data);
+        })
+            .catch((err) => {
             TokoLog_1.logT.log(err);
             resp.status(500).send('Error');
         });
@@ -47,6 +55,39 @@ app.get("/item/:id", (_req, resp) => {
         resp.status(500).send('Error');
     }
 });
+app.get("/", (_req, resp) => {
+    try {
+        BarangSql_1.barangSql.bacaPublish()
+            .then((data) => {
+            return Renderer_1.render.renderBeranda(data, "", false);
+        })
+            .then((data) => {
+            resp.status(200).send(data);
+        })
+            .catch((err) => {
+            TokoLog_1.logT.log(err);
+            resp.status(500).send('Error');
+        });
+    }
+    catch (err) {
+        TokoLog_1.logT.log(err);
+        resp.status(500).send('Error');
+    }
+});
+// app.get("/item/:id", (_req: express.Request, resp: express.Response) => {
+// 	try {
+// 		render.renderHalBarang(_req.params.id, "").then((hasil: string) => {
+// 			resp.status(200).send(hasil);
+// 		}).catch((err) => {
+// 			logT.log(err);
+// 			resp.status(500).send('Error');
+// 		});
+// 	}
+// 	catch (err) {
+// 		logT.log(err);
+// 		resp.status(500).send('Error');
+// 	}
+// })
 app.get("/admin", (_req, resp) => {
     try {
         resp.sendFile(path_1.default.join('index.html'), {

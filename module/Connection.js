@@ -27,7 +27,6 @@ class Connection {
             });
         });
     }
-    //TODO: setup withoud db on install
     static connect() {
         TokoLog_1.logT.log('create connection 1');
         try {
