@@ -1,4 +1,5 @@
 "use strict";
+// import { BaseComponent } from "BaseComponent.js";
 window.onload = () => {
     let img = document.body.querySelector("div.item-fokus img.besar");
     img.onerror = () => {

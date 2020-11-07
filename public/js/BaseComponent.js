@@ -1,5 +1,4 @@
-"use strict";
-class BaseComponent {
+export class BaseComponent {
     constructor() {
         this._template = '';
         this._elHtml = document.createElement('div');

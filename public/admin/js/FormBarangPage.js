@@ -116,6 +116,10 @@ class FormBarangPage {
         console.log(data);
         console.groupEnd();
     }
+    buatDate() {
+        let date = new Date();
+        return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+    }
     //TODO:validasi nomor wa
     formToObj(publish) {
         return {
@@ -126,7 +130,8 @@ class FormBarangPage {
             nama: (this.view.namaInput.value),
             wa: (this.view.wa.value),
             publish: publish,
-            lapak: (this.view.lapakInput.value)
+            lapak: (this.view.lapakInput.value),
+            last_view: this.buatDate()
         };
     }
     editFotoClick() {

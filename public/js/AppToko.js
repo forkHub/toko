@@ -1,4 +1,4 @@
-"use strict";
+import { BaseComponent } from "./BaseComponent.js";
 class AppToko {
     constructor() {
         this.items = [];
@@ -33,9 +33,6 @@ class AppToko {
         let koloms = [];
         cont.style.visibility = 'hidden';
         jmlPerKolom = Math.floor(jmlPerKolom);
-        // console.log('jml kolom ' + jmlKolom);
-        // console.log('jml per kolom ' + jmlPerKolom);
-        // console.log('jml item ' + items.length);
         while (cont.children.length > 0) {
             cont.removeChild(cont.children[0]);
         }

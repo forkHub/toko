@@ -73,6 +73,43 @@ class BarangSql {
     async bacaPublish() {
         return this.queryBaca(this.bacaBarangPulish);
     }
+    //TODO: belum dipake
+    async updateLastViewDate(id) {
+        return new Promise((resolve, reject) => {
+            let query = `
+				update BARANG set LAST_VIEW = NOW() where ID = ?
+			`;
+            Connection_1.Connection.pool.query(query, [id], (_err, _rows) => {
+                if (_err) {
+                    reject(_err);
+                }
+                else {
+                    resolve(_rows);
+                }
+            });
+        });
+    }
+    //TODO belum kepake
+    async bacaLapakPublishDate() {
+        let query = `
+		SELECT BARANG.*, FILE.thumb, FILE.gbr 
+		FROM BARANG
+		LEFT JOIN FILE
+		ON BARANG.file_id = FILE.id
+		WHERE BARANG.publish = 1
+		ORDER BY BARANG.LAST_VIEW
+		;`;
+        return new Promise((resolve, reject) => {
+            Connection_1.Connection.pool.query(query, [], (_err, _rows) => {
+                if (_err) {
+                    reject(_err);
+                }
+                else {
+                    resolve(_rows);
+                }
+            });
+        });
+    }
     async bacalapakPublish(lapak) {
         return new Promise((resolve, reject) => {
             Connection_1.Connection.pool.query(this.bacaBaranglapakPulish, [lapak], (_err, _rows) => {
@@ -110,6 +147,7 @@ class BarangSql {
         });
     }
     async update(data, id) {
+        // console.log(data);
         return new Promise((resolve, reject) => {
             Connection_1.Connection.pool.query(this.updateSql, [
                 data,

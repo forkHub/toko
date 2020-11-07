@@ -1,5 +1,11 @@
 "use strict";
 class BarangObj {
+    get last_view() {
+        return this._last_view;
+    }
+    set last_view(value) {
+        this._last_view = value;
+    }
     get lapak() {
         return this._lapak;
     }

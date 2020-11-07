@@ -13,10 +13,11 @@ const TokoTest_1 = require("./module/router/TokoTest");
 const Anggota_1 = require("./module/router/Anggota");
 const TokoLog_1 = require("./module/TokoLog");
 const cookie_session_1 = __importDefault(require("cookie-session"));
-const path_1 = __importDefault(require("path"));
-const Renderer_1 = require("./module/Renderer");
-const BarangSql_1 = require("./module/BarangSql");
-const Auth_2 = require("./module/Auth");
+// import path from "path";
+// import { render } from "./module/Renderer";
+// import { barangSql } from "./module/BarangSql";
+const Beranda_1 = require("./module/router/Beranda");
+// import { setCache } from "./module/Auth";
 const app = express_1.default();
 const port = 3000;
 app.use(express_1.default.static(__dirname + "/public"));
@@ -35,46 +36,53 @@ Connection_1.Connection.connect();
 exports.server = app.listen(port, () => {
     TokoLog_1.logT.log("app started");
 });
-app.get("/lapak/:lapak", Auth_2.setCache, (_req, resp) => {
+Beranda_1.beranda.init(app);
+/*
+app.get("/lapak/:lapak", (_req: express.Request, resp: express.Response) => {
     try {
-        TokoLog_1.logT.log("rendar beranda lapak " + _req.params.lapak);
-        BarangSql_1.barangSql.bacalapakPublish(_req.params.lapak)
-            .then((data) => {
-            TokoLog_1.logT.log(data);
-            return Renderer_1.render.renderBeranda(data, _req.params.lapak, false);
-        })
-            .then((data) => {
-            resp.status(200).header("Cache-Control", "max-age=7200").send(data);
-        })
+        logT.log("rendar beranda lapak " + _req.params.lapak);
+        barangSql.bacalapakPublish(_req.params.lapak)
+            .then((data: any[]) => {
+                logT.log(data);
+                return render.renderBeranda(data, _req.params.lapak, false);
+            })
+            .then((data: string) => {
+                resp.status(200).header("Cache-Control", "max-age=7200").send(data);
+            })
             .catch((err) => {
-            TokoLog_1.logT.log(err);
-            resp.status(500).send('Error');
-        });
+                logT.log(err);
+                resp.status(500).send('Error');
+            });
     }
     catch (err) {
-        TokoLog_1.logT.log(err);
+        logT.log(err);
         resp.status(500).send('Error');
     }
-});
-app.get("/", Auth_2.setCache, (_req, resp) => {
+})
+
+app.get("/", (_req: express.Request, resp: express.Response) => {
     try {
-        BarangSql_1.barangSql.bacaPublish()
-            .then((data) => {
-            return Renderer_1.render.renderBeranda(data, "", false);
-        })
-            .then((data) => {
-            resp.status(200).send(data);
-        })
+        barangSql.bacaPublish()
+            .then((data: any[]) => {
+                return render.renderBeranda(data, "", false);
+            })
+            .then((data: string) => {
+                resp.status(200).send(data);
+            })
+            .then(() => {
+                barangSql.updateLastViewDate();
+            })
             .catch((err) => {
-            TokoLog_1.logT.log(err);
-            resp.status(500).send('Error');
-        });
+                logT.log(err);
+                resp.status(500).send('Error');
+            });
     }
     catch (err) {
-        TokoLog_1.logT.log(err);
+        logT.log(err);
         resp.status(500).send('Error');
     }
-});
+})
+*/
 // app.get("/item/:id", (_req: express.Request, resp: express.Response) => {
 // 	try {
 // 		render.renderHalBarang(_req.params.id, "").then((hasil: string) => {
@@ -89,55 +97,63 @@ app.get("/", Auth_2.setCache, (_req, resp) => {
 // 		resp.status(500).send('Error');
 // 	}
 // })
-app.get("/admin", (_req, resp) => {
+/*
+app.get("/admin", (_req: express.Request, resp: express.Response) => {
     try {
-        resp.sendFile(path_1.default.join('index.html'), {
+        resp.sendFile(path.join('index.html'), {
             root: __dirname + '/public/admin'
         });
     }
     catch (e) {
         resp.status(500).send(e);
     }
-});
-app.get("/shutdown", (req, resp) => {
+})
+
+app.get("/shutdown", (req: express.Request, resp: express.Response) => {
     try {
-        TokoLog_1.logT.log('shutdown');
+        logT.log('shutdown');
+
         resp.status(200).end();
-        exports.server.close((e) => {
+
+        server.close((e) => {
             if (e) {
-                TokoLog_1.logT.log('server close error');
-                TokoLog_1.logT.log(e.message);
+                logT.log('server close error');
+                logT.log(e.message);
+            } else {
+                logT.log('server tutup');
             }
-            else {
-                TokoLog_1.logT.log('server tutup');
-            }
-        });
-        Connection_1.Connection.pool.end((err) => {
+        })
+
+        Connection.pool.end((err) => {
             if (err) {
-                TokoLog_1.logT.log('sql shutdown error');
-                TokoLog_1.logT.log(err.sqlMessage);
+                logT.log('sql shutdown error');
+                logT.log(err.sqlMessage);
             }
             else {
-                TokoLog_1.logT.log('connection tutup');
+                logT.log('connection tutup');
             }
         });
+
         //process.kill(process.pid, 'SIGTERM');
-    }
-    catch (e) {
-        TokoLog_1.logT.log(e);
+    } catch (e) {
+        logT.log(e);
         resp.status(500).send(e);
     }
 });
-app.use((_req, _resp, _next) => {
-    TokoLog_1.logT.log(_req.path);
-    TokoLog_1.logT.log('404');
+
+app.use((_req: express.Request, _resp: express.Response, _next: Function) => {
+    logT.log(_req.path);
+    logT.log('404');
     _resp.status(404).send('Halaman Tidak Ditemukan');
-});
+})
+
 process.on('SIGTERM', () => {
     try {
-        Connection_1.Connection.pool.end((err) => {
+        Connection.pool.end((err) => {
         });
     }
     catch (e) {
+
     }
-});
+})
+*/ 

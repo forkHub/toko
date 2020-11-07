@@ -8,6 +8,7 @@ const BarangSql_1 = require("../BarangSql");
 const TokoLog_1 = require("../TokoLog");
 const Auth_1 = require("../Auth");
 const Renderer_1 = require("../Renderer");
+const Util_1 = require("../Util");
 exports.router = express_1.default.Router();
 exports.router.post("/hapus/:id", Auth_1.checkAuth, (req, resp) => {
     try {
@@ -110,7 +111,8 @@ exports.router.post("/update/:id", Auth_1.checkAuth, (req, resp) => {
             wa: req.body.wa,
             file_id: req.body.file_id,
             publish: req.body.publish,
-            lapak: req.body.lapak
+            lapak: req.body.lapak,
+            last_view: Util_1.util.buatDate()
         }, req.params.id)
             // .then(() => {
             // 	return barangSql.bacaPublish();
