@@ -1,4 +1,3 @@
-"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -8,7 +7,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-class Util {
+import { data } from "./Data.js";
+import { dialog } from "./Dialog.js";
+export class Util {
     //TODO:
     static escape(str) {
         return str;
@@ -29,26 +30,26 @@ class Util {
             return Util._resp.message;
         });
     }
-    static Ajax(type, url, data) {
+    static Ajax(type, url, dataStr) {
         return __awaiter(this, void 0, void 0, function* () {
             return new Promise((resolve, reject) => {
                 try {
                     console.group('send data');
-                    console.log(data);
+                    console.log(dataStr);
                     console.groupEnd();
-                    App.dialog.attach(App.cont);
+                    dialog.attach(data.cont);
                     let xhr = new XMLHttpRequest();
                     xhr.onload = () => {
                         if (200 == xhr.status) {
                             Util._resp.code = 200;
-                            App.dialog.detach();
+                            dialog.detach();
                             resolve(xhr.responseText);
                         }
                         else {
                             console.log('response error');
                             Util._resp.code = xhr.status;
                             Util._resp.message = xhr.statusText;
-                            App.dialog.detach();
+                            dialog.detach();
                             reject(new Error('(' + xhr.status + ') ' + xhr.statusText));
                         }
                     };
@@ -56,21 +57,21 @@ class Util {
                         console.log('xhr error');
                         Util._resp.code = 500;
                         Util._resp.message = 'Error';
-                        App.dialog.detach();
+                        dialog.detach();
                         reject(new Error('Error'));
                     };
                     xhr.open(type, url, true);
                     xhr.setRequestHeader('Content-type', 'application/json');
                     // data = window.encodeURIComponent(data);
                     // console.log(data);
-                    xhr.send(data);
+                    xhr.send(dataStr);
                 }
                 catch (e) {
                     console.log('Util error');
                     console.log(e);
                     Util._resp.code = 500;
                     Util._resp.message = 'Error';
-                    App.dialog.detach();
+                    dialog.detach();
                     reject(new Error('Error'));
                 }
             });
@@ -87,6 +88,7 @@ Util.urlAnggotaHapus = "/anggota/hapus";
 Util.urlLoginStatus = '/auth/status';
 Util.urlLogin = '/auth/login';
 Util.urlBarangBacalapak = '/barang/baca/lapak/';
+Util.urlFileHapus = '/file/hapus/';
 Util._resp = {
     code: 0,
     message: ''

@@ -1,4 +1,7 @@
-"use strict";
+import { anggotaDaftar } from "./AnggotaDaftar.js";
+import { BaseComponent } from "./BaseComponent.js";
+import { daftarBarangPage } from "./DaftarBarangPage.js";
+import { data } from "./Data.js";
 class MenuSystem extends BaseComponent {
     constructor() {
         super();
@@ -11,13 +14,13 @@ class MenuSystem extends BaseComponent {
         this.build();
         this.barangTbl.onclick = () => {
             //halaman barang
-            App.daftarBarang.attach(App.cont);
-            App.daftarBarang.load2();
+            daftarBarangPage.attach(data.cont);
+            daftarBarangPage.load2();
         };
         this.anggotaTbl.onclick = () => {
             //halaman daftar anggota
-            App.anggotaDaftar.attach(App.cont);
-            App.anggotaDaftar.load();
+            anggotaDaftar.attach(data.cont);
+            anggotaDaftar.load();
         };
     }
     init() {
@@ -29,3 +32,4 @@ class MenuSystem extends BaseComponent {
         return this.getEl('button.anggota');
     }
 }
+export var menuSystem = new MenuSystem();

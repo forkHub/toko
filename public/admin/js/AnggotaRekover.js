@@ -1,4 +1,5 @@
-export class AnggotaRekover extends BaseComponent {
+import { BaseComponent } from "./BaseComponent.js";
+class AnggotaRekover extends BaseComponent {
     constructor() {
         super();
         this._template = `
@@ -17,3 +18,4 @@ export class AnggotaRekover extends BaseComponent {
 		`;
     }
 }
+export var anggotaRekover = new AnggotaRekover();

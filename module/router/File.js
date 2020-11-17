@@ -8,11 +8,18 @@ const Connection_1 = require("../Connection");
 const fs_1 = __importDefault(require("fs"));
 const Auth_1 = require("../Auth");
 const TokoLog_1 = require("../TokoLog");
+const File_1 = require("../File");
 exports.router = express_1.default.Router();
 exports.router.post("/baca", Auth_1.checkAuth, (req, resp) => {
-    //TODO: file admin
-    Connection_1.Connection.pool;
-    resp.status(200).send();
+    try {
+        //TODO:
+        Connection_1.Connection.pool;
+        resp.status(200).send('');
+    }
+    catch (err) {
+        TokoLog_1.logT.log('error');
+        resp.status(500).send(err);
+    }
 });
 exports.router.get("/baca/:id", Auth_1.checkAuth, (req, resp) => {
     //TODO: file admin
@@ -63,7 +70,17 @@ exports.router.post("/baru", Auth_1.checkAuth, (req, resp) => {
         resp.status(500).send(JSON.stringify(e));
     }
 });
-exports.router.post("/hapus/:id", Auth_1.checkAuth, (req, resp) => {
-    //TODO:
-    resp.status(200).send();
+exports.router.post("/hapus/", Auth_1.checkAuth, (req, resp) => {
+    try {
+        File_1.file.hapus(req.body.id).then(() => {
+            resp.status(200).send('');
+        }).catch((e) => {
+            console.log(e);
+            resp.status(500).send(e);
+        });
+    }
+    catch (e) {
+        console.log(e);
+        resp.status(500).send(e);
+    }
 });

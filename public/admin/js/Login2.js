@@ -1,4 +1,7 @@
-"use strict";
+import { BaseComponent } from "./BaseComponent.js";
+import { config } from "./Config.js";
+import { dialog } from "./Dialog.js";
+import { Util } from "./Util.js";
 class Login2 extends BaseComponent {
     constructor() {
         super();
@@ -8,12 +11,21 @@ class Login2 extends BaseComponent {
         this.form.onsubmit = () => {
             return this.formOnSubmit();
         };
-        if (!App.config.sofwan) {
+        if (!config.sofwan) {
+            console.log('config auni');
             this.lapakInput.value = 'auni';
             this.lapakInput.readOnly = true;
             this.lapakInput.type = 'hidden';
+            this.lapakLabel.style.visibility = 'hidden';
         }
-        this.dialog = App.dialog;
+        else {
+            console.log('config sofwan');
+            this.lapakInput.value = "";
+            this.lapakInput.readOnly = false;
+            this.lapakInput.type = 'text';
+            this.lapakLabel.style.visibility = 'visible';
+        }
+        // dialog = App.dialog;
         // this.rekoverTbl.onclick = () => {
         // 	//TODO: rekover page
         // }
@@ -25,24 +37,23 @@ class Login2 extends BaseComponent {
         // console.log(this.password.value);
         try {
             Util.Login(this.userName.value, this.password.value).then(() => {
-                let config = App.config;
                 config.lapak = this.lapakInput.value;
-                App.config = config;
+                // config.save();
                 window.top.location.reload();
             }).catch(() => {
                 if (401 == Util.resp.code) {
-                    this.dialog.tampil2('Username atau password salah');
+                    dialog.tampil2('Username atau password salah');
                 }
                 else {
-                    this.dialog.tampil2(Util.resp.message);
-                    this.dialog.okTbl.onclick = () => {
+                    dialog.tampil2(Util.resp.message);
+                    dialog.okTbl.onclick = () => {
                         window.top.location.reload();
                     };
                 }
             });
         }
         catch (e) {
-            this.dialog.tampil2(Util.resp.message);
+            dialog.tampil2(Util.resp.message);
         }
         return false;
     }
@@ -55,13 +66,11 @@ class Login2 extends BaseComponent {
     get password() {
         return this.getEl('input.password');
     }
-    // get rekoverTbl(): HTMLButtonElement {
-    // 	return this.getEl('button.rekover') as HTMLButtonElement;
-    // }
-    // get baruTbl(): HTMLButtonElement {
-    // 	return this.getEl('button.baru') as HTMLButtonElement;
-    // }
     get lapakInput() {
         return this.getEl('input.lapak');
     }
+    get lapakLabel() {
+        return this.getEl('label.lapak');
+    }
 }
+export var login = new Login2();

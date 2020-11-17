@@ -128,8 +128,12 @@ class Item extends BaseComponent {
             this.gbrKecil.onload = null;
             this.gbrKecil.src = '/gambar/kosong.png';
             this.gbrKecil.style.minHeight = '100px';
+            console.log(this.gbrKecil);
         };
         this.gbrKecil.src = this.gbrKecil.getAttribute('gbr');
+        if (this.gbrKecil.src == null) {
+            console.log(this.gbrKecil);
+        }
     }
     get ukuranKecil() {
         return this._ukuranKecil;
@@ -165,6 +169,6 @@ class Item extends BaseComponent {
         return this.getEl('img.besar');
     }
 }
-window.onload = () => {
-    new AppToko();
-};
+// window.onload = () => {
+new AppToko();
+// }

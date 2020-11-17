@@ -1,4 +1,3 @@
-"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -8,7 +7,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+import { BaseComponent } from "./BaseComponent.js";
+import { config } from "./Config.js";
+import { data } from "./Data.js";
+import { dialog } from "./Dialog.js";
+import { form } from "./FormBarangPage.js";
+// import { config } from "./IConfig.js";
+import { login } from "./Login2.js";
+import { upload } from "./PhotoUploadPage.js";
+import { Util } from "./Util.js";
 class DaftarBarangPage extends BaseComponent {
+    // private form: FormBarangPage;
     constructor() {
         super();
         this._template = `
@@ -26,13 +35,13 @@ class DaftarBarangPage extends BaseComponent {
         this.build();
     }
     init() {
-        this.form = App.form;
+        // this.form = App.form;
         this.tambahTbl.onclick = () => {
             this.tambahClick();
         };
         this.lihatTbl.onclick = () => {
-            if (App.config.sofwan) {
-                window.top.location.href = "/lapak/" + App.config.lapak;
+            if (config.sofwan) {
+                window.top.location.href = "/lapak/" + config.lapak;
             }
             else {
                 window.top.location.href = "/";
@@ -41,19 +50,20 @@ class DaftarBarangPage extends BaseComponent {
     }
     tambahClick() {
         this.detach();
-        this.form.view.attach(App.cont);
-        this.form.editMode = false;
-        this.form.default();
-        this.form.resetTinyMCE();
+        form.view.attach(data.cont);
+        form.editMode = false;
+        form.default();
+        form.resetTinyMCE();
     }
     barangEditlick(item) {
         console.log(item);
         this.detach();
-        App.form.view.attach(App.cont);
-        App.form.objToForm(item);
-        App.form.view.gambarHtml.src = item.thumb;
-        App.form.editMode = true;
-        this.form.resetTinyMCE();
+        form.view.attach(data.cont);
+        form.objToForm(item);
+        form.view.gambarHtml.src = item.thumb;
+        form.editMode = true;
+        form.resetTinyMCE();
+        upload.idLama = item.file_id;
     }
     barangHapusClick(item) {
         let hasil = confirm("Hapus Data?");
@@ -61,22 +71,22 @@ class DaftarBarangPage extends BaseComponent {
             console.log('hapus data');
             Util.Ajax('post', '/barang/hapus/' + item.id, null).then((hasil) => {
                 console.log(hasil);
-                App.dialog.p.innerHTML = "Berhasil";
-                App.dialog.tampil();
-                App.dialog.okTbl.onclick = () => {
+                dialog.p.innerHTML = "Berhasil";
+                dialog.tampil();
+                dialog.okTbl.onclick = () => {
                     window.top.location.href = Util.urlToko;
                 };
             }).catch((e) => {
-                App.dialog.p.innerHTML = e;
-                App.dialog.tampil();
+                dialog.p.innerHTML = e;
+                dialog.tampil();
             });
         }
     }
     load2() {
         return __awaiter(this, void 0, void 0, function* () {
             console.log('load barang ');
-            console.log(App.config);
-            Util.Ajax("post", Util.urlBarangBacalapak + App.config.lapak, "").then((str) => {
+            console.log(config);
+            Util.Ajax("post", Util.urlBarangBacalapak + config.lapak, "").then((str) => {
                 let barangAr = JSON.parse(str);
                 this.cont.innerHTML = '';
                 console.log('load ' + barangAr.length);
@@ -105,10 +115,10 @@ class DaftarBarangPage extends BaseComponent {
             }).catch((e) => {
                 if (Util.resp.code == 401) {
                     this.detach();
-                    App.login.attach(App.cont);
+                    login.attach(data.cont);
                 }
                 else {
-                    App.dialog.tampil2(e.message);
+                    dialog.tampil2(e.message);
                 }
             });
         });
@@ -156,3 +166,4 @@ class ItemBarangView extends BaseComponent {
         return this.getEl('div.deskripsi p.nama');
     }
 }
+export var daftarBarangPage = new DaftarBarangPage();

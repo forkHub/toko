@@ -1,4 +1,4 @@
-"use strict";
+import { BaseComponent } from "./BaseComponent.js";
 class Dialog extends BaseComponent {
     constructor() {
         super();
@@ -38,3 +38,4 @@ class Dialog extends BaseComponent {
         return this.getEl('p');
     }
 }
+export var dialog = new Dialog();

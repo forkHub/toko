@@ -1,61 +1,48 @@
-"use strict";
-// import { MenuSystem } from "./MenuSystem";
+import { anggotaBaru } from "./AnggotaBaru.js";
+import { anggotaDaftar } from "./AnggotaDaftar.js";
+import { daftarBarangPage } from "./DaftarBarangPage.js";
+import { data } from "./Data.js";
+import { dialog } from "./Dialog.js";
+import { form } from "./FormBarangPage.js";
+import { login } from "./Login2.js";
+import { menuSystem } from "./MenuSystem.js";
+import { upload } from "./PhotoUploadPage.js";
+import { Util } from "./Util.js";
 class App {
-    // static readonly flSofwan: boolean = false;
     constructor() {
         console.log('App init');
-        App.dialog.init();
-        App.form.init();
-        App.upload.init();
-        App.login.init();
-        App.anggotaDaftar.init();
-        App.anggotaBaru.init();
-        App.daftarBarang.init();
-        App.menuSystem.init();
-        App.dialog.detach();
-        // App.dialog.elHtml.style.display = 'block';
-        let config = App.config;
-        config.sofwan = ConfigDef.sofwan;
-        if (!config.sofwan) {
-            config.lapak = 'auni';
-        }
-        App.config = config;
+        dialog.init();
+        form.init();
+        upload.init();
+        login.init();
+        anggotaDaftar.init();
+        anggotaBaru.init();
+        daftarBarangPage.init();
+        menuSystem.init();
+        dialog.detach();
+        data.cont = App.getEl('div.main-cont');
         console.log('get login status');
         Util.LoginStatus().then(() => {
             console.log('login ok');
-            App.daftarBarang.attach(App.cont);
-            App.daftarBarang.load2();
+            daftarBarangPage.attach(data.cont);
+            daftarBarangPage.load2();
         }).catch((e) => {
             if (401 == Util.resp.code) {
-                App.login.attach(App.cont);
-                // App.login.seles
+                login.attach(data.cont);
             }
             else {
                 console.error(e);
-                App.dialog.tampil2('Error');
-                App.dialog.okTbl.onclick = () => {
+                dialog.tampil2('Error');
+                dialog.okTbl.onclick = () => {
                     window.top.location.reload();
                 };
             }
         });
     }
-    static get config() {
-        let config = JSON.parse(window.localStorage.getItem('aunistore_config'));
-        if (!config) {
-            config = ConfigDef;
-        }
-        return config;
-    }
-    static set config(config) {
-        window.localStorage.setItem('aunistore_config', JSON.stringify(config));
-    }
     static bersih() {
-        while (App.cont.firstChild) {
-            App.cont.removeChild(App.cont.firstChild);
+        while (data.cont.firstChild) {
+            data.cont.removeChild(data.cont.firstChild);
         }
-    }
-    static get cont() {
-        return App.getEl('div.container');
     }
     static getEl(query) {
         let el;
@@ -70,14 +57,6 @@ class App {
         }
     }
 }
-App.form = new FormBarangPage();
-App.dialog = new Dialog();
-App.daftarBarang = new DaftarBarangPage();
-App.upload = new PhotoUploadPage();
-App.login = new Login2();
-App.anggotaBaru = new AnggotaBaru();
-App.anggotaDaftar = new AnggotaDaftar();
-App.menuSystem = new MenuSystem();
 window.onload = () => {
     console.log('window onload');
     new App();

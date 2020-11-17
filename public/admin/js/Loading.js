@@ -1,4 +1,4 @@
-"use strict";
+import { BaseComponent } from "./BaseComponent.js";
 class Loading extends BaseComponent {
     constructor() {
         super();
@@ -13,3 +13,4 @@ class Loading extends BaseComponent {
         this.build();
     }
 }
+export var loading = new Loading();

@@ -1,9 +1,14 @@
-"use strict";
+import { BaseComponent } from "./BaseComponent.js";
+import { config } from "./Config.js";
+import { data } from "./Data.js";
+import { dialog } from "./Dialog.js";
+import { upload } from "./PhotoUploadPage.js";
+import { Util } from "./Util.js";
 class FormBarangPage {
     constructor() {
         this.id = '';
         this._editMode = false;
-        this._view = new FormBarangView();
+        this._view = new View();
         this._selesai = null;
     }
     resetTinyMCE() {
@@ -18,7 +23,7 @@ class FormBarangPage {
     }
     init() {
         this.view.init();
-        this.upload = App.upload;
+        // this.upload = App.upload;
         this.default();
         this.view.form.onsubmit = (e) => {
             e.stopPropagation();
@@ -54,21 +59,21 @@ class FormBarangPage {
                 .then((hasil) => {
                 console.log('update sukses');
                 console.log(hasil);
-                App.dialog.p.innerText = 'Sukses';
-                App.dialog.tampil(false);
-                App.dialog.okTbl.onclick = () => {
+                dialog.p.innerText = 'Sukses';
+                dialog.tampil(false);
+                dialog.okTbl.onclick = () => {
                     console.log('tombol on click');
                     window.top.location.href = Util.urlToko;
                 };
             })
                 .catch((_err) => {
-                App.dialog.p.innerHTML = _err;
-                App.dialog.tampil();
+                dialog.p.innerHTML = _err;
+                dialog.tampil();
             });
         }
         catch (e) {
-            App.dialog.p.innerHTML = e;
-            App.dialog.tampil();
+            dialog.p.innerHTML = e;
+            dialog.tampil();
         }
     }
     simpanKirim(publish) {
@@ -76,28 +81,28 @@ class FormBarangPage {
             Util.Ajax('post', '/barang/baru', JSON.stringify(this.formToObj(publish)))
                 .then((hasil) => {
                 console.log(hasil);
-                App.dialog.p.innerText = 'Sukses';
-                App.dialog.tampil(false);
-                App.dialog.okTbl.onclick = () => {
+                dialog.p.innerText = 'Sukses';
+                dialog.tampil(false);
+                dialog.okTbl.onclick = () => {
                     window.top.location.href = Util.urlToko;
                 };
             })
                 .catch((_err) => {
-                App.dialog.p.innerHTML = _err;
-                App.dialog.tampil();
+                dialog.p.innerHTML = _err;
+                dialog.tampil();
             });
         }
         catch (e) {
-            App.dialog.p.innerHTML = e;
-            App.dialog.tampil();
+            dialog.p.innerHTML = e;
+            dialog.tampil();
         }
     }
     default() {
         this.view.namaInput.value = 'nama';
         this.view.deskripsiPanjangInput.value = 'Deskripsi Barang';
         this.view.hargaBarangInput.value = 'Rp. 1000';
-        this.view.lapakInput.value = App.config.lapak;
-        if (App.config.lapak == 'auni') {
+        this.view.lapakInput.value = config.lapak;
+        if (config.lapak == 'auni') {
             this.view.wa.value = '6281219753619'; //https://wa.me/6281219753619?text=Assalamualaikum
         }
         else {
@@ -112,9 +117,9 @@ class FormBarangPage {
         this.id = data.id;
         this.view.inputFileId.value = data.file_id;
         this.view.lapakInput.value = data.lapak;
-        console.group('obj to form');
-        console.log(data);
-        console.groupEnd();
+        // console.group('obj to form');
+        // console.log(data);
+        // console.groupEnd();
     }
     buatDate() {
         let date = new Date();
@@ -136,18 +141,18 @@ class FormBarangPage {
     }
     editFotoClick() {
         this.view.detach();
-        this.upload.attach(App.cont);
-        this.upload.selesai = () => {
-            this.upload.detach();
-            this.upload.selesai = null;
-            this.view.inputFileId.value = this.upload.insertedId;
-            this.view.gambarHtml.src = this.upload.gbrUrl;
-            this.view.attach(App.cont);
+        upload.view.attach(data.cont);
+        upload.selesai = () => {
+            upload.view.detach();
+            upload.selesai = null;
+            this.view.inputFileId.value = upload.insertedId;
+            this.view.gambarHtml.src = upload.gbrUrl;
+            this.view.attach(data.cont);
             this.resetTinyMCE();
         };
-        this.upload.tutupTbl.onclick = () => {
-            this.upload.detach();
-            this.view.attach(App.cont);
+        upload.view.tutupTbl.onclick = () => {
+            upload.view.detach();
+            this.view.attach(data.cont);
             this.resetTinyMCE();
         };
     }
@@ -167,3 +172,51 @@ class FormBarangPage {
         this._selesai = value;
     }
 }
+class View extends BaseComponent {
+    init() {
+        this._elHtml = this.getTemplate('div.form');
+    }
+    get form() {
+        return this.getEl('form');
+    }
+    get namaInput() {
+        return this.getEl('form input#nama-barang');
+    }
+    get deskripsiPanjangInput() {
+        return this.getEl('form textarea#deskripsi-barang-panjang');
+    }
+    get hargaBarangInput() {
+        return this.getEl('form input#harga-barang');
+    }
+    get wa() {
+        return this.getEl('form input#wa');
+    }
+    get submitTbl() {
+        return this.getEl('button.submit');
+    }
+    get draftTbl() {
+        return this.getEl('button.draft');
+    }
+    get inputFileId() {
+        return this.getEl('input[type="hidden"].file_id');
+    }
+    get fotoCont() {
+        return this.getEl('div.foto-cont');
+    }
+    get editFotoTbl() {
+        return this.getEl('button.edit-foto');
+    }
+    get gambarHtml() {
+        return this.getEl('img.foto');
+    }
+    get postIdInput() {
+        return this.getEl('input[type="hidden"].post_id');
+    }
+    get tutupTbl() {
+        return this.getEl('button.tutup');
+    }
+    get lapakInput() {
+        return this.getEl('input.lapak');
+    }
+}
+export var form = new FormBarangPage();

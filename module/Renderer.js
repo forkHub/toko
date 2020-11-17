@@ -33,11 +33,14 @@ class HalDepan {
             hasil2 = (hasil2.replace("{{harga}}", item.harga + ''));
             hasil2 = hasil2.replace("{{wa}}", item.wa);
             hasil2 = hasil2.replace("{{wa-link}}", 'https://wa.me/' + item.wa + "?text=Assalamualaikum");
-            hasil2 = hasil2.replace("{{gbrThumb}}", item.thumb);
+            hasil2 = hasil2.replace("{{gbrThumb}}", (item.thumb != null) ? item.thumb : '/gambar/kosong.png');
             hasil2 = hasil2.replace("{{gbrBesar}}", item.gbr);
             hasil2 = hasil2.replace("{{id}}", item.id);
             hasil2 = hasil2.replace("{{lapak}}", lapak);
             hasil += hasil2;
+            // console.log("thumb " + item.thumb + "|");
+            // console.log("thumb is null " + (item.thumb == null));
+            // console.log("thumb is null " + (item.thumb == "null"));
         });
         return hasil;
     }
@@ -49,7 +52,7 @@ class HalBarang {
         let index = await Util.getFile("view/index.html");
         let header = await Util.getFile("view/header.html");
         let barangStr = await this.renderBarangDetail(barang);
-        let js = await Util.getFile("view/js_hal_item.html");
+        let js = await Util.getFile("view/item-page/js_hal_item.html");
         header = header.replace("{{nama_toko}}", Config_1.config.namaToko);
         header = header.replace("{{motto}}", Config_1.config.moto);
         let hasil = "";
@@ -66,7 +69,7 @@ class HalBarang {
         return hasil;
     }
     async renderBarangDetail(barang) {
-        let index = await Util.getFile("view/item-page.html");
+        let index = await Util.getFile("view/item-page/item-page.html");
         let hasil = '';
         hasil = index.replace("{{gbrBesar}}", barang.gbr ? barang.gbr : "/");
         hasil = hasil.replace("{{nama}}", barang.nama);
