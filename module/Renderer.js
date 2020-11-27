@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs_1 = __importDefault(require("fs"));
-const BarangSql_1 = require("./BarangSql");
+const BarangSql_1 = require("./entity/BarangSql");
 const Config_1 = require("./Config");
 class HalDepan {
     async render(barangData, lapak) {
@@ -12,17 +12,19 @@ class HalDepan {
         let index = await Util.getFile("view/index.html");
         let header = await Util.getFile("view/header.html");
         let js = await Util.getFile("view/js.html");
+        let cari = await Util.getFile("view/cari.html");
         let barang = await this.renderBerandaBarang(barangData, lapak);
         header = header.replace("{{nama_toko}}", Config_1.config.namaToko);
         header = header.replace("{{motto}}", Config_1.config.moto);
         let hasil = index;
+        hasil = hasil.replace("{{cari}}", cari);
         hasil = hasil.replace("{{nav_src}}", (("" == lapak) ? "/" : ("/lapak/" + lapak)));
         hasil = hasil.replace("{{header}}", header);
         hasil = hasil.replace("{{content}}", barang);
         hasil = hasil.replace("{{js}}", js);
         return hasil;
     }
-    async renderBerandaBarang(barangData, lapak) {
+    async renderBerandaBarang(barangData, lapak = 'auni') {
         let view = await Util.getFile("view/item.html");
         let hasil = '';
         barangData.forEach((item) => {
@@ -32,7 +34,7 @@ class HalDepan {
             hasil2 = (hasil2.replace("{{deskripsiPanjang}}", item.deskripsi_panjang));
             hasil2 = (hasil2.replace("{{harga}}", item.harga + ''));
             hasil2 = hasil2.replace("{{wa}}", item.wa);
-            hasil2 = hasil2.replace("{{wa-link}}", 'https://wa.me/' + item.wa + "?text=Assalamualaikum");
+            hasil2 = hasil2.replace("{{wa-link}}", 'https://wa.me/' + item.wa + "?text=Assalamualaikum\n\r[" + item.nama + "]\r\n==========");
             hasil2 = hasil2.replace("{{gbrThumb}}", (item.thumb != null) ? item.thumb : '/gambar/kosong.png');
             hasil2 = hasil2.replace("{{gbrBesar}}", item.gbr);
             hasil2 = hasil2.replace("{{id}}", item.id);
@@ -57,6 +59,7 @@ class HalBarang {
         header = header.replace("{{motto}}", Config_1.config.moto);
         let hasil = "";
         hasil = index.replace("{{header}}", header);
+        hasil = index.replace("{{cari}}", "");
         if (lapak) {
             hasil = hasil.replace("{{nav_src}}", "/lapak/" + lapak);
         }
@@ -84,18 +87,18 @@ class Renderer {
         this.halDepan = new HalDepan();
         this.halBarang = new HalBarang();
     }
-    async renderBeranda(barangData, lapak, tulis = true) {
+    async renderBeranda(barangData, lapak, tulis = false) {
         let hasil = await this.halDepan.render(barangData, lapak);
         if (tulis)
             Util.tulisKeFile("public/index.html", hasil);
         return hasil;
     }
-    // async renderHalBarang2(barang: any, lapak: string): Promise<string> {
-    // 	return await this.halBarang.render(barang, lapak);
-    // }
     async renderHalBarang(id, lapak) {
         console.log("render hal barang, id " + id);
         return await this.halBarang.render(id, lapak);
+    }
+    async renderDaftarBarang(data) {
+        return await this.halDepan.renderBerandaBarang(data);
     }
 }
 class Util {

@@ -1,3 +1,5 @@
+// import { data } from "./Data.js";
+// import { dialog } from "./Dialog.js";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -7,8 +9,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { data } from "./Data.js";
-// import { dialog } from "./Dialog.js";
 import { loading } from "./Loading.js";
 export class Util {
     //TODO:
@@ -38,7 +38,7 @@ export class Util {
                     console.group('send data');
                     console.log(dataStr);
                     console.groupEnd();
-                    loading.attach(data.cont);
+                    loading.attach(document.body);
                     let xhr = new XMLHttpRequest();
                     xhr.onload = () => {
                         if (200 == xhr.status) {
@@ -90,6 +90,7 @@ Util.urlLoginStatus = '/auth/status';
 Util.urlLogin = '/auth/login';
 Util.urlBarangBacalapak = '/barang/baca/lapak/';
 Util.urlFileHapus = '/file/hapus/';
+Util.urlBarangCari = '/barang/cari';
 Util._resp = {
     code: 0,
     message: ''

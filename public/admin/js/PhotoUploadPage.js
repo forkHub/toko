@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { BaseComponent } from "./BaseComponent.js";
 import { dialog } from "./Dialog.js";
+import { loading } from "./Loading.js";
 import { Util } from "./Util.js";
 class PhotoUploadPage {
     constructor() {
@@ -33,15 +34,25 @@ class PhotoUploadPage {
         this.initInput(this.view.input);
         this.view.form.onsubmit = () => {
             try {
+                loading.tampil();
                 this.uploadProcess().then(() => {
                     dialog.p.innerText = 'Sukses';
+                    loading.detach();
                     dialog.tampil(false);
                     dialog.okTbl.onclick = () => {
+                        this._idLama = null;
+                        while (this._view.fotoCont.firstElementChild) {
+                            this._view.fotoCont.removeChild(this._view.fotoCont.firstElementChild);
+                        }
+                        while (this._view.thumbCont.firstElementChild) {
+                            this._view.thumbCont.removeChild(this._view.thumbCont.firstElementChild);
+                        }
                         dialog.detach();
-                        this.selesai();
+                        this._selesai();
                     };
                 }).catch((e) => {
                     dialog.p.innerText = e.message;
+                    loading.detach();
                     dialog.tampil(false);
                     dialog.okTbl.onclick = () => {
                         dialog.detach();
@@ -50,6 +61,7 @@ class PhotoUploadPage {
             }
             catch (e) {
                 dialog.p.innerText = e.message;
+                loading.detach();
                 dialog.tampil(false);
                 dialog.okTbl.onclick = () => {
                     dialog.detach();
@@ -134,6 +146,7 @@ class PhotoUploadPage {
     uploadProcess() {
         return __awaiter(this, void 0, void 0, function* () {
             console.log('upload file');
+            loading.tampil();
             let hasil = yield this.fileBaru();
             console.log(hasil);
             let hasilObj = JSON.parse(hasil);
@@ -146,9 +159,9 @@ class PhotoUploadPage {
     get view() {
         return this._view;
     }
-    get selesai() {
-        return this._selesai;
-    }
+    // public get selesai(): Function {
+    // 	return this._selesai;
+    // }
     set selesai(value) {
         this._selesai = value;
     }

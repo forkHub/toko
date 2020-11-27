@@ -4,19 +4,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const Anggota_1 = require("../Anggota");
+const Anggota_1 = require("../entity/Anggota");
 exports.router = express_1.default.Router();
 exports.router.post("/baca", (req, resp) => {
     try {
         Anggota_1.anggota.baca().then((hasil) => {
             resp.status(200).send(hasil);
         }).catch((e) => {
-            resp.status(500).send(e);
+            resp.status(500).send(e.message);
         });
     }
     catch (e) {
         console.log(e);
-        resp.status(200).send(e);
+        resp.status(200).send(e.message);
     }
 });
 exports.router.post("/hapus", (req, resp) => {
@@ -24,11 +24,11 @@ exports.router.post("/hapus", (req, resp) => {
         Anggota_1.anggota.hapus(req.params.id).then(() => {
             resp.status(200).end();
         }).catch((e) => {
-            resp.status(500).send(e);
+            resp.status(500).send(e.message);
         });
     }
     catch (err) {
-        resp.status(500).send(err);
+        resp.status(500).send(err.message);
     }
 });
 exports.router.post("/baru", (req, resp) => {
@@ -42,11 +42,11 @@ exports.router.post("/baru", (req, resp) => {
             .then(() => {
             resp.status(200).end();
         }).catch((e) => {
-            resp.status(500).send(e);
+            resp.status(500).send(e.message);
         });
     }
     catch (e) {
-        resp.status(500).send(e);
+        resp.status(500).send(e.message);
     }
 });
 exports.router.post("/update/:id", (req, resp) => {
@@ -54,13 +54,14 @@ exports.router.post("/update/:id", (req, resp) => {
         Anggota_1.anggota.update({
             password: req.body.password,
             level: req.body.level,
+            id: req.params.id
         }, req.params.id).then(() => {
             resp.status(200).end();
         }).catch((e) => {
-            resp.status(500).send(e);
+            resp.status(500).send(e.message);
         });
     }
     catch (error) {
-        resp.status(500).send(error);
+        resp.status(500).send(error.message);
     }
 });

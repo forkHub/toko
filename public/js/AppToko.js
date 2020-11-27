@@ -1,18 +1,61 @@
 import { BaseComponent } from "./BaseComponent.js";
+import { dialog } from "./Dialog.js";
+// import { loading } from "./Loading.js";
+// import { dialog } from "./Dialog.js";
+import { Util } from "./Util.js";
 class AppToko {
     constructor() {
         this.items = [];
         this.resizeInProgress = false;
+        console.log('App start');
+        // let nodes: NodeListOf<Element> = document.querySelectorAll('div.item');
+        // nodes.forEach((node: Element) => {
+        // 	let item: Item = new Item();
+        // 	item.init(node as HTMLElement);
+        // 	this.items.push(item);
+        // });
+        this.daftarItem();
+        window.onresize = () => {
+            this.atur();
+        };
+        this.atur();
+        this.formCari.onsubmit = () => {
+            try {
+                Util.Ajax("post", Util.urlBarangCari, JSON.stringify({ kataKunci: this.kataKunciInput.value })).then((hasil) => {
+                    console.log('hasil ');
+                    if (!hasil || hasil == '' || hasil.length == 0) {
+                        dialog.tampil2('pencarian tidak menemukan hasil');
+                    }
+                    else {
+                        this.daftarBarang.innerHTML = hasil;
+                        this.daftarItem();
+                        this.atur();
+                    }
+                    return false;
+                }).catch((e) => {
+                    console.warn(e);
+                    dialog.tampil2(e.message);
+                    // loading.detach();
+                });
+            }
+            catch (e) {
+                console.warn(e.message);
+                console.warn(e);
+                dialog.tampil2(e.message);
+                // loading.detach();
+                return false;
+            }
+            return false;
+        };
+    }
+    daftarItem() {
         let nodes = document.querySelectorAll('div.item');
+        this.items = [];
         nodes.forEach((node) => {
             let item = new Item();
             item.init(node);
             this.items.push(item);
         });
-        window.onresize = () => {
-            this.atur();
-        };
-        this.atur();
     }
     jmlKolom() {
         if (window.innerWidth > 600) {
@@ -104,6 +147,15 @@ class AppToko {
             throw new Error('query not found ');
         }
     }
+    get formCari() {
+        return AppToko.getEl('form.cari');
+    }
+    get kataKunciInput() {
+        return AppToko.getEl('form.cari input.cari');
+    }
+    get daftarBarang() {
+        return AppToko.getEl('div.daftar-barang-cont');
+    }
 }
 class Item extends BaseComponent {
     constructor() {
@@ -169,6 +221,10 @@ class Item extends BaseComponent {
         return this.getEl('img.besar');
     }
 }
+window.onload = () => {
+    console.log('window on load');
+};
 // window.onload = () => {
 new AppToko();
+``;
 // }

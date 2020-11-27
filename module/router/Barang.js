@@ -4,21 +4,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const BarangSql_1 = require("../BarangSql");
+const BarangSql_1 = require("../entity/BarangSql");
 const TokoLog_1 = require("../TokoLog");
 const Auth_1 = require("../Auth");
 const Renderer_1 = require("../Renderer");
 const Util_1 = require("../Util");
+const Barang_1 = require("../controller/Barang");
 exports.router = express_1.default.Router();
 exports.router.post("/hapus/:id", Auth_1.checkAuth, (req, resp) => {
     try {
         BarangSql_1.barangSql.hapus(req.params.id)
-            // .then(() => {
-            // 	return barangSql.bacaPublish()
-            // })
-            // .then((data: any[]) => {
-            // 	return toko.render(data);
-            // })
             .then(() => {
             resp.status(200).end();
         }).catch((e) => {
@@ -71,6 +66,22 @@ exports.router.post("/baca", Auth_1.checkAuth, (req, resp) => {
         resp.status(500).send(e);
     }
 });
+exports.router.post("/cari", (req, resp) => {
+    try {
+        TokoLog_1.logT.log('cari barang, kata kunci ' + req.body.kataKunci);
+        Barang_1.barangController.cariBarang(req.body.kataKunci)
+            .then((hasil) => {
+            resp.status(200).send(hasil);
+        })
+            .catch((e) => {
+            TokoLog_1.logT.log(e);
+            resp.status(500).send(e);
+        });
+    }
+    catch (e) {
+        resp.status(500).send(e);
+    }
+});
 exports.router.post("/baru", Auth_1.checkAuth, (req, resp) => {
     try {
         let data = {
@@ -81,15 +92,10 @@ exports.router.post("/baru", Auth_1.checkAuth, (req, resp) => {
             wa: req.body.wa,
             file_id: req.body.file_id,
             publish: req.body.publish,
-            lapak: req.body.lapak
+            lapak: req.body.lapak,
+            last_view: Util_1.util.buatDate()
         };
         BarangSql_1.barangSql.baru(data)
-            // .then(() => {
-            // 	return barangSql.bacaPublish();
-            // })
-            // .then((data: any[]) => {
-            // 	return toko.render(data);
-            // })
             .then(() => {
             resp.status(200).end();
         }).catch((e) => {
@@ -114,12 +120,6 @@ exports.router.post("/update/:id", Auth_1.checkAuth, (req, resp) => {
             lapak: req.body.lapak,
             last_view: Util_1.util.buatDate()
         }, req.params.id)
-            // .then(() => {
-            // 	return barangSql.bacaPublish();
-            // })
-            // .then((data: any[]) => {
-            // 	return toko.render(data)
-            // })
             .then(() => {
             resp.status(200).end();
         }).catch((e) => {

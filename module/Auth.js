@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const User_1 = require("./User");
 const Connection_1 = require("./Connection");
 const TokoLog_1 = require("./TokoLog");
 const SessionData_1 = require("./SessionData");
+const Anggota_1 = require("./entity/Anggota");
 class Auth {
     async login(userName, password) {
         TokoLog_1.logT.log('Auth: login ');
         let pool = await Connection_1.Connection.getPool();
-        let hasil = await User_1.user.getUser(pool, userName, password);
+        let hasil = await Anggota_1.anggota.bacaId(pool, userName, password);
         if (hasil.length == 0) {
             TokoLog_1.logT.log('login gagal ' + userName + '/' + password);
             return null;

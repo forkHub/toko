@@ -5,7 +5,7 @@ class Loading extends BaseComponent {
         this._template = `
 			<div class='loading'>
 				<div class='box'>
-					<img src='/gbr/loading.gif'/>
+					<img src='/gambar/loading.gif'/>
 					<p>Memuat</p>
 				</div>
 			</div>
@@ -13,6 +13,7 @@ class Loading extends BaseComponent {
         this.build();
     }
     tampil() {
+        console.log('loading tampil');
         this.attach(document.body);
     }
 }

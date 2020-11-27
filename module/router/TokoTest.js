@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const BarangSql_1 = require("../BarangSql");
+const BarangSql_1 = require("../entity/BarangSql");
 const Toko_1 = require("../Toko");
 const TokoLog_1 = require("../TokoLog");
 exports.router = express_1.default.Router();

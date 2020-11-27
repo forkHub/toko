@@ -8,7 +8,7 @@ const Connection_1 = require("../Connection");
 const fs_1 = __importDefault(require("fs"));
 const Auth_1 = require("../Auth");
 const TokoLog_1 = require("../TokoLog");
-const File_1 = require("../File");
+const File_1 = require("../entity/File");
 exports.router = express_1.default.Router();
 exports.router.post("/baca", Auth_1.checkAuth, (req, resp) => {
     try {
@@ -68,6 +68,26 @@ exports.router.post("/baru", Auth_1.checkAuth, (req, resp) => {
     catch (e) {
         TokoLog_1.logT.log(e);
         resp.status(500).send(JSON.stringify(e));
+    }
+});
+exports.router.post('/baca/file/kosong', Auth_1.checkAuth, (req, resp) => {
+    try {
+    }
+    catch (e) {
+    }
+});
+exports.router.post("/baca/disk/kosong", Auth_1.checkAuth, (req, resp) => {
+    try {
+        File_1.file.bacaDiskKosong().then((item) => {
+            resp.status(200).send('');
+        }).catch((e) => {
+            console.log(e);
+            resp.status(500).send(e);
+        });
+    }
+    catch (e) {
+        console.log(e);
+        resp.status(500).send(e);
     }
 });
 exports.router.post("/hapus/", Auth_1.checkAuth, (req, resp) => {

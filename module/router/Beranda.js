@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const path_1 = __importDefault(require("path"));
 const App_1 = require("../../App");
-const BarangSql_1 = require("../BarangSql");
+const BarangSql_1 = require("../entity/BarangSql");
 const Connection_1 = require("../Connection");
 const Renderer_1 = require("../Renderer");
 const TokoLog_1 = require("../TokoLog");
