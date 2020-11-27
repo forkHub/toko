@@ -56,6 +56,11 @@ class AppToko {
             item.init(node);
             this.items.push(item);
         });
+        setTimeout(() => {
+            this.items.forEach((item) => {
+                item.loadImage();
+            });
+        }, 1000);
     }
     jmlKolom() {
         if (window.innerWidth > 600) {
@@ -163,6 +168,27 @@ class Item extends BaseComponent {
         this._ukuranKecil = 0;
         this._id = '';
     }
+    loadImage() {
+        this.gbrKecil.onerror = () => {
+            this.gbrKecil.onerror = null;
+            this.gbrKecil.onload = null;
+            this.gbrKecil.src = '/gambar/kosong.png';
+            // this.gbrKecil.style.minHeight = '100px';
+            this.gbrKecil.style.width = '80%';
+            console.log(this.gbrKecil);
+        };
+        this.gbrKecil.src = this.gbrKecil.getAttribute('gbr');
+        if (this.gbrKecil.src == null) {
+            console.log(this.gbrKecil);
+        }
+        if (this.gbrKecil.src.indexOf('/gambar/kosong.png') > -1) {
+            // this.gbrKecil.style.minHeight = '100px';
+            this.gbrKecil.style.width = '80%';
+        }
+        // else {
+        // console.log(this.gbrKecil.src);
+        // }
+    }
     init(el) {
         this._elHtml = el;
         this._elHtml.onclick = (e) => {
@@ -175,17 +201,17 @@ class Item extends BaseComponent {
                 window.top.location.href = '/barang/lapak/' + this.lapakP.innerHTML + '/' + this.idP.innerHTML;
             }
         };
-        this.gbrKecil.onerror = () => {
-            this.gbrKecil.onerror = null;
-            this.gbrKecil.onload = null;
-            this.gbrKecil.src = '/gambar/kosong.png';
-            this.gbrKecil.style.minHeight = '100px';
-            console.log(this.gbrKecil);
-        };
-        this.gbrKecil.src = this.gbrKecil.getAttribute('gbr');
-        if (this.gbrKecil.src == null) {
-            console.log(this.gbrKecil);
-        }
+        // this.gbrKecil.onerror = () => {
+        // 	this.gbrKecil.onerror = null;
+        // 	this.gbrKecil.onload = null;
+        // 	this.gbrKecil.src = '/gambar/kosong.png';
+        // 	this.gbrKecil.style.minHeight = '100px';
+        // 	console.log(this.gbrKecil);
+        // }
+        // this.gbrKecil.src = this.gbrKecil.getAttribute('gbr');
+        // if (this.gbrKecil.src == null) {
+        // 	console.log(this.gbrKecil);
+        // }
     }
     get ukuranKecil() {
         return this._ukuranKecil;
