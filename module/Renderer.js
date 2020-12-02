@@ -7,13 +7,16 @@ const fs_1 = __importDefault(require("fs"));
 const BarangSql_1 = require("./entity/BarangSql");
 const Config_1 = require("./Config");
 class HalDepan {
-    async render(barangData, lapak) {
+    async render(barangData, lapak, hal = 0, jml = 0) {
         console.log('render beranda');
         let index = await Util.getFile("view/index.html");
         let header = await Util.getFile("view/header.html");
         let js = await Util.getFile("view/js.html");
         let cari = await Util.getFile("view/cari.html");
         let barang = await this.renderBerandaBarang(barangData, lapak);
+        let halaman = await Util.getFile("view/halaman.html");
+        halaman = halaman.replace("{{hal}}", hal + '');
+        halaman = halaman.replace("{{jml}}", jml + '');
         header = header.replace("{{nama_toko}}", Config_1.config.namaToko);
         header = header.replace("{{motto}}", Config_1.config.moto);
         let hasil = index;
@@ -22,6 +25,7 @@ class HalDepan {
         hasil = hasil.replace("{{header}}", header);
         hasil = hasil.replace("{{content}}", barang);
         hasil = hasil.replace("{{js}}", js);
+        hasil = hasil.replace("{{halaman}}", halaman);
         return hasil;
     }
     async renderBerandaBarang(barangData, lapak = 'auni') {
@@ -57,9 +61,15 @@ class HalBarang {
         let js = await Util.getFile("view/item-page/js_hal_item.html");
         header = header.replace("{{nama_toko}}", Config_1.config.namaToko);
         header = header.replace("{{motto}}", Config_1.config.moto);
-        let hasil = "";
+        console.log('header');
+        console.log(header);
+        console.log('index:');
+        console.log(index);
+        let hasil = index;
         hasil = index.replace("{{header}}", header);
-        hasil = index.replace("{{cari}}", "");
+        console.log('hasil');
+        console.log(hasil);
+        hasil = hasil.replace("{{cari}}", "");
         if (lapak) {
             hasil = hasil.replace("{{nav_src}}", "/lapak/" + lapak);
         }
@@ -84,11 +94,12 @@ class HalBarang {
 }
 class Renderer {
     constructor() {
-        this.halDepan = new HalDepan();
+        this._halDepan = new HalDepan();
         this.halBarang = new HalBarang();
     }
-    async renderBeranda(barangData, lapak, tulis = false) {
-        let hasil = await this.halDepan.render(barangData, lapak);
+    //TODO: refaktor
+    async renderBeranda(barangData, lapak, tulis = false, hal = 0, jml = 0) {
+        let hasil = await this.halDepan.render(barangData, lapak, hal, jml);
         if (tulis)
             Util.tulisKeFile("public/index.html", hasil);
         return hasil;
@@ -98,7 +109,10 @@ class Renderer {
         return await this.halBarang.render(id, lapak);
     }
     async renderDaftarBarang(data) {
-        return await this.halDepan.renderBerandaBarang(data);
+        return await this._halDepan.renderBerandaBarang(data);
+    }
+    get halDepan() {
+        return this._halDepan;
     }
 }
 class Util {

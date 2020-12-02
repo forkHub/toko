@@ -60,7 +60,6 @@ div.loading div.box {
 	text-align: center;
 }
 
-
 h1.judul-toko {
 	margin: 16px;
 	margin-top: 0px;
@@ -128,6 +127,17 @@ div.daftar-barang-cont div.kolom {
 	width: 20%;
 	vertical-align:top;
 	padding: 4px;
+}
+
+div.halaman {
+	display: none;
+	/*display: block;*/
+}
+
+div.halaman div.content {
+	margin: auto;
+	font-size: large;
+	text-align: center;
 }
 
 div.footer {

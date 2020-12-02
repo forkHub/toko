@@ -1,19 +1,11 @@
 import { BaseComponent } from "./BaseComponent.js";
 import { dialog } from "./Dialog.js";
-// import { loading } from "./Loading.js";
-// import { dialog } from "./Dialog.js";
 import { Util } from "./Util.js";
 class AppToko {
     constructor() {
         this.items = [];
         this.resizeInProgress = false;
         console.log('App start');
-        // let nodes: NodeListOf<Element> = document.querySelectorAll('div.item');
-        // nodes.forEach((node: Element) => {
-        // 	let item: Item = new Item();
-        // 	item.init(node as HTMLElement);
-        // 	this.items.push(item);
-        // });
         this.daftarItem();
         window.onresize = () => {
             this.atur();
@@ -27,9 +19,11 @@ class AppToko {
                         dialog.tampil2('pencarian tidak menemukan hasil');
                     }
                     else {
+                        console.log(hasil);
                         this.daftarBarang.innerHTML = hasil;
                         this.daftarItem();
                         this.atur();
+                        // this.halaman();
                     }
                     return false;
                 }).catch((e) => {
@@ -47,6 +41,56 @@ class AppToko {
             }
             return false;
         };
+    }
+    halaman() {
+        let hal = 0;
+        let jml = 0;
+        hal = parseInt(this.halamanDiv.getAttribute('data-hal'));
+        jml = parseInt(this.halamanDiv.getAttribute('data-jml'));
+        //default hidden
+        if (hal == 0) {
+            this.halamanDiv.style.display = 'none';
+            return;
+        }
+        this.halamanDiv.style.display = 'block';
+        this.halPertama.style.display = 'inline';
+        this.halSebelumnya.style.display = 'inline';
+        this.halAngka0.style.display = 'inline';
+        this.halTerakhir.style.display = 'inline';
+        this.halSelanjutnya.style.display = 'inline';
+        this.halAngka2.style.display = 'inline';
+        this.halAngka1.style.display = 'inline';
+        this.halAngka1.innerHTML = hal + '';
+        //ada halaman pertama
+        if (hal == 1) {
+            this.halPertama.style.display = 'none';
+            this.halSebelumnya.style.display = 'none';
+            this.halAngka0.style.display = 'none';
+        }
+        else if (hal == 2) {
+            this.halPertama.style.display = 'inline';
+            this.halSebelumnya.style.display = 'none';
+            this.halAngka0.style.display = 'inline';
+            this.halAngka0.innerHTML = (hal - 1) + '';
+        }
+        //kanan
+        if (hal == (jml - 2)) {
+            this.halTerakhir.style.display = 'inline';
+            this.halSelanjutnya.style.display = 'inline';
+            this.halAngka2.style.display = 'inline';
+            this.halAngka2.innerHTML = (hal + 1) + '';
+        }
+        else if (hal == (jml - 1)) {
+            this.halTerakhir.style.display = 'inline';
+            this.halSelanjutnya.style.display = 'none';
+            this.halAngka2.style.display = 'inline';
+            this.halAngka2.innerHTML = (hal + 1) + '';
+        }
+        else if (hal == jml) {
+            this.halTerakhir.style.display = 'none';
+            this.halSelanjutnya.style.display = 'none';
+            this.halAngka2.style.display = 'none';
+        }
     }
     daftarItem() {
         let nodes = document.querySelectorAll('div.item');
@@ -161,6 +205,30 @@ class AppToko {
     get daftarBarang() {
         return AppToko.getEl('div.daftar-barang-cont');
     }
+    get halamanDiv() {
+        return AppToko.getEl('div.halaman');
+    }
+    get halPertama() {
+        return AppToko.getEl('div.halaman div.content span.pertama');
+    }
+    get halSebelumnya() {
+        return AppToko.getEl('div.halaman div.content span.sebelumnya');
+    }
+    get halAngka0() {
+        return AppToko.getEl('div.halaman div.content span.angka0');
+    }
+    get halAngka1() {
+        return AppToko.getEl('div.halaman div.content span.angka1');
+    }
+    get halAngka2() {
+        return AppToko.getEl('div.halaman div.content span.angka2');
+    }
+    get halSelanjutnya() {
+        return AppToko.getEl('div.halaman div.content span.selanjutnya');
+    }
+    get halTerakhir() {
+        return AppToko.getEl('div.halaman div.content span.terakhir');
+    }
 }
 class Item extends BaseComponent {
     constructor() {
@@ -250,7 +318,5 @@ class Item extends BaseComponent {
 window.onload = () => {
     console.log('window on load');
 };
-// window.onload = () => {
 new AppToko();
 ``;
-// }

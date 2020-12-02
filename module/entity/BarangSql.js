@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const Connection_1 = require("../Connection");
 const assert_1 = require("assert");
+const Config_1 = require("../Config");
 class BarangSql {
     constructor() {
         // private bacaBarangPulish: string = `SELECT BARANG.*, FILE.thumb, FILE.gbr 
@@ -67,11 +68,42 @@ class BarangSql {
             });
         });
     }
-    async cari(kataKunci) {
+    async cari(kataKunci, offset = 0) {
         let query = `SELECT BARANG.*, FILE.thumb, FILE.gbr
 			FROM BARANG
 			LEFT JOIN FILE
 			ON BARANG.file_id = FILE.id
+			WHERE BARANG.publish = 1
+			AND (BARANG.nama like ?
+			OR BARANG.deskripsi_panjang like ?)
+			LIMIT ?
+			OFFSET ?
+			`;
+        // let jml: number = await this.cariJml(kataKunci);
+        return new Promise((resolve, reject) => {
+            try {
+                Connection_1.Connection.pool.query(query, [
+                    '%' + kataKunci + '%',
+                    '%' + kataKunci + '%',
+                    Config_1.config.jmlPerHal,
+                    offset
+                ], (_err, _rows) => {
+                    if (_err) {
+                        reject(_err.message);
+                    }
+                    else {
+                        resolve(_rows);
+                    }
+                });
+            }
+            catch (err) {
+                assert_1.rejects(err.message);
+            }
+        });
+    }
+    async cariJml(kataKunci) {
+        let query = `SELECT COUNT(*) as JML
+			FROM BARANG
 			WHERE BARANG.publish = 1
 			AND (BARANG.nama like ?
 			OR BARANG.deskripsi_panjang like ?)
@@ -83,7 +115,7 @@ class BarangSql {
                         reject(_err.message);
                     }
                     else {
-                        resolve(_rows);
+                        resolve(_rows[0].JML);
                     }
                 });
             }
@@ -123,7 +155,6 @@ class BarangSql {
 			LEFT JOIN FILE
 			ON BARANG.file_id = FILE.id
 			WHERE BARANG.publish = 1
-
 			`;
         return new Promise((resolve, reject) => {
             try {

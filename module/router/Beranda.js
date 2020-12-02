@@ -17,10 +17,31 @@ class Beranda {
                 BarangSql_1.barangSql.bacalapakPublish(_req.params.lapak)
                     .then((data) => {
                     TokoLog_1.logT.log(data);
-                    return Renderer_1.render.renderBeranda(data, _req.params.lapak, false);
+                    return Renderer_1.render.renderBeranda(data, _req.params.lapak, false, 0, 0);
                 })
                     .then((data) => {
                     resp.status(200).header("Cache-Control", "max-age=7200").send(data);
+                })
+                    .catch((err) => {
+                    TokoLog_1.logT.log(err);
+                    resp.status(500).send('Error');
+                });
+            }
+            catch (err) {
+                TokoLog_1.logT.log(err);
+                resp.status(500).send('Error');
+            }
+        });
+        app.get("/hal", (_req, resp) => {
+            // let barangObj: any;
+            try {
+                BarangSql_1.barangSql.bacaPublish()
+                    .then((data) => {
+                    // barangObj = data[0];
+                    return Renderer_1.render.renderBeranda(data, "", false);
+                })
+                    .then((data) => {
+                    resp.status(200).send(data);
                 })
                     .catch((err) => {
                     TokoLog_1.logT.log(err);
