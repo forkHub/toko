@@ -5,7 +5,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mysql_1 = __importDefault(require("mysql"));
 const TokoLog_1 = require("./TokoLog");
-const Config_1 = require("./Config");
+// import { config } from "./Config";
+const ConfigDB_1 = require("./ConfigDB");
 class Connection {
     static get pool() {
         return Connection._pool;
@@ -29,14 +30,15 @@ class Connection {
     }
     static connect() {
         TokoLog_1.logT.log('create connection 1');
+        ConfigDB_1.configDB;
         try {
             TokoLog_1.logT.log('create connection start');
             Connection._pool = mysql_1.default.createPool({
-                host: Config_1.config.host,
-                user: Config_1.config.user,
-                password: Config_1.config.pass,
-                database: Config_1.config.db,
-                port: Config_1.config.port,
+                host: ConfigDB_1.configDB.host,
+                user: ConfigDB_1.configDB.user,
+                password: ConfigDB_1.configDB.pass,
+                database: ConfigDB_1.configDB.db,
+                port: ConfigDB_1.configDB.port,
                 multipleStatements: true
             });
             TokoLog_1.logT.log('create connection end');
@@ -46,20 +48,6 @@ class Connection {
             TokoLog_1.logT.log(e);
         }
         TokoLog_1.logT.log('create connection 2');
-    }
-    static connect2() {
-        if (Connection._connection) {
-            TokoLog_1.logT.log('already connected ');
-            return;
-        }
-        Connection._connection = mysql_1.default.createConnection({
-            host: process.env.TOKO_DB_HOST,
-            user: process.env.TOKO_DB_USER,
-            password: process.env.TOKO_DB_PASS,
-            database: process.env.TOKO_DB_DB,
-            port: 3306,
-            multipleStatements: true
-        });
     }
 }
 exports.Connection = Connection;
