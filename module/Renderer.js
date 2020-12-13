@@ -14,9 +14,7 @@ class HalDepan {
         let js = await Util.getFile("view/js.html");
         let cari = await Util.getFile("view/cari.html");
         let barang = await this.renderBerandaBarang(barangData, lapak);
-        let halaman = await Util.getFile("view/halaman.html");
-        halaman = halaman.replace("{{hal}}", hal + '');
-        halaman = halaman.replace("{{jml}}", jml + '');
+        let halaman = await this.renderHalaman0();
         header = header.replace("{{nama_toko}}", Config_1.config.namaToko);
         header = header.replace("{{motto}}", Config_1.config.moto);
         let hasil = index;
@@ -28,6 +26,98 @@ class HalDepan {
         hasil = hasil.replace("{{halaman}}", halaman);
         return hasil;
     }
+    async renderHalaman2(_hal, _jml) {
+        return '';
+    }
+    async renderHalaman0() {
+        return '';
+    }
+    async renderHalaman1(hal, jml) {
+        //fase 2
+        let halaman = await Util.getFile("view/halaman1.html");
+        if (0 == hal) {
+            return '';
+        }
+        if (0 == jml) {
+            return '';
+        }
+        //TODO: url
+        halaman = halaman.replace("{{pertama}}", "<a href=''>%lt%lt</a> ");
+        halaman = halaman.replace("{{sebelumnya}}", "<a href=''>%lt</a> ");
+        halaman = halaman.replace("{{hal}}", hal + "");
+        halaman = halaman.replace("{{jumlah}}", jml + " ");
+        halaman = halaman.replace("{{selanjutnya}}", "<a href=''>%gt</a> ");
+        halaman = halaman.replace("{{terakhir}}", "<a href=''>%gt%gt</a> ");
+        // 	//kanan
+        // 	if (hal == (jml - 2)) {
+        // 		this.halTerakhir.style.display = 'inline';
+        // 		this.halSelanjutnya.style.display = 'inline';
+        // 		this.halAngka2.style.display = 'inline';
+        // 		this.halAngka2.innerHTML = (hal + 1) + '';
+        // 	}
+        // 	else if (hal == (jml - 1)) {
+        // 		this.halTerakhir.style.display = 'inline';
+        // 		this.halSelanjutnya.style.display = 'none';
+        // 		this.halAngka2.style.display = 'inline';
+        // 		this.halAngka2.innerHTML = (hal + 1) + '';
+        // 	}
+        // 	else if (hal == jml) {
+        // 		this.halTerakhir.style.display = 'none';
+        // 		this.halSelanjutnya.style.display = 'none';
+        // 		this.halAngka2.style.display = 'none';
+        // 	}		
+        // halaman(): void {
+        // 	let hal: number = 0;
+        // 	let jml: number = 0;
+        // 	hal = parseInt(this.halamanDiv.getAttribute('data-hal'));
+        // 	jml = parseInt(this.halamanDiv.getAttribute('data-jml'));
+        // 	//default hidden
+        // 	if (hal == 0) {
+        // 		this.halamanDiv.style.display = 'none';
+        // 		return;
+        // 	}
+        // 	this.halamanDiv.style.display = 'block';
+        // 	this.halPertama.style.display = 'inline';
+        // 	this.halSebelumnya.style.display = 'inline';
+        // 	this.halAngka0.style.display = 'inline';
+        // 	this.halTerakhir.style.display = 'inline';
+        // 	this.halSelanjutnya.style.display = 'inline';
+        // 	this.halAngka2.style.display = 'inline';
+        // 	this.halAngka1.style.display = 'inline';
+        // 	this.halAngka1.innerHTML = hal + '';
+        // 	//ada halaman pertama
+        // 	if (hal == 1) {
+        // 		this.halPertama.style.display = 'none';
+        // 		this.halSebelumnya.style.display = 'none';
+        // 		this.halAngka0.style.display = 'none';
+        // 	}
+        // 	else if (hal == 2) {
+        // 		this.halPertama.style.display = 'inline';
+        // 		this.halSebelumnya.style.display = 'none';
+        // 		this.halAngka0.style.display = 'inline';
+        // 		this.halAngka0.innerHTML = (hal - 1) + '';
+        // 	}
+        // 	//kanan
+        // 	if (hal == (jml - 2)) {
+        // 		this.halTerakhir.style.display = 'inline';
+        // 		this.halSelanjutnya.style.display = 'inline';
+        // 		this.halAngka2.style.display = 'inline';
+        // 		this.halAngka2.innerHTML = (hal + 1) + '';
+        // 	}
+        // 	else if (hal == (jml - 1)) {
+        // 		this.halTerakhir.style.display = 'inline';
+        // 		this.halSelanjutnya.style.display = 'none';
+        // 		this.halAngka2.style.display = 'inline';
+        // 		this.halAngka2.innerHTML = (hal + 1) + '';
+        // 	}
+        // 	else if (hal == jml) {
+        // 		this.halTerakhir.style.display = 'none';
+        // 		this.halSelanjutnya.style.display = 'none';
+        // 		this.halAngka2.style.display = 'none';
+        // 	}
+        // }
+        return halaman;
+    }
     async renderBerandaBarang(barangData, lapak = 'auni') {
         let view = await Util.getFile("view/item.html");
         let hasil = '';
@@ -38,7 +128,7 @@ class HalDepan {
             hasil2 = (hasil2.replace("{{deskripsiPanjang}}", item.deskripsi_panjang));
             hasil2 = (hasil2.replace("{{harga}}", item.harga + ''));
             hasil2 = hasil2.replace("{{wa}}", item.wa);
-            hasil2 = hasil2.replace("{{wa-link}}", 'https://wa.me/' + item.wa + "?text=Assalamualaikum\n\r[" + item.nama + "]\r\n==========");
+            hasil2 = hasil2.replace("{{wa-link}}", Util.buatWa(item.wa, item.nama));
             hasil2 = hasil2.replace("{{gbrThumb}}", (item.thumb != null) ? item.thumb : '/gambar/kosong.png');
             hasil2 = hasil2.replace("{{gbrBesar}}", item.gbr);
             hasil2 = hasil2.replace("{{id}}", item.id);
@@ -88,7 +178,7 @@ class HalBarang {
         hasil = hasil.replace("{{nama}}", barang.nama);
         hasil = hasil.replace("{{harga}}", barang.harga);
         hasil = hasil.replace("{{deskripsiPanjang}}", barang.deskripsi_panjang);
-        hasil = hasil.replace("{{wa-link}}", Util.buatWa(barang.wa));
+        hasil = hasil.replace("{{wa-link}}", Util.buatWa(barang.wa, barang.nama));
         return hasil;
     }
 }
@@ -140,8 +230,8 @@ class Util {
             });
         });
     }
-    static buatWa(wa) {
-        return 'https://wa.me/' + wa + "?text=Assalamualaikum";
+    static buatWa(wa, namaBarang) {
+        return 'https://wa.me/' + wa + "?text==========%0D%0A" + namaBarang + "%0D%0A=========%0D%0AAssalamu'alaikum:";
     }
 }
 exports.render = new Renderer();

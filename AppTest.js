@@ -24,18 +24,18 @@ async function testRead(pool) {
         });
     });
 }
-async function testBaca() {
-    return new Promise((resolve, reject) => {
-        Connection_1.Connection.pool.query("select * from barang limit 1", (err, rows) => {
-            if (err) {
-                reject(err.sqlMessage + '/' + err.message);
-            }
-            else {
-                resolve(rows);
-            }
-        });
-    });
-}
+// async function testBaca(): Promise<void> {
+// 	return new Promise((resolve, reject) => {
+// 		Connection.pool.query("select * from barang limit 1", (err: MysqlError, rows) => {
+// 			if (err) {
+// 				reject(err.sqlMessage + '/' + err.message);
+// 			}
+// 			else {
+// 				resolve(rows);
+// 			}
+// 		})
+// 	});
+// }
 // app.get("/connect", (_req: express.Request, resp: express.Response) => {
 // 	try {
 // 		Connection.connect2();

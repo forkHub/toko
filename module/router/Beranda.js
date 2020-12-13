@@ -9,6 +9,7 @@ const BarangSql_1 = require("../entity/BarangSql");
 const Connection_1 = require("../Connection");
 const Renderer_1 = require("../Renderer");
 const TokoLog_1 = require("../TokoLog");
+const Barang_1 = require("../controller/Barang");
 class Beranda {
     init(app) {
         app.get("/lapak/:lapak", (_req, resp) => {
@@ -32,16 +33,11 @@ class Beranda {
                 resp.status(500).send('Error');
             }
         });
-        app.get("/hal", (_req, resp) => {
-            // let barangObj: any;
+        app.get("/cari/:kataKunci/:hal", (_req, resp) => {
             try {
-                BarangSql_1.barangSql.bacaPublish()
-                    .then((data) => {
-                    // barangObj = data[0];
-                    return Renderer_1.render.renderBeranda(data, "", false);
-                })
-                    .then((data) => {
-                    resp.status(200).send(data);
+                Barang_1.barangController.cariBarang2(_req.params.kataKunci, parseInt(_req.params.hal))
+                    .then((hal) => {
+                    resp.status(200).send(hal);
                 })
                     .catch((err) => {
                     TokoLog_1.logT.log(err);
@@ -50,7 +46,7 @@ class Beranda {
             }
             catch (err) {
                 TokoLog_1.logT.log(err);
-                resp.status(500).send('Error');
+                resp.status(500).send(err.message);
             }
         });
         app.get("/", (_req, resp) => {
