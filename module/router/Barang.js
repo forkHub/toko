@@ -9,7 +9,7 @@ const TokoLog_1 = require("../TokoLog");
 const Auth_1 = require("../Auth");
 const Renderer_1 = require("../Renderer");
 const Util_1 = require("../Util");
-const Barang_1 = require("../controller/Barang");
+// import { barangController } from "../controller/Barang";
 exports.router = express_1.default.Router();
 exports.router.post("/hapus/:id", Auth_1.checkAuth, (req, resp) => {
     try {
@@ -23,63 +23,6 @@ exports.router.post("/hapus/:id", Auth_1.checkAuth, (req, resp) => {
     }
     catch (err) {
         resp.status(500).send(err);
-    }
-});
-exports.router.post("/baca/:id", Auth_1.checkAuth, (req, resp) => {
-    try {
-        BarangSql_1.barangSql.bacaId(req.params.id).then().catch();
-    }
-    catch (err) {
-        resp.status(500).send(err);
-    }
-});
-exports.router.post("/baca/lapak/:lapak", Auth_1.checkAuth, (req, resp) => {
-    try {
-        TokoLog_1.logT.log("barang baca lapak, lapak " + req.params.lapak);
-        BarangSql_1.barangSql
-            .bacalapak(req.params.lapak)
-            .then((rows) => {
-            resp.status(200).send(rows);
-        })
-            .catch((e) => {
-            TokoLog_1.logT.log(e);
-            resp.status(500).send(e);
-        });
-    }
-    catch (e) {
-        resp.status(500).send(e);
-    }
-});
-exports.router.post("/baca", Auth_1.checkAuth, (req, resp) => {
-    try {
-        BarangSql_1.barangSql
-            .bacaSemua()
-            .then((rows) => {
-            resp.status(200).send(rows);
-        })
-            .catch((e) => {
-            TokoLog_1.logT.log(e);
-            resp.status(500).send(e);
-        });
-    }
-    catch (e) {
-        resp.status(500).send(e);
-    }
-});
-exports.router.post("/cari", (req, resp) => {
-    try {
-        TokoLog_1.logT.log('cari barang, kata kunci ' + req.body.kataKunci);
-        Barang_1.barangController.cariBarang(req.body.kataKunci)
-            .then((hasil) => {
-            resp.status(200).send(hasil);
-        })
-            .catch((e) => {
-            TokoLog_1.logT.log(e);
-            resp.status(500).send(e);
-        });
-    }
-    catch (e) {
-        resp.status(500).send(e);
     }
 });
 exports.router.post("/baru", Auth_1.checkAuth, (req, resp) => {

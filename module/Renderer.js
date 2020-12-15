@@ -7,115 +7,50 @@ const fs_1 = __importDefault(require("fs"));
 const BarangSql_1 = require("./entity/BarangSql");
 const Config_1 = require("./Config");
 class HalDepan {
-    async render(barangData, lapak, hal = 0, jml = 0) {
+    async render(barangData, lapak, hal, jml, kataKunci) {
         console.log('render beranda');
         let index = await Util.getFile("view/index.html");
         let header = await Util.getFile("view/header.html");
         let js = await Util.getFile("view/js.html");
         let cari = await Util.getFile("view/cari.html");
         let barang = await this.renderBerandaBarang(barangData, lapak);
-        let halaman = await this.renderHalaman0();
+        let halaman = await this.renderHalaman1(hal, jml, kataKunci);
         header = header.replace("{{nama_toko}}", Config_1.config.namaToko);
         header = header.replace("{{motto}}", Config_1.config.moto);
+        let berandaUrl = "/";
+        if (lapak != '' && Config_1.config.sofwan) {
+            berandaUrl = "/lapak/" + lapak;
+        }
         let hasil = index;
         hasil = hasil.replace("{{cari}}", cari);
-        hasil = hasil.replace("{{nav_src}}", (("" == lapak) ? "/" : ("/lapak/" + lapak)));
+        hasil = hasil.replace("{{nav_src}}", berandaUrl);
         hasil = hasil.replace("{{header}}", header);
         hasil = hasil.replace("{{content}}", barang);
         hasil = hasil.replace("{{js}}", js);
         hasil = hasil.replace("{{halaman}}", halaman);
         return hasil;
     }
-    async renderHalaman2(_hal, _jml) {
-        return '';
-    }
-    async renderHalaman0() {
-        return '';
-    }
-    async renderHalaman1(hal, jml) {
-        //fase 2
+    //
+    async renderHalaman1(hal, jml, kataKunci) {
         let halaman = await Util.getFile("view/halaman1.html");
+        let url = "/cari/" + kataKunci + "/";
+        let url2 = '';
         if (0 == hal) {
             return '';
         }
         if (0 == jml) {
             return '';
         }
-        //TODO: url
-        halaman = halaman.replace("{{pertama}}", "<a href=''>%lt%lt</a> ");
-        halaman = halaman.replace("{{sebelumnya}}", "<a href=''>%lt</a> ");
+        url2 = url + "1";
+        halaman = halaman.replace("{{pertama}}", "<a href='" + url2 + "'>%lt%lt</a > ");
+        url2 = url + (((hal - 1) > 0) ? (hal - 1) : "1");
+        halaman = halaman.replace("{{sebelumnya}}", "<a href='" + url2 + "'>%lt</a> ");
         halaman = halaman.replace("{{hal}}", hal + "");
         halaman = halaman.replace("{{jumlah}}", jml + " ");
-        halaman = halaman.replace("{{selanjutnya}}", "<a href=''>%gt</a> ");
-        halaman = halaman.replace("{{terakhir}}", "<a href=''>%gt%gt</a> ");
-        // 	//kanan
-        // 	if (hal == (jml - 2)) {
-        // 		this.halTerakhir.style.display = 'inline';
-        // 		this.halSelanjutnya.style.display = 'inline';
-        // 		this.halAngka2.style.display = 'inline';
-        // 		this.halAngka2.innerHTML = (hal + 1) + '';
-        // 	}
-        // 	else if (hal == (jml - 1)) {
-        // 		this.halTerakhir.style.display = 'inline';
-        // 		this.halSelanjutnya.style.display = 'none';
-        // 		this.halAngka2.style.display = 'inline';
-        // 		this.halAngka2.innerHTML = (hal + 1) + '';
-        // 	}
-        // 	else if (hal == jml) {
-        // 		this.halTerakhir.style.display = 'none';
-        // 		this.halSelanjutnya.style.display = 'none';
-        // 		this.halAngka2.style.display = 'none';
-        // 	}		
-        // halaman(): void {
-        // 	let hal: number = 0;
-        // 	let jml: number = 0;
-        // 	hal = parseInt(this.halamanDiv.getAttribute('data-hal'));
-        // 	jml = parseInt(this.halamanDiv.getAttribute('data-jml'));
-        // 	//default hidden
-        // 	if (hal == 0) {
-        // 		this.halamanDiv.style.display = 'none';
-        // 		return;
-        // 	}
-        // 	this.halamanDiv.style.display = 'block';
-        // 	this.halPertama.style.display = 'inline';
-        // 	this.halSebelumnya.style.display = 'inline';
-        // 	this.halAngka0.style.display = 'inline';
-        // 	this.halTerakhir.style.display = 'inline';
-        // 	this.halSelanjutnya.style.display = 'inline';
-        // 	this.halAngka2.style.display = 'inline';
-        // 	this.halAngka1.style.display = 'inline';
-        // 	this.halAngka1.innerHTML = hal + '';
-        // 	//ada halaman pertama
-        // 	if (hal == 1) {
-        // 		this.halPertama.style.display = 'none';
-        // 		this.halSebelumnya.style.display = 'none';
-        // 		this.halAngka0.style.display = 'none';
-        // 	}
-        // 	else if (hal == 2) {
-        // 		this.halPertama.style.display = 'inline';
-        // 		this.halSebelumnya.style.display = 'none';
-        // 		this.halAngka0.style.display = 'inline';
-        // 		this.halAngka0.innerHTML = (hal - 1) + '';
-        // 	}
-        // 	//kanan
-        // 	if (hal == (jml - 2)) {
-        // 		this.halTerakhir.style.display = 'inline';
-        // 		this.halSelanjutnya.style.display = 'inline';
-        // 		this.halAngka2.style.display = 'inline';
-        // 		this.halAngka2.innerHTML = (hal + 1) + '';
-        // 	}
-        // 	else if (hal == (jml - 1)) {
-        // 		this.halTerakhir.style.display = 'inline';
-        // 		this.halSelanjutnya.style.display = 'none';
-        // 		this.halAngka2.style.display = 'inline';
-        // 		this.halAngka2.innerHTML = (hal + 1) + '';
-        // 	}
-        // 	else if (hal == jml) {
-        // 		this.halTerakhir.style.display = 'none';
-        // 		this.halSelanjutnya.style.display = 'none';
-        // 		this.halAngka2.style.display = 'none';
-        // 	}
-        // }
+        url2 = url + (((hal + 1) < jml) ? (hal + 1) : jml);
+        halaman = halaman.replace("{{selanjutnya}}", "<a href='" + url2 + "'>%gt</a> ");
+        url2 = url + jml;
+        halaman = halaman.replace("{{terakhir}}", "<a href='" + url2 + "'>%gt%gt</a> ");
         return halaman;
     }
     async renderBerandaBarang(barangData, lapak = 'auni') {
@@ -160,7 +95,7 @@ class HalBarang {
         console.log('hasil');
         console.log(hasil);
         hasil = hasil.replace("{{cari}}", "");
-        if (lapak) {
+        if (lapak && (Config_1.config.sofwan)) {
             hasil = hasil.replace("{{nav_src}}", "/lapak/" + lapak);
         }
         else {
@@ -189,15 +124,17 @@ class Renderer {
     }
     //TODO: refaktor
     async renderBeranda(barangData, lapak, tulis = false, hal = 0, jml = 0) {
-        let hasil = await this.halDepan.render(barangData, lapak, hal, jml);
+        let hasil = await this.halDepan.render(barangData, lapak, hal, jml, '');
         if (tulis)
             Util.tulisKeFile("public/index.html", hasil);
         return hasil;
     }
+    //TODO: dep
     async renderHalBarang(id, lapak) {
         console.log("render hal barang, id " + id);
         return await this.halBarang.render(id, lapak);
     }
+    //TODO: dep
     async renderDaftarBarang(data) {
         return await this._halDepan.renderBerandaBarang(data);
     }
@@ -235,3 +172,71 @@ class Util {
     }
 }
 exports.render = new Renderer();
+// 	//kanan
+// 	if (hal == (jml - 2)) {
+// 		this.halTerakhir.style.display = 'inline';
+// 		this.halSelanjutnya.style.display = 'inline';
+// 		this.halAngka2.style.display = 'inline';
+// 		this.halAngka2.innerHTML = (hal + 1) + '';
+// 	}
+// 	else if (hal == (jml - 1)) {
+// 		this.halTerakhir.style.display = 'inline';
+// 		this.halSelanjutnya.style.display = 'none';
+// 		this.halAngka2.style.display = 'inline';
+// 		this.halAngka2.innerHTML = (hal + 1) + '';
+// 	}
+// 	else if (hal == jml) {
+// 		this.halTerakhir.style.display = 'none';
+// 		this.halSelanjutnya.style.display = 'none';
+// 		this.halAngka2.style.display = 'none';
+// 	}		
+// halaman(): void {
+// 	let hal: number = 0;
+// 	let jml: number = 0;
+// 	hal = parseInt(this.halamanDiv.getAttribute('data-hal'));
+// 	jml = parseInt(this.halamanDiv.getAttribute('data-jml'));
+// 	//default hidden
+// 	if (hal == 0) {
+// 		this.halamanDiv.style.display = 'none';
+// 		return;
+// 	}
+// 	this.halamanDiv.style.display = 'block';
+// 	this.halPertama.style.display = 'inline';
+// 	this.halSebelumnya.style.display = 'inline';
+// 	this.halAngka0.style.display = 'inline';
+// 	this.halTerakhir.style.display = 'inline';
+// 	this.halSelanjutnya.style.display = 'inline';
+// 	this.halAngka2.style.display = 'inline';
+// 	this.halAngka1.style.display = 'inline';
+// 	this.halAngka1.innerHTML = hal + '';
+// 	//ada halaman pertama
+// 	if (hal == 1) {
+// 		this.halPertama.style.display = 'none';
+// 		this.halSebelumnya.style.display = 'none';
+// 		this.halAngka0.style.display = 'none';
+// 	}
+// 	else if (hal == 2) {
+// 		this.halPertama.style.display = 'inline';
+// 		this.halSebelumnya.style.display = 'none';
+// 		this.halAngka0.style.display = 'inline';
+// 		this.halAngka0.innerHTML = (hal - 1) + '';
+// 	}
+// 	//kanan
+// 	if (hal == (jml - 2)) {
+// 		this.halTerakhir.style.display = 'inline';
+// 		this.halSelanjutnya.style.display = 'inline';
+// 		this.halAngka2.style.display = 'inline';
+// 		this.halAngka2.innerHTML = (hal + 1) + '';
+// 	}
+// 	else if (hal == (jml - 1)) {
+// 		this.halTerakhir.style.display = 'inline';
+// 		this.halSelanjutnya.style.display = 'none';
+// 		this.halAngka2.style.display = 'inline';
+// 		this.halAngka2.innerHTML = (hal + 1) + '';
+// 	}
+// 	else if (hal == jml) {
+// 		this.halTerakhir.style.display = 'none';
+// 		this.halSelanjutnya.style.display = 'none';
+// 		this.halAngka2.style.display = 'none';
+// 	}
+// }

@@ -14,6 +14,7 @@ const Anggota_1 = require("./module/router/Anggota");
 const TokoLog_1 = require("./module/TokoLog");
 const cookie_session_1 = __importDefault(require("cookie-session"));
 const Beranda_1 = require("./module/router/Beranda");
+const Barang_2 = require("./module/router/api/Barang");
 const app = express_1.default();
 const port = 3000;
 app.use(express_1.default.static(__dirname + "/public"));
@@ -23,6 +24,7 @@ app.use(cookie_session_1.default({
     keys: ['Auni_202002_cookie_session']
 }));
 app.use("/barang", Barang_1.router);
+app.use("/barang", Barang_2.routerApiBarang); //TODO: pakai API
 app.use("/file", File_1.router);
 app.use("/auth", Auth_1.router);
 app.use("/sys", Install_1.router);

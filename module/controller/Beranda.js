@@ -3,9 +3,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const BarangSql_1 = require("../entity/BarangSql");
 const Renderer_1 = require("../Renderer");
 class Beranda {
-    async hal() {
+    /**
+     * halaman depan
+     */
+    async halamanDepan(hal, lapak, kataKunci) {
         let data = await BarangSql_1.barangSql.bacaPublish();
-        return Renderer_1.render.renderBeranda(data, "", false);
+        let jml = 0; //TODO: diganti dengan jumlah barang sesungguhnya
+        return Renderer_1.render.halDepan.render(data, lapak, hal, jml, kataKunci);
     }
 }
 exports.berandaController = new Beranda();

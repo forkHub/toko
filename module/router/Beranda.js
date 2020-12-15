@@ -35,7 +35,7 @@ class Beranda {
         });
         app.get("/cari/:kataKunci/:hal", (_req, resp) => {
             try {
-                Barang_1.barangController.cariBarang2(_req.params.kataKunci, parseInt(_req.params.hal))
+                Barang_1.barangController.cariBarangGet(decodeURI(_req.params.kataKunci), parseInt(_req.params.hal), '')
                     .then((hal) => {
                     resp.status(200).send(hal);
                 })
@@ -50,12 +50,10 @@ class Beranda {
             }
         });
         app.get("/", (_req, resp) => {
-            // let barangObj: any;
             try {
                 BarangSql_1.barangSql.bacaPublish()
                     .then((data) => {
-                    // barangObj = data[0];
-                    return Renderer_1.render.renderBeranda(data, "", false);
+                    return Renderer_1.render.halDepan.render(data, '', 0, 0, '');
                 })
                     .then((data) => {
                     resp.status(200).send(data);

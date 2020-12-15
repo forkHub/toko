@@ -12,85 +12,49 @@ class AppToko {
         };
         this.atur();
         this.formCari.onsubmit = () => {
-            try {
-                Util.Ajax("post", Util.urlBarangCari, JSON.stringify({ kataKunci: this.kataKunciInput.value })).then((hasil) => {
-                    console.log('hasil ');
-                    if (!hasil || hasil == '' || hasil.length == 0) {
-                        dialog.tampil2('pencarian tidak menemukan hasil');
-                    }
-                    else {
-                        console.log(hasil);
-                        this.daftarBarang.innerHTML = hasil;
-                        this.daftarItem();
-                        this.atur();
-                        // this.halaman();
-                    }
-                    return false;
-                }).catch((e) => {
-                    console.warn(e);
-                    dialog.tampil2(e.message);
-                    // loading.detach();
-                });
-            }
-            catch (e) {
-                console.warn(e.message);
+            return this.cariBarangGet();
+        };
+    }
+    cariBarangGet() {
+        try {
+            //TODO: goto url;
+            window.top.location.href = Util.urlBarangCariGet + window.encodeURI(this.kataKunciInput.value) + "/0";
+        }
+        catch (e) {
+            return false;
+        }
+        return false;
+    }
+    //TODO: depecreated diganti dengan get
+    cariBarangPost() {
+        try {
+            Util.Ajax("post", Util.urlBarangCariPost, JSON.stringify({ kataKunci: this.kataKunciInput.value })).then((hasil) => {
+                console.log('hasil ');
+                if (!hasil || hasil == '' || hasil.length == 0) {
+                    dialog.tampil2('pencarian tidak menemukan hasil');
+                }
+                else {
+                    console.log(hasil);
+                    this.daftarBarang.innerHTML = hasil;
+                    this.daftarItem();
+                    this.atur();
+                    // this.halaman();
+                }
+                return false;
+            }).catch((e) => {
                 console.warn(e);
                 dialog.tampil2(e.message);
                 // loading.detach();
-                return false;
-            }
+            });
+        }
+        catch (e) {
+            console.warn(e.message);
+            console.warn(e);
+            dialog.tampil2(e.message);
+            // loading.detach();
             return false;
-        };
-    }
-    halaman() {
-        let hal = 0;
-        let jml = 0;
-        hal = parseInt(this.halamanDiv.getAttribute('data-hal'));
-        jml = parseInt(this.halamanDiv.getAttribute('data-jml'));
-        //default hidden
-        if (hal == 0) {
-            this.halamanDiv.style.display = 'none';
-            return;
         }
-        this.halamanDiv.style.display = 'block';
-        this.halPertama.style.display = 'inline';
-        this.halSebelumnya.style.display = 'inline';
-        this.halAngka0.style.display = 'inline';
-        this.halTerakhir.style.display = 'inline';
-        this.halSelanjutnya.style.display = 'inline';
-        this.halAngka2.style.display = 'inline';
-        this.halAngka1.style.display = 'inline';
-        this.halAngka1.innerHTML = hal + '';
-        //ada halaman pertama
-        if (hal == 1) {
-            this.halPertama.style.display = 'none';
-            this.halSebelumnya.style.display = 'none';
-            this.halAngka0.style.display = 'none';
-        }
-        else if (hal == 2) {
-            this.halPertama.style.display = 'inline';
-            this.halSebelumnya.style.display = 'none';
-            this.halAngka0.style.display = 'inline';
-            this.halAngka0.innerHTML = (hal - 1) + '';
-        }
-        //kanan
-        if (hal == (jml - 2)) {
-            this.halTerakhir.style.display = 'inline';
-            this.halSelanjutnya.style.display = 'inline';
-            this.halAngka2.style.display = 'inline';
-            this.halAngka2.innerHTML = (hal + 1) + '';
-        }
-        else if (hal == (jml - 1)) {
-            this.halTerakhir.style.display = 'inline';
-            this.halSelanjutnya.style.display = 'none';
-            this.halAngka2.style.display = 'inline';
-            this.halAngka2.innerHTML = (hal + 1) + '';
-        }
-        else if (hal == jml) {
-            this.halTerakhir.style.display = 'none';
-            this.halSelanjutnya.style.display = 'none';
-            this.halAngka2.style.display = 'none';
-        }
+        return false;
     }
     daftarItem() {
         let nodes = document.querySelectorAll('div.item');

@@ -90,7 +90,8 @@ Util.urlLoginStatus = '/auth/status';
 Util.urlLogin = '/auth/login';
 Util.urlBarangBacalapak = '/barang/baca/lapak/';
 Util.urlFileHapus = '/file/hapus/';
-Util.urlBarangCari = '/barang/cari';
+Util.urlBarangCariPost = '/barang/cari';
+Util.urlBarangCariGet = '/cari/';
 Util._resp = {
     code: 0,
     message: ''
