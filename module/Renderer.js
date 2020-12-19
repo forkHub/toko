@@ -120,26 +120,13 @@ class HalBarang {
 class Renderer {
     constructor() {
         this._halDepan = new HalDepan();
-        this.halBarang = new HalBarang();
-    }
-    //TODO: refaktor
-    async renderBeranda(barangData, lapak, tulis = false, hal = 0, jml = 0) {
-        let hasil = await this.halDepan.render(barangData, lapak, hal, jml, '');
-        if (tulis)
-            Util.tulisKeFile("public/index.html", hasil);
-        return hasil;
-    }
-    //TODO: dep
-    async renderHalBarang(id, lapak) {
-        console.log("render hal barang, id " + id);
-        return await this.halBarang.render(id, lapak);
-    }
-    //TODO: dep
-    async renderDaftarBarang(data) {
-        return await this._halDepan.renderBerandaBarang(data);
+        this._halBarang = new HalBarang();
     }
     get halDepan() {
         return this._halDepan;
+    }
+    get halBarang() {
+        return this._halBarang;
     }
 }
 class Util {
@@ -172,71 +159,3 @@ class Util {
     }
 }
 exports.render = new Renderer();
-// 	//kanan
-// 	if (hal == (jml - 2)) {
-// 		this.halTerakhir.style.display = 'inline';
-// 		this.halSelanjutnya.style.display = 'inline';
-// 		this.halAngka2.style.display = 'inline';
-// 		this.halAngka2.innerHTML = (hal + 1) + '';
-// 	}
-// 	else if (hal == (jml - 1)) {
-// 		this.halTerakhir.style.display = 'inline';
-// 		this.halSelanjutnya.style.display = 'none';
-// 		this.halAngka2.style.display = 'inline';
-// 		this.halAngka2.innerHTML = (hal + 1) + '';
-// 	}
-// 	else if (hal == jml) {
-// 		this.halTerakhir.style.display = 'none';
-// 		this.halSelanjutnya.style.display = 'none';
-// 		this.halAngka2.style.display = 'none';
-// 	}		
-// halaman(): void {
-// 	let hal: number = 0;
-// 	let jml: number = 0;
-// 	hal = parseInt(this.halamanDiv.getAttribute('data-hal'));
-// 	jml = parseInt(this.halamanDiv.getAttribute('data-jml'));
-// 	//default hidden
-// 	if (hal == 0) {
-// 		this.halamanDiv.style.display = 'none';
-// 		return;
-// 	}
-// 	this.halamanDiv.style.display = 'block';
-// 	this.halPertama.style.display = 'inline';
-// 	this.halSebelumnya.style.display = 'inline';
-// 	this.halAngka0.style.display = 'inline';
-// 	this.halTerakhir.style.display = 'inline';
-// 	this.halSelanjutnya.style.display = 'inline';
-// 	this.halAngka2.style.display = 'inline';
-// 	this.halAngka1.style.display = 'inline';
-// 	this.halAngka1.innerHTML = hal + '';
-// 	//ada halaman pertama
-// 	if (hal == 1) {
-// 		this.halPertama.style.display = 'none';
-// 		this.halSebelumnya.style.display = 'none';
-// 		this.halAngka0.style.display = 'none';
-// 	}
-// 	else if (hal == 2) {
-// 		this.halPertama.style.display = 'inline';
-// 		this.halSebelumnya.style.display = 'none';
-// 		this.halAngka0.style.display = 'inline';
-// 		this.halAngka0.innerHTML = (hal - 1) + '';
-// 	}
-// 	//kanan
-// 	if (hal == (jml - 2)) {
-// 		this.halTerakhir.style.display = 'inline';
-// 		this.halSelanjutnya.style.display = 'inline';
-// 		this.halAngka2.style.display = 'inline';
-// 		this.halAngka2.innerHTML = (hal + 1) + '';
-// 	}
-// 	else if (hal == (jml - 1)) {
-// 		this.halTerakhir.style.display = 'inline';
-// 		this.halSelanjutnya.style.display = 'none';
-// 		this.halAngka2.style.display = 'inline';
-// 		this.halAngka2.innerHTML = (hal + 1) + '';
-// 	}
-// 	else if (hal == jml) {
-// 		this.halTerakhir.style.display = 'none';
-// 		this.halSelanjutnya.style.display = 'none';
-// 		this.halAngka2.style.display = 'none';
-// 	}
-// }

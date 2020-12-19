@@ -83,10 +83,11 @@ exports.router.get("/", (req, resp) => {
         resp.status(500).send(err);
     }
 });
+//TODO: dep
 exports.router.get("/lapak/:lapak/:id", (req, resp) => {
     try {
         console.log('render lapak ');
-        Renderer_1.render.renderHalBarang(req.params.id, req.params.lapak)
+        Renderer_1.render.halBarang.render(req.params.id, req.params.lapak)
             .then((hasil) => {
             resp.status(200).send(hasil);
         }).catch((err) => {
@@ -117,7 +118,7 @@ exports.router.get("/:id", (req, resp) => {
         else {
             console.log(req.params.id);
         }
-        Renderer_1.render.renderHalBarang(req.params.id, "")
+        Renderer_1.render.halBarang.render(req.params.id, "")
             .then((hasil) => {
             resp.status(200).send(hasil);
         }).catch((err) => {

@@ -18,10 +18,8 @@ class Barang {
     }
     //TODO: buat api return json
     async cariBarangJSON(kataKunci, hal) {
-        let barangAr = await BarangSql_1.barangSql.cari(kataKunci);
         let jml = await BarangSql_1.barangSql.cariJml(kataKunci);
         let str = '';
-        str = await Renderer_1.render.renderDaftarBarang(barangAr);
         jml;
         return str;
     }

@@ -143,6 +143,7 @@ class FormBarangPage {
     editFotoClick() {
         this.view.detach();
         upload.view.attach(data.cont);
+        upload.reset();
         upload.selesai = () => {
             upload.view.detach();
             upload.selesai = null;
@@ -153,6 +154,7 @@ class FormBarangPage {
         };
         upload.view.tutupTbl.onclick = () => {
             upload.view.detach();
+            upload.reset();
             this.view.attach(data.cont);
             this.resetTinyMCE();
         };

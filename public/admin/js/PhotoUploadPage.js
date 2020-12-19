@@ -30,6 +30,10 @@ class PhotoUploadPage {
         console.log('nama: ' + hasil);
         return hasil;
     }
+    reset() {
+        this._view.fotoCont.innerHTML = '';
+        this._view.thumbCont.innerHTML = '';
+    }
     init() {
         this.initInput(this.view.input);
         this.view.form.onsubmit = () => {
@@ -48,6 +52,7 @@ class PhotoUploadPage {
                             this._view.thumbCont.removeChild(this._view.thumbCont.firstElementChild);
                         }
                         dialog.detach();
+                        this.reset();
                         this._selesai();
                     };
                 }).catch((e) => {
