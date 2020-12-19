@@ -114,7 +114,7 @@ class PhotoUploadPage {
                 // this.uploadTbl.style.display = 'block';
                 //TODO: loading end
             }).catch((e) => {
-                dialog.p.innerHTML = e.message();
+                dialog.p.innerHTML = e.message;
                 dialog.tampil();
             });
         };
