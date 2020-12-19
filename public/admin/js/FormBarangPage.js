@@ -10,6 +10,19 @@ class FormBarangPage {
         this._editMode = false;
         this._view = new View();
         this._selesai = null;
+        this.isi1 = '';
+    }
+    simpanState() {
+        // this.isi1 = JSON.stringify(this.formToObj(1));
+    }
+    checkPerubahan() {
+        let isi2 = JSON.stringify(this.formToObj(1));
+        if (isi2 != this.isi1) {
+            console.log(this.isi1);
+            console.log(isi2);
+            return true;
+        }
+        return false;
     }
     resetTinyMCE() {
         if (tinymce.activeEditor) {
@@ -50,11 +63,18 @@ class FormBarangPage {
             this.editFotoClick();
         };
         this.view.tutupTbl.onclick = () => {
-            window.top.location.href = Util.urlToko;
+            window.top.location.href = Util.urlAdmin;
         };
     }
     editKirim(publish) {
         try {
+            if (false == this.checkPerubahan()) {
+                console.log('tidak berubah');
+                return;
+            }
+            else {
+                console.log('berubah');
+            }
             Util.Ajax('post', '/barang/update/' + this.id, JSON.stringify(this.formToObj(publish)))
                 .then((hasil) => {
                 console.log('update sukses');
@@ -63,7 +83,7 @@ class FormBarangPage {
                 dialog.tampil(false);
                 dialog.okTbl.onclick = () => {
                     console.log('tombol on click');
-                    window.top.location.href = Util.urlToko;
+                    window.top.location.href = Util.urlAdmin;
                 };
             })
                 .catch((_err) => {
@@ -84,7 +104,7 @@ class FormBarangPage {
                 dialog.p.innerText = 'Sukses';
                 dialog.tampil(false);
                 dialog.okTbl.onclick = () => {
-                    window.top.location.href = Util.urlToko;
+                    window.top.location.href = Util.urlAdmin;
                 };
             })
                 .catch((_err) => {
@@ -110,7 +130,7 @@ class FormBarangPage {
             this.view.wa.value = '62xxx';
         }
     }
-    objToForm(data) {
+    objToForm(data, simpanState = false) {
         this.view.namaInput.value = data.nama;
         this.view.deskripsiPanjangInput.value = data.deskripsi_panjang;
         this.view.hargaBarangInput.value = data.harga + '';
@@ -118,18 +138,25 @@ class FormBarangPage {
         this.id = data.id;
         this.view.inputFileId.value = data.file_id;
         this.view.lapakInput.value = data.lapak;
-        // console.group('obj to form');
-        // console.log(data);
-        // console.groupEnd();
+        if (simpanState) {
+            let obj = this.formToObj(1, false);
+            obj.deskripsi_panjang = data.deskripsi_panjang;
+            this.isi1 = JSON.stringify(obj);
+        }
     }
     buatDate() {
         let date = new Date();
         return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
     }
-    //TODO:validasi nomor wa
-    formToObj(publish) {
+    formToObj(publish, ambilDariTiny = true) {
+        let desc = this._view.deskripsiPanjangInput.value;
+        if (ambilDariTiny) {
+            if (tinymce && tinymce.activeEditor) {
+                desc = tinymce.activeEditor.getContent();
+            }
+        }
         return {
-            deskripsi_panjang: tinymce.activeEditor.getContent(),
+            deskripsi_panjang: desc,
             file_id: this.view.inputFileId.value,
             harga: (this.view.hargaBarangInput.value),
             id: this.view.postIdInput.value,

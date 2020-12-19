@@ -5,22 +5,13 @@ const assert_1 = require("assert");
 const Config_1 = require("../Config");
 class BarangSql {
     constructor() {
-        // private bacaBarangPulish: string = `SELECT BARANG.*, FILE.thumb, FILE.gbr 
-        // 										FROM BARANG
-        // 										LEFT JOIN FILE
-        // 										ON BARANG.file_id = FILE.id
-        // 										WHERE BARANG.publish = 1`;
-        // private bacaBaranglapakPulish: string = `SELECT BARANG.*, FILE.thumb, FILE.gbr 
-        // 										FROM BARANG
-        // 										LEFT JOIN FILE
-        // 										ON BARANG.file_id = FILE.id
-        // 										WHERE BARANG.publish = 1
-        // 										AND BARANG.lapak = ?;`;
         this.bacaBaranglapak = `SELECT BARANG.*, FILE.thumb, FILE.gbr 
 											FROM BARANG
 											LEFT JOIN FILE
 											ON BARANG.file_id = FILE.id
-											WHERE BARANG.lapak = ?;`;
+											WHERE BARANG.lapak = ?
+											ORDER BY BARANG.nama 
+											;`;
         this.bacaBarangSemua = `SELECT BARANG.*, FILE.thumb, FILE.gbr 
 											FROM BARANG
 											LEFT JOIN FILE

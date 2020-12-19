@@ -38,6 +38,9 @@ class DaftarBarangPage extends BaseComponent {
         this.tambahTbl.onclick = () => {
             this.tambahClick();
         };
+        this.logoutTbl.onclick = () => {
+            this.logoutClick();
+        };
         this.lihatTbl.onclick = () => {
             if (config.sofwan) {
                 window.top.location.href = "/lapak/" + window.sessionStorage.getItem('lapak');
@@ -46,6 +49,10 @@ class DaftarBarangPage extends BaseComponent {
                 window.top.location.href = "/";
             }
         };
+    }
+    logoutClick() {
+        // Util.Ajax('get', Util.urlLogout, '');
+        window.top.location.href = Util.urlLogout;
     }
     tambahClick() {
         this.detach();
@@ -58,7 +65,8 @@ class DaftarBarangPage extends BaseComponent {
         console.log(item);
         this.detach();
         form.view.attach(data.cont);
-        form.objToForm(item);
+        form.objToForm(item, true);
+        // form.simpanState();
         form.view.gambarHtml.src = item.thumb;
         form.editMode = true;
         form.resetTinyMCE();
@@ -73,7 +81,7 @@ class DaftarBarangPage extends BaseComponent {
                 dialog.p.innerHTML = "Berhasil";
                 dialog.tampil();
                 dialog.okTbl.onclick = () => {
-                    window.top.location.href = Util.urlToko;
+                    window.top.location.href = Util.urlAdmin;
                 };
             }).catch((e) => {
                 dialog.p.innerHTML = e;
@@ -130,6 +138,9 @@ class DaftarBarangPage extends BaseComponent {
     }
     get lihatTbl() {
         return this.getEl('button.lihat');
+    }
+    get logoutTbl() {
+        return this.getEl('button.logout');
     }
 }
 class ItemBarangView extends BaseComponent {

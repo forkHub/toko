@@ -82,12 +82,13 @@ export class Util {
         return Util._resp;
     }
 }
-Util.urlToko = '/admin';
+Util.urlAdmin = '/admin';
 Util.urlAnggotaDaftar = "/anggota/baca";
 Util.urlAnggotaBaru = "/anggota/baru";
 Util.urlAnggotaHapus = "/anggota/hapus";
 Util.urlLoginStatus = '/auth/status';
 Util.urlLogin = '/auth/login';
+Util.urlLogout = '/auth/logout';
 Util.urlBarangBacalapak = '/barang/baca/lapak/';
 Util.urlFileHapus = '/file/hapus/';
 Util._resp = {
