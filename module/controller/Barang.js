@@ -16,7 +16,7 @@ class Barang {
         let jml = await BarangSql_1.barangSql.cariJml(kataKunci);
         return await Renderer_1.render.halDepan.render(barangAr, lapak, hal, jml, kataKunci);
     }
-    //TODO: depecreated diganti cariBarang2 dan return digantu json
+    //TODO: buat api return json
     async cariBarangJSON(kataKunci, hal) {
         let barangAr = await BarangSql_1.barangSql.cari(kataKunci);
         let jml = await BarangSql_1.barangSql.cariJml(kataKunci);

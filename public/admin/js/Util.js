@@ -19,7 +19,7 @@ export class Util {
         return __awaiter(this, void 0, void 0, function* () {
             let data = JSON.stringify({ user_id: window.encodeURIComponent(nama), password: md5(pass) });
             console.log("login " + data);
-            yield Util.Ajax("POST", Util.urlLogin, data);
+            return Util.Ajax("POST", Util.urlLogin, data);
         });
     }
     static LoginStatus() {

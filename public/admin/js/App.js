@@ -29,6 +29,10 @@ class App {
         }).catch((e) => {
             if (401 == Util.resp.code) {
                 login.attach(data.cont);
+                // login.selesai = () => {
+                // 	daftarBarangPage.attach(data.cont);
+                // 	daftarBarangPage.load2();
+                // }
             }
             else {
                 console.error(e);

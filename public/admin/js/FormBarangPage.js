@@ -1,5 +1,5 @@
 import { BaseComponent } from "./BaseComponent.js";
-import { config } from "./Config.js";
+// import { config } from "./Config.js";
 import { data } from "./Data.js";
 import { dialog } from "./Dialog.js";
 import { upload } from "./PhotoUploadPage.js";
@@ -98,15 +98,16 @@ class FormBarangPage {
         }
     }
     default() {
+        let lapak = window.sessionStorage.getItem('lapak');
         this.view.namaInput.value = 'nama';
         this.view.deskripsiPanjangInput.value = 'Deskripsi Barang';
         this.view.hargaBarangInput.value = 'Rp. 1000';
-        this.view.lapakInput.value = config.lapak;
-        if (config.lapak == 'auni') {
+        this.view.lapakInput.value = lapak;
+        if ('auni' == lapak) {
             this.view.wa.value = '6281219753619'; //https://wa.me/6281219753619?text=Assalamualaikum
         }
         else {
-            this.view.wa.value = '62123456789';
+            this.view.wa.value = '62xxx';
         }
     }
     objToForm(data) {

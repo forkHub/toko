@@ -3,6 +3,10 @@ import { config } from "./Config.js";
 import { dialog } from "./Dialog.js";
 import { Util } from "./Util.js";
 class Login2 extends BaseComponent {
+    // private _selesai: Function;
+    // public set selesai(value: Function) {
+    // 	this._selesai = value;
+    // }
     constructor() {
         super();
     }
@@ -25,21 +29,18 @@ class Login2 extends BaseComponent {
             this.lapakInput.type = 'text';
             this.lapakLabel.style.visibility = 'visible';
         }
-        // dialog = App.dialog;
-        // this.rekoverTbl.onclick = () => {
-        // 	//TODO: rekover page
-        // }
-        // this.baruTbl.onclick = () => {
-        // 	//TODOL baru page
-        // }
     }
     formOnSubmit() {
         // console.log(this.password.value);
         try {
-            Util.Login(this.userName.value, this.password.value).then(() => {
-                config.lapak = this.lapakInput.value;
-                // config.save();
+            Util.Login(this.userName.value, this.password.value).then((hasil) => {
+                // config.lapak = this.lapakInput.value;
+                console.log(hasil);
+                // config.lapak = hasil.lapak;
+                window.sessionStorage.setItem('lapak', JSON.parse(hasil).lapak);
                 window.top.location.reload();
+                // this.detach();
+                // this._selesai();
             }).catch(() => {
                 if (401 == Util.resp.code) {
                     dialog.tampil2('Username atau password salah');

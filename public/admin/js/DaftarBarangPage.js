@@ -41,7 +41,7 @@ class DaftarBarangPage extends BaseComponent {
         };
         this.lihatTbl.onclick = () => {
             if (config.sofwan) {
-                window.top.location.href = "/lapak/" + config.lapak;
+                window.top.location.href = "/lapak/" + window.sessionStorage.getItem('lapak');
             }
             else {
                 window.top.location.href = "/";
@@ -86,7 +86,7 @@ class DaftarBarangPage extends BaseComponent {
         return __awaiter(this, void 0, void 0, function* () {
             console.log('load barang ');
             console.log(config);
-            Util.Ajax("post", Util.urlBarangBacalapak + config.lapak, "").then((str) => {
+            Util.Ajax("post", Util.urlBarangBacalapak + window.sessionStorage.getItem('lapak'), "").then((str) => {
                 let barangAr = JSON.parse(str);
                 this.cont.innerHTML = '';
                 console.log('load ' + barangAr.length);

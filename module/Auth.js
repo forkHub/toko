@@ -13,7 +13,11 @@ class Auth {
             TokoLog_1.logT.log('login gagal ' + userName + '/' + password);
             return null;
         }
-        return hasil[0];
+        // return hasil[0];
+        return {
+            id: hasil[0].id,
+            lapak: hasil[0].lapak
+        };
     }
     logout() {
         return null;
