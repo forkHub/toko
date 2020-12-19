@@ -1,5 +1,5 @@
-import { anggotaBaru } from "./AnggotaBaru.js";
-import { anggotaDaftar } from "./AnggotaDaftar.js";
+import { anggotaBaru } from "./reg/AnggotaBaru.js";
+import { anggotaDaftar } from "./reg/AnggotaDaftar.js";
 import { daftarBarangPage } from "./DaftarBarangPage.js";
 import { data } from "./Data.js";
 import { dialog } from "./Dialog.js";

@@ -12,19 +12,18 @@ import { config } from "./Config.js";
 import { data } from "./Data.js";
 import { dialog } from "./Dialog.js";
 import { form } from "./FormBarangPage.js";
-// import { config } from "./IConfig.js";
 import { login } from "./Login2.js";
 import { upload } from "./PhotoUploadPage.js";
 import { Util } from "./Util.js";
 class DaftarBarangPage extends BaseComponent {
-    // private form: FormBarangPage;
     constructor() {
         super();
         this._template = `
 			<div class='daftar-barang-page'>
 				<h1>Daftar Barang</h1>
-				<button type='button' class='btn btn-primary tambah'>Tambah Data</button>
-				<button type='button' class='btn btn-primary lihat'>Lihat Lapak</button>
+				<button type='button' class='btn btn-primary btn-small tambah'>Tambah Data</button>
+				<button type='button' class='btn btn-primary btn-small lihat'>Lihat Lapak</button>
+				<button type='button' class='btn btn-primary btn-small logout'>Logout</button>
 				<br/>
 				<br/>
 				<div class='cont'>

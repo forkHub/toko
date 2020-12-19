@@ -10,29 +10,10 @@ const Connection_1 = require("../Connection");
 const Renderer_1 = require("../Renderer");
 const TokoLog_1 = require("../TokoLog");
 const Barang_1 = require("../controller/Barang");
+const Auth_1 = require("../Auth");
+const Util_1 = require("../Util");
 class Beranda {
     init(app) {
-        app.get("/lapak/:lapak", (_req, resp) => {
-            try {
-                TokoLog_1.logT.log("rendar beranda lapak " + _req.params.lapak);
-                BarangSql_1.barangSql.bacalapakPublish(_req.params.lapak)
-                    .then((data) => {
-                    TokoLog_1.logT.log(data);
-                    return Renderer_1.render.renderBeranda(data, _req.params.lapak, false, 0, 0);
-                })
-                    .then((data) => {
-                    resp.status(200).header("Cache-Control", "max-age=7200").send(data);
-                })
-                    .catch((err) => {
-                    TokoLog_1.logT.log(err);
-                    resp.status(500).send('Error');
-                });
-            }
-            catch (err) {
-                TokoLog_1.logT.log(err);
-                resp.status(500).send('Error');
-            }
-        });
         app.get("/cari/:kataKunci/:hal", (_req, resp) => {
             try {
                 Barang_1.barangController.cariBarangGet(decodeURI(_req.params.kataKunci), parseInt(_req.params.hal), '')
@@ -73,6 +54,14 @@ class Beranda {
                 resp.sendFile(path_1.default.join('index.html'), {
                     root: __dirname + '/public/admin'
                 });
+            }
+            catch (e) {
+                resp.status(500).send(e);
+            }
+        });
+        app.get("/hapus-cache", Auth_1.checkAuth, (_req, resp) => {
+            try {
+                Util_1.util.hapusCache();
             }
             catch (e) {
                 resp.status(500).send(e);
