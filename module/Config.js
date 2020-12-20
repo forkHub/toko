@@ -5,5 +5,5 @@ exports.config = {
     jmlPerHal: 25,
     base: 'http://localhost/',
     namaToko: 'Auni Store',
-    moto: ''
+    moto: 'Belanja cepat, mudah, murah dari rumah'
 };

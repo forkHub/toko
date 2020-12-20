@@ -21,6 +21,9 @@ class LogM {
     }
     log(msg) {
         this._logs.push(msg);
+        if (this._logs.length > 1000) {
+            this._logs.shift();
+        }
     }
     bersih() {
         this._logs = [];

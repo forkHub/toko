@@ -16,7 +16,8 @@ class Auth {
         // return hasil[0];
         return {
             id: hasil[0].id,
-            lapak: hasil[0].lapak
+            lapak: hasil[0].lapak,
+            level: hasil[0].level
         };
     }
     logout() {

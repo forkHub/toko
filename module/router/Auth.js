@@ -15,6 +15,7 @@ exports.router.post("/login", (req, resp) => {
             if (h) {
                 SessionData_1.session(req).level = h.level;
                 SessionData_1.session(req).statusLogin = true;
+                SessionData_1.session(req).lapak = h.lapak;
                 resp.status(200).send(h);
             }
             else {
@@ -36,7 +37,7 @@ exports.router.post("/login", (req, resp) => {
 exports.router.post("/status", (req, resp) => {
     try {
         if (SessionData_1.session(req).statusLogin) {
-            resp.status(200).send('ok');
+            resp.status(200).send(SessionData_1.session(req).lapak);
         }
         else {
             req.session = null;

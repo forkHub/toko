@@ -4,6 +4,13 @@ class SessionData {
     constructor() {
         this._statusLogin = false;
         this._level = '';
+        this._lapak = '';
+    }
+    get lapak() {
+        return this._lapak;
+    }
+    set lapak(value) {
+        this._lapak = value;
     }
     get level() {
         return this._level;

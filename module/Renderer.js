@@ -14,7 +14,7 @@ class HalDepan {
         let barang = await this.renderBerandaBarang(barangData, lapak);
         let halaman = await this.renderHalaman1(hal, jml, kataKunci);
         header = header.replace("{{nama_toko}}", Config_1.config.namaToko);
-        header = header.replace("{{motto}}", Config_1.config.moto);
+        header = header.replace("{{motto}}", "");
         let berandaUrl = "/";
         let hasil = index;
         hasil = hasil.replace("{{cari}}", cari);
@@ -80,7 +80,7 @@ class HalBarang {
         let barangStr = await this.renderBarangDetail(barang);
         let js = await Util_1.util.getFile("view/item-page/js_hal_item.html");
         header = header.replace("{{nama_toko}}", Config_1.config.namaToko);
-        header = header.replace("{{motto}}", Config_1.config.moto);
+        header = header.replace("{{motto}}", "");
         console.log('header');
         console.log(header);
         console.log('index:');
