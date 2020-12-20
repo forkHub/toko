@@ -17,6 +17,10 @@ const Beranda_1 = require("./module/router/Beranda");
 const Barang_2 = require("./module/router/api/Barang");
 const app = express_1.default();
 const port = 3000;
+app.use((req, res, next) => {
+    res.setHeader('Content-Security-Policy-Report-Only', "default-src 'self'; font-src 'self'; img-src 'self' data: blob:; script-src 'self'; style-src 'self'; frame-src 'self'");
+    next();
+});
 app.use(express_1.default.static(__dirname + "/public"));
 app.use(express_1.default.json({ limit: '5mb' }));
 app.use(cookie_session_1.default({
