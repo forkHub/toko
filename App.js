@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const helmet_1 = __importDefault(require("helmet"));
 const Connection_1 = require("./module/Connection");
 const Barang_1 = require("./module/router/Barang");
 const File_1 = require("./module/router/File");
@@ -23,10 +24,18 @@ app.use(cookie_session_1.default({
     name: 'toko_session',
     keys: ['Auni_202002_cookie_session']
 }));
-app.use((req, res, next) => {
-    res.setHeader('Content-Security-Policy', "default-src 'self' 'unsafe-inline' 'unsafe-eval'; font-src 'self'; img-src 'self' data: blob:; script-src 'self'; style-src 'self'; frame-src 'self'");
-    next();
-});
+// app.use((req, res, next) => {
+// 	res.setHeader(
+// 		'Content-Security-Policy',
+// 		"default-src 'self' 'unsafe-inline' 'unsafe-eval'; font-src 'self'; img-src 'self' data: blob:; script-src 'self'; style-src 'self'; frame-src 'self'"
+// 	);
+// 	next();
+// });
+app.use(helmet_1.default.contentSecurityPolicy({
+    directives: {
+        defaultSrc: ["'self'", "'unsafe-eval'", "'unsafe-inline'", "data:", "blob:"]
+    }
+}));
 app.use("/barang", Barang_1.router);
 app.use("/barang", Barang_2.routerApiBarang); //TODO: pakai API
 app.use("/file", File_1.router);
