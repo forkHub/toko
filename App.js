@@ -18,7 +18,7 @@ const Barang_2 = require("./module/router/api/Barang");
 const app = express_1.default();
 const port = 3000;
 app.use((req, res, next) => {
-    res.setHeader('Content-Security-Policy-Report-Only', "default-src 'self'; font-src 'self'; img-src 'self' data: blob:; script-src 'self'; style-src 'self'; frame-src 'self'");
+    res.setHeader('Content-Security-Policy', "default-src 'self' 'unsafe-inline' 'unsafe-eval'; font-src 'self'; img-src 'self' data: blob:; script-src 'self'; style-src 'self'; frame-src 'self'");
     next();
 });
 app.use(express_1.default.static(__dirname + "/public"));
