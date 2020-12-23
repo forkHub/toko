@@ -1,6 +1,6 @@
 import { anggotaDaftar } from "./reg/AnggotaDaftar.js";
 import { BaseComponent } from "./BaseComponent.js";
-import { daftarBarangPage } from "./DaftarBarangPage.js";
+import { daftarBarangPage } from "./barang/DaftarBarangPage.js";
 import { data } from "./Data.js";
 class MenuSystem extends BaseComponent {
     constructor() {

@@ -81,18 +81,17 @@ class HalBarang {
         let js = await Util_1.util.getFile("view/item-page/js_hal_item.html");
         header = header.replace("{{nama_toko}}", Config_1.config.namaToko);
         header = header.replace("{{motto}}", "");
-        console.log('header');
-        console.log(header);
-        console.log('index:');
-        console.log(index);
+        // console.log('header');
+        // console.log(header);
+        // console.log('index:');
+        // console.log(index);
         let hasil = index;
         hasil = index.replace("{{header}}", header);
-        console.log('hasil');
-        console.log(hasil);
         hasil = hasil.replace("{{cari}}", "");
         hasil = hasil.replace("{{nav_src}}", "/");
         hasil = hasil.replace("{{content}}", barangStr);
         hasil = hasil.replace("{{js}}", js);
+        hasil = hasil.replace("{{halaman}}", "");
         console.log('hasil');
         return hasil;
     }

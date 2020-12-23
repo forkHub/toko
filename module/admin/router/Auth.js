@@ -5,9 +5,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 // import { stat } from "fs";
-const Auth_1 = require("../Auth");
-const SessionData_1 = require("../SessionData");
-const TokoLog_1 = require("../TokoLog");
+const Auth_1 = require("../../Auth");
+const SessionData_1 = require("../../SessionData");
+const TokoLog_1 = require("../../TokoLog");
 exports.router = express_1.default.Router();
 exports.router.post("/login", (req, resp) => {
     try {

@@ -11,9 +11,15 @@ import { data } from "./Data.js";
 // import { dialog } from "./Dialog.js";
 import { loading } from "./Loading.js";
 export class Util {
-    //TODO:
     static escape(str) {
-        return str;
+        let hasil = str;
+        while (hasil.indexOf("<") > -1) {
+            hasil = hasil.replace("<", "&lt;");
+        }
+        while (hasil.indexOf(">") > -1) {
+            hasil = hasil.replace(">", "&gt;");
+        }
+        return hasil;
     }
     static Login(nama, pass) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -27,7 +33,7 @@ export class Util {
             yield Util.Ajax("POST", Util.urlLoginStatus, "");
             console.log('login ok ' + Util.resp.code);
             if (401 == Util._resp.code)
-                throw Error('');
+                throw Error('Belum Login');
             return Util._resp.message;
         });
     }
@@ -91,6 +97,7 @@ Util.urlLogin = '/auth/login';
 Util.urlLogout = '/auth/logout';
 Util.urlBarangBacalapak = '/barang/baca/lapak/';
 Util.urlFileHapus = '/file/hapus/';
+Util.sLapak = 'lapak';
 Util._resp = {
     code: 0,
     message: ''

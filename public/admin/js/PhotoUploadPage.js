@@ -91,7 +91,7 @@ class PhotoUploadPage {
                 maxHeight: lebar,
                 canvas: true,
                 orientation: true,
-                imageSmoothingQuality: 'high'
+                imageSmoothingQuality: 'high',
             });
             canvas = img.image;
             canvas.setAttribute("id", id);
@@ -108,11 +108,10 @@ class PhotoUploadPage {
         return JSON.stringify(obj);
     }
     initInput(input) {
-        //TODO: loading
+        loading.tampil();
         input.onchange = () => {
             this.loadImage3(input).then(() => {
-                // this.uploadTbl.style.display = 'block';
-                //TODO: loading end
+                loading.detach();
             }).catch((e) => {
                 dialog.p.innerHTML = e.message;
                 dialog.tampil();

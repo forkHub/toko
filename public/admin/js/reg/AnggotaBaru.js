@@ -62,7 +62,6 @@ class AnggotaBaru extends BaseComponent {
                     this.kotakGalat.innerHTML += "<p>Password tidak sama</p>";
                     return false;
                 }
-                //TODO: validasi tambahan
                 this.daftar().then(() => {
                     this._selesai();
                 }).catch(() => {

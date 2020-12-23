@@ -37,7 +37,7 @@ class Login2 extends BaseComponent {
                 // config.lapak = this.lapakInput.value;
                 console.log(hasil);
                 // config.lapak = hasil.lapak;
-                window.sessionStorage.setItem('lapak', JSON.parse(hasil).lapak);
+                window.sessionStorage.setItem(Util.sLapak, JSON.parse(hasil).lapak);
                 window.top.location.reload();
                 // this.detach();
                 // this._selesai();

@@ -8,14 +8,14 @@ const helmet_1 = __importDefault(require("helmet"));
 const Connection_1 = require("./module/Connection");
 const Barang_1 = require("./module/router/Barang");
 const File_1 = require("./module/router/File");
-const Auth_1 = require("./module/router/Auth");
+const Auth_1 = require("./module/admin/router/Auth");
 const Install_1 = require("./module/router/Install");
 const TokoTest_1 = require("./module/router/TokoTest");
 const Anggota_1 = require("./module/router/Anggota");
 const TokoLog_1 = require("./module/TokoLog");
 const cookie_session_1 = __importDefault(require("cookie-session"));
 const Beranda_1 = require("./module/router/Beranda");
-const Barang_2 = require("./module/router/api/Barang");
+const Barang_2 = require("./module/admin/router/Barang");
 const app = express_1.default();
 const port = 3000;
 app.use(express_1.default.static(__dirname + "/public"));
@@ -24,13 +24,6 @@ app.use(cookie_session_1.default({
     name: 'toko_session',
     keys: ['Auni_202002_cookie_session']
 }));
-// app.use((req, res, next) => {
-// 	res.setHeader(
-// 		'Content-Security-Policy',
-// 		"default-src 'self' 'unsafe-inline' 'unsafe-eval'; font-src 'self'; img-src 'self' data: blob:; script-src 'self'; style-src 'self'; frame-src 'self'"
-// 	);
-// 	next();
-// });
 app.use(helmet_1.default.contentSecurityPolicy({
     directives: {
         defaultSrc: ["'self'", "'unsafe-eval'", "'unsafe-inline'", "data:", "blob:"]

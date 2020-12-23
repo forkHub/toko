@@ -92,3 +92,12 @@ div.deskripsi
 p.nama {
 	flex-grow: 1;
 }
+
+/* foto upload */
+div.foto-page form div.foto-cont canvas {
+	display:none;
+}
+
+div.foto-page form p.foto {
+	display:none;
+}

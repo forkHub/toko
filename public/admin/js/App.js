@@ -1,9 +1,9 @@
 import { anggotaBaru } from "./reg/AnggotaBaru.js";
 import { anggotaDaftar } from "./reg/AnggotaDaftar.js";
-import { daftarBarangPage } from "./DaftarBarangPage.js";
+import { daftarBarangPage } from "./barang/DaftarBarangPage.js";
 import { data } from "./Data.js";
 import { dialog } from "./Dialog.js";
-import { form } from "./FormBarangPage.js";
+import { form } from "./barang/FormBarangPage.js";
 import { login } from "./Login2.js";
 import { menuSystem } from "./MenuSystem.js";
 import { upload } from "./PhotoUploadPage.js";
@@ -22,17 +22,14 @@ class App {
         dialog.detach();
         data.cont = App.getEl('div.main-cont');
         console.log('get login status');
-        Util.LoginStatus().then(() => {
-            console.log('login ok');
+        Util.LoginStatus().then((h) => {
+            console.log('login ok ' + h);
+            sessionStorage.setItem(Util.sLapak, JSON.parse(h).lapak);
             daftarBarangPage.attach(data.cont);
             daftarBarangPage.load2();
         }).catch((e) => {
             if (401 == Util.resp.code) {
                 login.attach(data.cont);
-                // login.selesai = () => {
-                // 	daftarBarangPage.attach(data.cont);
-                // 	daftarBarangPage.load2();
-                // }
             }
             else {
                 console.error(e);
