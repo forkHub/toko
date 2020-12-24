@@ -50,6 +50,8 @@ class DaftarBarangPage extends BaseComponent {
             }
         };
     }
+    tampil() {
+    }
     logoutClick() {
         window.top.location.href = Util.urlLogout;
     }

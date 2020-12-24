@@ -30,11 +30,12 @@ export class Util {
     }
     static LoginStatus() {
         return __awaiter(this, void 0, void 0, function* () {
-            yield Util.Ajax("POST", Util.urlLoginStatus, "");
+            let hasil = yield Util.Ajax("POST", Util.urlLoginStatus, "");
             console.log('login ok ' + Util.resp.code);
+            console.log('login ok ' + hasil);
             if (401 == Util._resp.code)
                 throw Error('Belum Login');
-            return Util._resp.message;
+            return hasil;
         });
     }
     static Ajax(type, url, dataStr) {
