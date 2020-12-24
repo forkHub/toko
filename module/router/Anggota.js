@@ -34,9 +34,10 @@ exports.router.post("/hapus", (req, resp) => {
 exports.router.post("/baru", (req, resp) => {
     try {
         let data = {
-            id: req.body.id,
             password: req.body.password,
             level: req.body.level,
+            user_id: req.body.user_id,
+            lapak: req.body.lapak
         };
         Anggota_1.anggota.baru(data)
             .then(() => {

@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+// import { PoolConnection } from "mysql";
 const Connection_1 = require("../Connection");
 class Anggota {
     constructor() {
@@ -20,6 +21,8 @@ class Anggota {
     }
     async baru(data) {
         return new Promise((resolve, reject) => {
+            // console.log('anggota baru');
+            // console.log(data);
             Connection_1.Connection.pool.query(`INSERT INTO pengguna SET ?`, data, (_err, _rows) => {
                 if (_err) {
                     reject(_err);
@@ -58,9 +61,9 @@ class Anggota {
             });
         });
     }
-    async userId(pool, userId, password) {
+    async userId(userId, password) {
         return new Promise((resolve, reject) => {
-            pool.query(this.GET_USER_SQL, [userId, password], (_err, _rows) => {
+            Connection_1.Connection.pool.query(this.GET_USER_SQL, [userId, password], (_err, _rows) => {
                 if (_err) {
                     reject(_err.message);
                 }

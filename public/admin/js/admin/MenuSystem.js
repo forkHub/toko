@@ -1,7 +1,7 @@
-import { anggotaDaftar } from "./reg/AnggotaDaftar.js";
-import { BaseComponent } from "./BaseComponent.js";
-import { daftarBarangPage } from "./barang/DaftarBarangPage.js";
-import { data } from "./Data.js";
+import { anggotaDaftar } from "./AnggotaDaftar.js";
+import { BaseComponent } from "../BaseComponent.js";
+import { daftarBarangPage } from "../barang/DaftarBarangPage.js";
+import { data } from "../Data.js";
 class MenuSystem extends BaseComponent {
     constructor() {
         super();

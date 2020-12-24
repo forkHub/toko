@@ -8,23 +8,26 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { BaseComponent } from "../BaseComponent.js";
+import { data } from "../Data.js";
 import { dialog } from "../Dialog.js";
 import { Util } from "../Util.js";
 class AnggotaBaru extends BaseComponent {
     constructor() {
+        console.log('anggota baru');
         super();
         this._template = `
 			<div class='anggota-baru'>
 				<div class='error'></div>
+				<h1>Anggota Baru</h1>
 				<form action="">
 					<div class="form-group">
-						<label for="nama_anggota">Nama:</label>
-						<input type="text" class="form-control nama_anggota" name="nama_anggota" id="nama_barang" required />
+						<label for="user_name">User Name:</label>
+						<input type="text" class="form-control user_name" name="user_name" id="user_name" required />
 					</div>
 
 					<div class="form-group">
-						<label for="email_anggota">Email:</label>
-						<input type="email" class="form-control email_anggota" name="email_anggota" id="email_anggota" required />
+						<label for="user_name">Lapak:</label>
+						<input type="text" class="form-control lapak" name="lapak" id="lapak" required />
 					</div>
 
 					<div class="form-group">
@@ -34,7 +37,7 @@ class AnggotaBaru extends BaseComponent {
 
 					<div class="form-group">
 						<label for="password_anggota2">Password 2:</label>
-						<input type="password" class="form-control password_anggota" name="password_anggota2" id="password_anggota2" required />
+						<input type="password" class="form-control password_anggota2" name="password_anggota2" id="password_anggota2" required />
 					</div>
 
 					<button type="submit" class="btn btn-primary submit">Simpan</button>
@@ -43,16 +46,15 @@ class AnggotaBaru extends BaseComponent {
 			</div>
 		`;
         this.build();
-    }
-    set selesai(value) {
-        this._selesai = value;
-    }
-    set batal(value) {
-        this._batal = value;
+        window.onload = () => {
+            console.log('window on load');
+            this.init();
+        };
     }
     init() {
         this.tutupTbl.onclick = () => {
-            this._batal();
+            // this._batal();
+            window.top.location.href = '/';
         };
         this.form.onsubmit = () => {
             this.kotakGalat.innerHTML = '';
@@ -63,7 +65,11 @@ class AnggotaBaru extends BaseComponent {
                     return false;
                 }
                 this.daftar().then(() => {
-                    this._selesai();
+                    dialog.tampil2('Terima kasih. Pendaftaran Anda menunggu persetujuan dari admin');
+                    dialog.okTbl.onclick = () => {
+                        // this._selesai();
+                        window.top.location.href = '/';
+                    };
                 }).catch(() => {
                     dialog.tampil2(Util.resp.message);
                 });
@@ -73,18 +79,20 @@ class AnggotaBaru extends BaseComponent {
             }
             return false;
         };
+        data.cont = document.body.querySelector('div.main-cont');
+        this.attach(data.cont);
     }
     daftar() {
         return __awaiter(this, void 0, void 0, function* () {
             yield Util.Ajax("post", Util.urlAnggotaBaru, this.form2Obj());
-            yield Util.Login(this.nama.value, this.password.value);
         });
     }
     form2Obj() {
         let obj = {
-            nama: this.nama.value,
-            password: this.password.value,
-            email: this.email.value
+            user_id: this.nama.value,
+            password: md5(this.password.value),
+            level: 'user',
+            lapak: this.lapak.value,
         };
         return JSON.stringify(obj);
     }
@@ -98,7 +106,7 @@ class AnggotaBaru extends BaseComponent {
         return this.getEl('form');
     }
     get nama() {
-        return this.getEl('input.nama_anggota');
+        return this.getEl('input.user_name');
     }
     get password() {
         return this.getEl('input.password_anggota');
@@ -106,8 +114,8 @@ class AnggotaBaru extends BaseComponent {
     get password2() {
         return this.getEl('input.password_anggota2');
     }
-    get email() {
-        return this.getEl('input.email_anggota');
+    get lapak() {
+        return this.getEl('input.lapak');
     }
 }
 export var anggotaBaru = new AnggotaBaru();

@@ -1,9 +1,6 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const path_1 = __importDefault(require("path"));
+// import path from "path";
 const App_1 = require("../../App");
 const BarangSql_1 = require("../entity/BarangSql");
 const Connection_1 = require("../Connection");
@@ -49,14 +46,26 @@ class Beranda {
                 resp.status(500).send('Error');
             }
         });
-        app.get("/admin", (_req, resp) => {
+        // app.get("/admin", (_req: express.Request, resp: express.Response) => {
+        // 	try {
+        // 		resp.sendFile(path.join('index.html'), {
+        // 			root: __dirname + '/public/admin'
+        // 		});
+        // 	}
+        // 	catch (e) {
+        // 		resp.status(500).send(e);
+        // 	}
+        // })
+        app.get("/daftar", (_req, resp) => {
             try {
-                resp.sendFile(path_1.default.join('index.html'), {
-                    root: __dirname + '/public/admin'
+                Util_1.util.getFile('view/daftar.html').then((h) => {
+                    resp.status(200).send(h);
+                }).catch((e) => {
+                    resp.status(500).send(e.message);
                 });
             }
             catch (e) {
-                resp.status(500).send(e);
+                resp.status(500).send(e.message);
             }
         });
         app.get("/hapus-cache", Auth_1.checkAuth, (_req, resp) => {

@@ -1,11 +1,10 @@
-import { anggotaBaru } from "./reg/AnggotaBaru.js";
-import { anggotaDaftar } from "./reg/AnggotaDaftar.js";
+// import { anggotaBaru } from "./reg/AnggotaBaru.js";
+import { anggotaDaftar } from "./admin/AnggotaDaftar.js";
 import { daftarBarangPage } from "./barang/DaftarBarangPage.js";
 import { data } from "./Data.js";
 import { dialog } from "./Dialog.js";
 import { form } from "./barang/FormBarangPage.js";
 import { login } from "./Login2.js";
-import { menuSystem } from "./MenuSystem.js";
 import { upload } from "./PhotoUploadPage.js";
 import { Util } from "./Util.js";
 class App {
@@ -16,11 +15,15 @@ class App {
         upload.init();
         login.init();
         anggotaDaftar.init();
-        anggotaBaru.init();
+        // anggotaBaru.init();
         daftarBarangPage.init();
-        menuSystem.init();
         dialog.detach();
         data.cont = App.getEl('div.main-cont');
+        this.loginStatus();
+    }
+    query() {
+    }
+    loginStatus() {
         console.log('get login status');
         Util.LoginStatus().then((h) => {
             console.log('login ok ' + h);
