@@ -54,7 +54,7 @@ exports.router.post("/update/:id", (req, resp) => {
         Anggota_1.anggota.update({
             password: req.body.password,
             level: req.body.level,
-            id: req.params.id,
+            user_id: req.params.user_id,
             lapak: req.body.lapak
         }, req.params.id).then(() => {
             resp.status(200).end();

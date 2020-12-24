@@ -6,6 +6,13 @@ class SessionData {
         this._level = '';
         this._lapak = '';
         this._id = '';
+        this._user_id = '';
+    }
+    get user_id() {
+        return this._user_id;
+    }
+    set user_id(value) {
+        this._user_id = value;
     }
     get id() {
         return this._id;

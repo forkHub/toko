@@ -5,18 +5,19 @@ const TokoLog_1 = require("./TokoLog");
 const SessionData_1 = require("./SessionData");
 const Anggota_1 = require("./entity/Anggota");
 class Auth {
-    async login(userName, password) {
+    async login(userId, password) {
         TokoLog_1.logT.log('Auth: login ');
         let pool = await Connection_1.Connection.getPool();
-        let hasil = await Anggota_1.anggota.bacaId(pool, userName, password);
+        let hasil = await Anggota_1.anggota.userId(pool, userId, password);
         if (hasil.length == 0) {
-            TokoLog_1.logT.log('login gagal ' + userName + '/' + password);
+            TokoLog_1.logT.log('login gagal ' + userId + '/' + password);
             return null;
         }
         return {
             id: hasil[0].id,
             lapak: hasil[0].lapak,
-            level: hasil[0].level
+            level: hasil[0].level,
+            user_id: hasil[0].user_id
         };
     }
     logout() {

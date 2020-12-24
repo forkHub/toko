@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Connection_1 = require("../Connection");
 class Anggota {
     constructor() {
-        this.GET_USER_SQL = `SELECT * FROM pengguna WHERE ID = ? && PASSWORD = ? LIMIT 1`;
+        this.GET_USER_SQL = `SELECT * FROM pengguna WHERE user_id = ? && password = ? LIMIT 1`;
     }
     async baca() {
         return new Promise((resolve, reject) => {
@@ -58,9 +58,9 @@ class Anggota {
             });
         });
     }
-    async bacaId(pool, id, password) {
+    async userId(pool, userId, password) {
         return new Promise((resolve, reject) => {
-            pool.query(this.GET_USER_SQL, [id, password], (_err, _rows) => {
+            pool.query(this.GET_USER_SQL, [userId, password], (_err, _rows) => {
                 if (_err) {
                     reject(_err.message);
                 }
