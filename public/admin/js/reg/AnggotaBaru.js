@@ -92,7 +92,7 @@ class AnggotaBaru extends BaseComponent {
             user_id: this.nama.value,
             password: md5(this.password.value),
             level: 'user',
-            lapak: this.lapak.value,
+            lapak: this.lapak.value
         };
         return JSON.stringify(obj);
     }

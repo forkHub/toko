@@ -3,10 +3,6 @@ import { config } from "./Config.js";
 import { dialog } from "./Dialog.js";
 import { Util } from "./Util.js";
 class Login2 extends BaseComponent {
-    // private _selesai: Function;
-    // public set selesai(value: Function) {
-    // 	this._selesai = value;
-    // }
     constructor() {
         super();
     }
