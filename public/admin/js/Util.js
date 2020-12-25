@@ -93,6 +93,7 @@ Util.urlAdmin = '/admin';
 Util.urlAnggotaDaftar = "/anggota/baca";
 Util.urlAnggotaBaru = "/anggota/baru";
 Util.urlAnggotaHapus = "/anggota/hapus";
+Util.urlAnggotaDaftarSetuju = '/anggota/daftar/setuju';
 Util.urlLoginStatus = '/auth/status';
 Util.urlLogin = '/auth/login';
 Util.urlLogout = '/auth/logout';

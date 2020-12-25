@@ -7,6 +7,7 @@ import { form } from "./barang/FormBarangPage.js";
 import { login } from "./Login2.js";
 import { upload } from "./PhotoUploadPage.js";
 import { Util } from "./Util.js";
+import { admin } from "./admin/Admin.js";
 class App {
     constructor() {
         console.log('App init');
@@ -27,9 +28,17 @@ class App {
         console.log('get login status');
         Util.LoginStatus().then((h) => {
             console.log('login ok ' + h);
-            sessionStorage.setItem(Util.sLapak, JSON.parse(h).lapak);
-            daftarBarangPage.attach(data.cont);
-            daftarBarangPage.load2();
+            let obj = JSON.parse(h);
+            if (obj.level == 'user') {
+                sessionStorage.setItem(Util.sLapak, obj.lapak);
+                daftarBarangPage.attach(data.cont);
+                daftarBarangPage.load2();
+            }
+            else if (obj.level == 'admin') {
+                admin.menu.attach(data.cont);
+            }
+            else {
+            }
         }).catch((e) => {
             if (401 == Util.resp.code) {
                 login.attach(data.cont);
