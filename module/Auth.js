@@ -1,7 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-// import { PoolConnection } from "mysql";
-// import { Connection } from "./Connection";
 const TokoLog_1 = require("./TokoLog");
 const SessionData_1 = require("./SessionData");
 const Anggota_1 = require("./entity/Anggota");
@@ -21,7 +19,8 @@ class Auth {
             id: hasil[0].id,
             lapak: hasil[0].lapak,
             level: hasil[0].level,
-            user_id: hasil[0].user_id
+            user_id: hasil[0].user_id,
+            password: ''
         };
     }
     logout() {

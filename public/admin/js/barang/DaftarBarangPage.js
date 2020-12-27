@@ -61,17 +61,18 @@ class DaftarBarangPage extends BaseComponent {
         form.editMode = false;
         form.default();
         form.resetTinyMCE();
+        form.tampil(null, true);
     }
     barangEditlick(item) {
         console.log(item);
         this.detach();
         form.view.attach(data.cont);
-        form.objToForm(item, true);
-        // form.simpanState();
+        form.objToForm(item);
         form.view.gambarHtml.src = item.thumb;
         form.editMode = true;
         form.resetTinyMCE();
         upload.idLama = item.file_id;
+        form.tampil(item, false);
     }
     barangHapusClick(item) {
         let hasil = confirm("Hapus Data?");

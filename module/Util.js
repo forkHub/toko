@@ -7,10 +7,17 @@ const fs_1 = __importDefault(require("fs"));
 class Util {
     constructor() {
         this.caches = [];
+        this._randId = '';
     }
     buatDate() {
         let date = new Date();
         return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+    }
+    buatRandom() {
+        this._randId = '';
+        for (let i = 0; i < 10; i++) {
+            this._randId += (Math.floor(Math.random() * 10) + '');
+        }
     }
     ambilDariCache(url) {
         let hasil = '';
@@ -60,6 +67,9 @@ class Util {
     }
     buatWa(wa, namaBarang) {
         return 'https://wa.me/' + wa + "?text==========%0D%0A" + namaBarang + "%0D%0A=========%0D%0AAssalamu'alaikum:";
+    }
+    get randId() {
+        return this._randId;
     }
 }
 exports.util = new Util();

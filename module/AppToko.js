@@ -1,6 +1,8 @@
-import { BaseComponent } from "./BaseComponent.js";
-import { dialog } from "./Dialog.js";
-import { Util } from "./Util.js";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const BaseComponent_js_1 = require("./BaseComponent.js");
+const Dialog_js_1 = require("./Dialog.js");
+const Util_js_1 = require("./Util.js");
 class AppToko {
     constructor() {
         this.items = [];
@@ -18,7 +20,7 @@ class AppToko {
     cariBarangGet() {
         try {
             //TODO: goto url;
-            window.top.location.href = Util.urlBarangCariGet + window.encodeURI(this.kataKunciInput.value) + "/0";
+            window.top.location.href = Util_js_1.Util.urlBarangCariGet + window.encodeURI(this.kataKunciInput.value) + "/0";
         }
         catch (e) {
             return false;
@@ -28,10 +30,10 @@ class AppToko {
     //TODO: depecreated diganti dengan get
     cariBarangPost() {
         try {
-            Util.Ajax("post", Util.urlBarangCariPost, JSON.stringify({ kataKunci: this.kataKunciInput.value })).then((hasil) => {
+            Util_js_1.Util.Ajax("post", Util_js_1.Util.urlBarangCariPost, JSON.stringify({ kataKunci: this.kataKunciInput.value })).then((hasil) => {
                 console.log('hasil ');
                 if (!hasil || hasil == '' || hasil.length == 0) {
-                    dialog.tampil2('pencarian tidak menemukan hasil');
+                    Dialog_js_1.dialog.tampil2('pencarian tidak menemukan hasil');
                 }
                 else {
                     console.log(hasil);
@@ -43,14 +45,14 @@ class AppToko {
                 return false;
             }).catch((e) => {
                 console.warn(e);
-                dialog.tampil2(e.message);
+                Dialog_js_1.dialog.tampil2(e.message);
                 // loading.detach();
             });
         }
         catch (e) {
             console.warn(e.message);
             console.warn(e);
-            dialog.tampil2(e.message);
+            Dialog_js_1.dialog.tampil2(e.message);
             // loading.detach();
             return false;
         }
@@ -194,7 +196,7 @@ class AppToko {
         return AppToko.getEl('div.halaman div.content span.terakhir');
     }
 }
-class Item extends BaseComponent {
+class Item extends BaseComponent_js_1.BaseComponent {
     constructor() {
         super();
         this._ukuranKecil = 0;

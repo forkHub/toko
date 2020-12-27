@@ -16,7 +16,6 @@ class App {
         upload.init();
         login.init();
         anggotaDaftar.init();
-        // anggotaBaru.init();
         daftarBarangPage.init();
         dialog.detach();
         data.cont = App.getEl('div.main-cont');
@@ -31,6 +30,7 @@ class App {
             let obj = JSON.parse(h);
             if (obj.level == 'user') {
                 sessionStorage.setItem(Util.sLapak, obj.lapak);
+                sessionStorage.setItem(Util.sLapakId, obj.id);
                 daftarBarangPage.attach(data.cont);
                 daftarBarangPage.load2();
             }

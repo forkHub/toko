@@ -1,5 +1,4 @@
 import { BaseComponent } from "../BaseComponent.js";
-// import { config } from "./Config.js";
 import { data } from "../Data.js";
 import { dialog } from "../Dialog.js";
 import { upload } from "../PhotoUploadPage.js";
@@ -11,7 +10,16 @@ class FormBarangPage {
         this._view = new View();
         this._selesai = null;
     }
-    // private isi1: string = '';
+    tampil(_item, _baru) {
+        //TODO:
+        this._view.namaInput.focus;
+    }
+    baru() {
+        //TODO:
+    }
+    edit() {
+        //TODO:
+    }
     simpanState() {
         //TODO: implementasi
     }
@@ -132,7 +140,7 @@ class FormBarangPage {
             this.view.wa.value = '62xxx';
         }
     }
-    objToForm(data, simpanState = false) {
+    objToForm(data) {
         this.view.namaInput.value = data.nama;
         this.view.deskripsiPanjangInput.value = data.deskripsi_panjang;
         this.view.hargaBarangInput.value = data.harga + '';
@@ -140,21 +148,14 @@ class FormBarangPage {
         this.id = data.id;
         this.view.inputFileId.value = data.file_id;
         this.view.lapakInput.value = data.lapak;
-        if (simpanState) {
-            this.simpanState();
-        }
+        this.view.lapakIdInput.value = data.lapak_id;
     }
     buatDate() {
         let date = new Date();
         return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
     }
-    formToObj(publish, ambilDariTiny = true) {
+    formToObj(publish) {
         let desc = this._view.deskripsiPanjangInput.value;
-        if (ambilDariTiny) {
-            if (tinymce && tinymce.activeEditor) {
-                desc = tinymce.activeEditor.getContent();
-            }
-        }
         return {
             deskripsi_panjang: desc,
             file_id: Util.escape(this.view.inputFileId.value),
@@ -164,7 +165,8 @@ class FormBarangPage {
             wa: Util.escape(this.view.wa.value),
             publish: publish,
             lapak: Util.escape(this.view.lapakInput.value),
-            last_view: this.buatDate()
+            last_view: this.buatDate(),
+            lapak_id: this.view.lapakIdInput.value
         };
     }
     editFotoClick() {
@@ -247,6 +249,9 @@ class View extends BaseComponent {
     }
     get lapakInput() {
         return this.getEl('input.lapak');
+    }
+    get lapakIdInput() {
+        return this.getEl('input.lapak_id');
     }
 }
 export var form = new FormBarangPage();

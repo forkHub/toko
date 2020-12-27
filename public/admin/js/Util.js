@@ -56,15 +56,16 @@ export class Util {
                         else {
                             console.log('response error');
                             Util._resp.code = xhr.status;
-                            Util._resp.message = xhr.statusText;
+                            Util._resp.message = xhr.responseText;
                             loading.detach();
-                            reject(new Error('(' + xhr.status + ') ' + xhr.statusText));
+                            reject(new Error('(' + xhr.status + ') ' + xhr.responseText));
                         }
                     };
-                    xhr.onerror = () => {
+                    xhr.onerror = (e) => {
                         console.log('xhr error');
+                        console.log(e);
                         Util._resp.code = 500;
-                        Util._resp.message = 'Error';
+                        Util._resp.message = e.message;
                         loading.detach();
                         reject(new Error('Error'));
                     };
@@ -78,9 +79,9 @@ export class Util {
                     console.log('Util error');
                     console.log(e);
                     Util._resp.code = 500;
-                    Util._resp.message = 'Error';
+                    Util._resp.message = e.message;
                     loading.detach();
-                    reject(new Error('Error'));
+                    reject(new Error(e.message));
                 }
             });
         });
@@ -99,7 +100,10 @@ Util.urlLogin = '/auth/login';
 Util.urlLogout = '/auth/logout';
 Util.urlBarangBacalapak = '/barang/baca/lapak/';
 Util.urlFileHapus = '/file/hapus/';
-Util.sLapak = 'lapak';
+Util.urlBarangCariPost = '/barang/cari';
+Util.urlBarangCariGet = '/cari/';
+Util.sLapak = 'lapak'; //TODO: dihapus
+Util.sLapakId = 'lapak_id';
 Util._resp = {
     code: 0,
     message: ''

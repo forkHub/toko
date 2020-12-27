@@ -43,7 +43,8 @@ exports.router.post("/status", (req, resp) => {
             id: SessionData_1.session(req).id,
             level: SessionData_1.session(req).level,
             lapak: SessionData_1.session(req).lapak,
-            user_id: SessionData_1.session(req).user_id
+            user_id: SessionData_1.session(req).user_id,
+            password: ''
         };
         if (SessionData_1.session(req).statusLogin) {
             resp.status(200).send(status);

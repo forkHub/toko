@@ -51,6 +51,13 @@ div.form-barang div.foto-cont img {
 	border: 1px solid;
 }
 
+div.form-barang div.form-group.lapak_id,
+div.form-barang div.form-group.lapak
+{
+	display:none;
+}
+
+
 /* Daftar barang page */
 div.daftar-barang-page 
 div.item-barang  {

@@ -59,7 +59,8 @@ class BarangSql {
             });
         });
     }
-    async cari(kataKunci, offset = 0) {
+    async cari(kataKunci, offset, _lapak) {
+        let lapakQuery = ''; //TODO:
         let query = `SELECT BARANG.*, FILE.thumb, FILE.gbr
 			FROM BARANG
 			LEFT JOIN FILE
@@ -67,10 +68,10 @@ class BarangSql {
 			WHERE BARANG.publish = 1
 			AND (BARANG.nama like ?
 			OR BARANG.deskripsi_panjang like ?)
+			${lapakQuery}
 			LIMIT ?
 			OFFSET ?
 			`;
-        // let jml: number = await this.cariJml(kataKunci);
         return new Promise((resolve, reject) => {
             try {
                 Connection_1.Connection.pool.query(query, [
@@ -140,15 +141,19 @@ class BarangSql {
         });
     }
     //TODO: pakai paging
-    async bacaPublish(mulai = 0, jml = 25) {
+    async bacaPublish(_mulai, _jml, lapak) {
         let query = `
 			SELECT BARANG.*, FILE.thumb, FILE.gbr 
 			FROM BARANG
 			LEFT JOIN FILE
 			ON BARANG.file_id = FILE.id
-			WHERE BARANG.publish = 1
+			WHERE BARANG.publish = 1`;
+        if (lapak != '') {
+            query += `AND lapak_id = ` + lapak;
+        }
+        query += `
 			ORDER BY BARANG.last_view DESC
-			`;
+		`;
         return new Promise((resolve, reject) => {
             try {
                 this.query(query, resolve, reject);
@@ -158,11 +163,10 @@ class BarangSql {
             }
         });
     }
-    //TODO: belum dipake
     async updateLastViewDate(id) {
         return new Promise((resolve, reject) => {
             let query = `
-				update BARANG set LAST_VIEW = NOW() where ID = ?
+		update BARANG set LAST_VIEW = NOW() where ID = ?
 			`;
             Connection_1.Connection.pool.query(query, [id], (_err, _rows) => {
                 if (_err) {
@@ -177,13 +181,13 @@ class BarangSql {
     //TODO belum kepake
     async bacaLapakPublishDate() {
         let query = `
-		SELECT BARANG.*, FILE.thumb, FILE.gbr 
+		SELECT BARANG.*, FILE.thumb, FILE.gbr
 		FROM BARANG
 		LEFT JOIN FILE
 		ON BARANG.file_id = FILE.id
 		WHERE BARANG.publish = 1
 		ORDER BY BARANG.LAST_VIEW
-		;`;
+			; `;
         return new Promise((resolve, reject) => {
             Connection_1.Connection.pool.query(query, [], (_err, _rows) => {
                 if (_err) {
@@ -212,6 +216,61 @@ class BarangSql {
     async bacalapak(lapak) {
         return new Promise((resolve, reject) => {
             Connection_1.Connection.pool.query(this.bacaBaranglapak, [lapak], (_err, _rows) => {
+                if (_err) {
+                    reject(_err);
+                }
+                else {
+                    resolve(_rows);
+                }
+            });
+        });
+    }
+    async baca(opt) {
+        let whereQuery = 'WHERE 1 ';
+        let offsetQuery = '';
+        let limitQuery = '';
+        let orderQuery = '';
+        let data = [];
+        if (opt.id) {
+            whereQuery += 'AND BARANG.lapak_id = ? ';
+            data.push(opt.id);
+        }
+        if (opt.lapak_id) {
+            whereQuery += 'AND BARANG.lapak_id = ? ';
+            data.push(opt.lapak_id);
+        }
+        if (opt.kataKunci) {
+            whereQuery += ` AND (BARANG.nama like ?
+							OR BARANG.deskripsi_panjang like ?) `;
+            data.push(opt.kataKunci);
+        }
+        if (opt.offset) {
+            offsetQuery = 'OFFSET = ? ';
+            data.push(opt.offset);
+        }
+        if (opt.limit) {
+            limitQuery = 'LIMIT ? ';
+            data.push(opt.limit);
+        }
+        if (opt.orderDateDesc) {
+            orderQuery = 'ORDER BY last_view DESC ';
+        }
+        else if (opt.orderNamaAsc) {
+            orderQuery = 'ORDER BY BARANG.nama ASC ';
+        }
+        let query = `
+			SELECT BARANG.*, FILE.thumb, FILE.gbr 
+			FROM BARANG
+			LEFT JOIN FILE
+			ON BARANG.file_id = FILE.id
+			${whereQuery}
+			${offsetQuery}
+			${limitQuery}
+			${orderQuery}
+		`;
+        console.log(query);
+        return new Promise((resolve, reject) => {
+            Connection_1.Connection.pool.query(query, data, (_err, _rows) => {
                 if (_err) {
                     reject(_err);
                 }

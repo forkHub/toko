@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-// import path from "path";
 const App_1 = require("../../App");
 const BarangSql_1 = require("../entity/BarangSql");
 const Connection_1 = require("../Connection");
-const Renderer_1 = require("../Renderer");
+const Renderer_1 = require("../render/Renderer");
 const TokoLog_1 = require("../TokoLog");
 const Barang_1 = require("../controller/Barang");
 const Auth_1 = require("../Auth");
 const Util_1 = require("../Util");
+//TODO: dibuat router default
 class Beranda {
     init(app) {
         app.get("/cari/:kataKunci/:hal", (_req, resp) => {
@@ -29,9 +29,18 @@ class Beranda {
         });
         app.get("/", (_req, resp) => {
             try {
-                BarangSql_1.barangSql.bacaPublish()
+                BarangSql_1.barangSql.baca({
+                    publish: 1,
+                    orderDateDesc: 1,
+                })
                     .then((data) => {
-                    return Renderer_1.render.halDepan.render(data, '', 0, 0, '');
+                    return Renderer_1.render.halDepan.render({
+                        barangData: data,
+                        lapak: '',
+                        hal: 0,
+                        jml: 0,
+                        kataKunci: ''
+                    });
                 })
                     .then((data) => {
                     resp.status(200).send(data);
@@ -46,19 +55,10 @@ class Beranda {
                 resp.status(500).send('Error');
             }
         });
-        // app.get("/admin", (_req: express.Request, resp: express.Response) => {
-        // 	try {
-        // 		resp.sendFile(path.join('index.html'), {
-        // 			root: __dirname + '/public/admin'
-        // 		});
-        // 	}
-        // 	catch (e) {
-        // 		resp.status(500).send(e);
-        // 	}
-        // })
         app.get("/daftar", (_req, resp) => {
             try {
                 Util_1.util.getFile('view/daftar.html').then((h) => {
+                    h = h.replace("{{cache}}", Util_1.util.randId);
                     resp.status(200).send(h);
                 }).catch((e) => {
                     resp.status(500).send(e.message);

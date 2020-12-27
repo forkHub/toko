@@ -7,8 +7,9 @@ const express_1 = __importDefault(require("express"));
 const BarangSql_1 = require("../entity/BarangSql");
 const TokoLog_1 = require("../TokoLog");
 const Auth_1 = require("../Auth");
-const Renderer_1 = require("../Renderer");
+// import { render } from "../render/Renderer";
 const Util_1 = require("../Util");
+const Barang_1 = require("../controller/Barang");
 // import { barangController } from "../controller/Barang";
 exports.router = express_1.default.Router();
 exports.router.post("/hapus/:id", Auth_1.checkAuth, (req, resp) => {
@@ -29,13 +30,13 @@ exports.router.post("/baru", Auth_1.checkAuth, (req, resp) => {
     try {
         let data = {
             nama: req.body.nama,
-            deskripsi: req.body.deskripsi,
             deskripsi_panjang: req.body.deskripsi_panjang,
             harga: req.body.harga,
             wa: req.body.wa,
             file_id: req.body.file_id,
             publish: req.body.publish,
             lapak: req.body.lapak,
+            lapak_id: req.body.lapak_id,
             last_view: Util_1.util.buatDate()
         };
         BarangSql_1.barangSql.baru(data)
@@ -54,14 +55,14 @@ exports.router.post("/update/:id", Auth_1.checkAuth, (req, resp) => {
     try {
         BarangSql_1.barangSql.update({
             nama: req.body.nama,
-            deskripsi: req.body.deskripsi,
             deskripsi_panjang: req.body.deskripsi_panjang,
             harga: req.body.harga,
             wa: req.body.wa,
             file_id: req.body.file_id,
             publish: req.body.publish,
             lapak: req.body.lapak,
-            last_view: Util_1.util.buatDate()
+            last_view: Util_1.util.buatDate(),
+            lapak_id: req.body.lapak_id
         }, req.params.id)
             .then(() => {
             resp.status(200).end();
@@ -73,33 +74,21 @@ exports.router.post("/update/:id", Auth_1.checkAuth, (req, resp) => {
         resp.status(500).send(error);
     }
 });
-exports.router.get("/", (req, resp) => {
-    try {
-        TokoLog_1.logT.log('barang ok');
-        resp.status(200).send('barang ok');
-    }
-    catch (err) {
-        TokoLog_1.logT.log('barang error');
-        resp.status(500).send(err);
-    }
-});
-//TODO: dep
-exports.router.get("/lapak/:lapak/:id", (req, resp) => {
-    try {
-        console.log('render lapak ');
-        Renderer_1.render.halBarang.render(req.params.id, req.params.lapak)
-            .then((hasil) => {
-            resp.status(200).send(hasil);
-        }).catch((err) => {
-            TokoLog_1.logT.log(err);
-            resp.status(500).send('Error');
-        });
-    }
-    catch (e) {
-        TokoLog_1.logT.log(e);
-        resp.status(500).send("Error");
-    }
-});
+// router.get("/:lapak/:id", (req: express.Request, resp: express.Response) => {
+// 	try {
+// 		barangController.lihat(req.params.id, req.params.lapak).then((hasil: string) => {
+// 			resp.status(200).send(hasil);
+// 		}).catch((err) => {
+// 			console.log('render hal barang error');
+// 			logT.log(err);
+// 			resp.status(500).send(err.message);
+// 		});
+// 	}
+// 	catch (e) {
+// 		logT.log(e);
+// 		resp.status(500).send("Error");
+// 	}
+// });
 exports.router.get("/:id", (req, resp) => {
     try {
         console.log(req.params);
@@ -118,17 +107,16 @@ exports.router.get("/:id", (req, resp) => {
         else {
             console.log(req.params.id);
         }
-        Renderer_1.render.halBarang.render(req.params.id, "")
-            .then((hasil) => {
+        Barang_1.barangController.lihat(req.params.id, "").then((hasil) => {
             resp.status(200).send(hasil);
         }).catch((err) => {
             console.log('render hal barang error');
             TokoLog_1.logT.log(err);
-            resp.status(500).send('Error');
+            resp.status(500).send(err.message);
         });
     }
     catch (err) {
         TokoLog_1.logT.log(err);
-        resp.status(500).send('Error');
+        resp.status(500).send(err.message);
     }
 });

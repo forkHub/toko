@@ -43,7 +43,9 @@ exports.router.post("/baru", (req, resp) => {
             .then(() => {
             resp.status(200).end();
         }).catch((e) => {
+            console.log(e.errno);
             resp.status(500).send(e.message);
+            //TODO: err 1062 duplicate entry
         });
     }
     catch (e) {

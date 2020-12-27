@@ -27,16 +27,13 @@ class Login2 extends BaseComponent {
         }
     }
     formOnSubmit() {
-        // console.log(this.password.value);
         try {
             Util.Login(this.userName.value, this.password.value).then((hasil) => {
-                // config.lapak = this.lapakInput.value;
                 console.log(hasil);
-                // config.lapak = hasil.lapak;
-                window.sessionStorage.setItem(Util.sLapak, JSON.parse(hasil).lapak);
+                let hasilObj = JSON.parse(hasil);
+                window.sessionStorage.setItem(Util.sLapak, hasilObj.lapak);
+                window.sessionStorage.setItem(Util.sLapakId, hasilObj.id);
                 window.top.location.reload();
-                // this.detach();
-                // this._selesai();
             }).catch(() => {
                 if (401 == Util.resp.code) {
                     dialog.tampil2('Username atau password salah');

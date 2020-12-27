@@ -1,5 +1,10 @@
-"use strict";
 class BarangObj {
+    get lapak_id() {
+        return this._lapak_id;
+    }
+    set lapak_id(value) {
+        this._lapak_id = value;
+    }
     get last_view() {
         return this._last_view;
     }
@@ -67,5 +72,14 @@ class BarangObj {
         this._harga = value;
     }
 }
-class BarangController {
-}
+// interface IBarangDBO {
+// 	id: string;
+// 	nama: string;
+// 	deskripsi_panjang: string;
+// 	harga: string;
+// 	wa: string;
+// 	file_id: string;
+// 	publish: number;
+// 	lapak: string;
+// 	last_view: string;
+// }
