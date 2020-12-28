@@ -1,14 +1,29 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-// import { PoolConnection } from "mysql";
 const Connection_1 = require("../Connection");
 class Anggota {
-    constructor() {
-        this.GET_USER_SQL = `SELECT * FROM pengguna WHERE user_id = ? && password = ? LIMIT 1`;
-    }
-    async baca() {
+    async baca(opt) {
+        let whereQuery = 'WHERE 1 ';
+        let data = [];
+        if (opt.id) {
+            whereQuery += 'AND pengguna.id = ? ';
+            data.push(opt.id);
+        }
+        if (opt.user_id) {
+            whereQuery += 'AND pengguna.user_id = ? ';
+            data.push(opt.user_id);
+        }
+        if (opt.password) {
+            whereQuery += 'AND pengguna.password = ? ';
+            data.push(opt.password);
+        }
+        if (opt.setuju) {
+            whereQuery += 'AND pengguna.setuju = ? ';
+        }
+        let query = ` SELECT * FROM pengguna ${whereQuery}`;
+        console.log(query);
         return new Promise((resolve, reject) => {
-            Connection_1.Connection.pool.query(`SELECT * FROM pengguna`, [], (_err, _rows) => {
+            Connection_1.Connection.pool.query(query, data, (_err, _rows) => {
                 if (_err) {
                     reject(_err);
                 }
@@ -54,18 +69,6 @@ class Anggota {
             Connection_1.Connection.pool.query("DELETE FROM BARANG WHERE ID = ?", [id], (_err, _rows) => {
                 if (_err) {
                     reject(_err);
-                }
-                else {
-                    resolve(_rows);
-                }
-            });
-        });
-    }
-    async userId(userId, password) {
-        return new Promise((resolve, reject) => {
-            Connection_1.Connection.pool.query(this.GET_USER_SQL, [userId, password], (_err, _rows) => {
-                if (_err) {
-                    reject(_err.message);
                 }
                 else {
                     resolve(_rows);

@@ -6,9 +6,24 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const Anggota_1 = require("../entity/Anggota");
 exports.router = express_1.default.Router();
-exports.router.post("/baca", (req, resp) => {
+/*
+router.post("/baca/semua", (req: express.Request, resp: express.Response) => {
     try {
-        Anggota_1.anggota.baca().then((hasil) => {
+        anggota.baca().then((hasil: any) => {
+            resp.status(200).send(hasil);
+        }).catch((e) => {
+            resp.status(500).send(e.message);
+        });
+    }
+    catch (e) {
+        console.log(e);
+        resp.status(200).send(e.message);
+    }
+});
+*/
+exports.router.post("/baca/setuju/:status", (req, resp) => {
+    try {
+        Anggota_1.anggota.baca(null).then((hasil) => {
             resp.status(200).send(hasil);
         }).catch((e) => {
             resp.status(500).send(e.message);

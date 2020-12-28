@@ -4,10 +4,11 @@ const TokoLog_1 = require("./TokoLog");
 const SessionData_1 = require("./SessionData");
 const Anggota_1 = require("./entity/Anggota");
 class Auth {
+    // static readonly SD_ADMIN: string = 'admin';
+    // static readonly SD_SYSTEM: string = 'system';
     async login(userId, password) {
         TokoLog_1.logT.log('Auth: login ');
-        // let pool: PoolConnection = await Connection.getPool();
-        let hasil = await Anggota_1.anggota.userId(userId, password);
+        let hasil = await Anggota_1.anggota.baca({ user_id: userId, password: password, setuju: '1' });
         if (hasil.length == 0) {
             TokoLog_1.logT.log('login gagal ' + userId + '/' + password);
             return null;
@@ -27,8 +28,6 @@ class Auth {
         return null;
     }
 }
-Auth.SD_ADMIN = 'admin';
-Auth.SD_SYSTEM = 'system';
 exports.auth = new Auth();
 //check auth middle ware
 function checkAuth(req, resp, next) {
@@ -45,15 +44,16 @@ function setCache(_req, resp, next) {
     next();
 }
 exports.setCache = setCache;
-function checkSystem(req, resp, next) {
-    // auth.default(req);
-    if (SessionData_1.session(req).statusLogin) {
+/*
+export function checkSystem(req: express.Request, resp: express.Response, next: express.NextFunction) {
+
+    if (session(req).statusLogin) {
         resp.status(401).send('belum login');
     }
-    else if (SessionData_1.session(req).level != Auth.SD_SYSTEM)
+    else if (session(req).level != Auth.SD_SYSTEM)
         resp.status(401).send('akses ditolak');
     else {
         next();
     }
 }
-exports.checkSystem = checkSystem;
+*/

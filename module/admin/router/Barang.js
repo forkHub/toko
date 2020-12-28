@@ -9,6 +9,7 @@ const Barang_1 = require("../../controller/Barang");
 const BarangSql_1 = require("../../entity/BarangSql");
 const TokoLog_1 = require("../../TokoLog");
 var router = express_1.default.Router();
+//TODO: dipindah ke router
 router.post("/baca/:id", Auth_1.checkAuth, (req, resp) => {
     try {
         BarangSql_1.barangSql.bacaId(req.params.id).then().catch();
