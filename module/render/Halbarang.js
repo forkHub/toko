@@ -22,7 +22,7 @@ class HalBarang {
         index = index.replace("{{og_deskripsi}}", "Belanja Mudah, Murah dari Rumah");
         if (lapak && lapak != '') {
             index = index.replace("{{og_url}}", "http://aunistore.com/barang/lapak/" + lapak + "/barang/" + barang[0].id);
-            index = index.replace("{{og_gambar}}", "http://aunistore.com/" + barang[0].thumb);
+            index = index.replace("{{og_gambar}}", "http://aunistore.com" + barang[0].thumb);
             index = index.replace("{{og_title}}", barang[0].nama);
         }
         else {
