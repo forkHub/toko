@@ -8,6 +8,7 @@ const TokoLog_1 = require("../TokoLog");
 const BarangSql_1 = require("../entity/BarangSql");
 const Renderer_1 = require("../render/Renderer");
 const Config_1 = require("../Config");
+const SessionData_1 = require("../SessionData");
 exports.lapakRouter = express_1.default.Router();
 var router = exports.lapakRouter;
 router.get("/:id", (_req, resp) => {
@@ -30,6 +31,7 @@ router.get("/:id", (_req, resp) => {
             });
         })
             .then((data) => {
+            SessionData_1.session(_req).lapak = _req.params.id;
             resp.status(200).send(data);
         })
             .catch((err) => {
@@ -49,8 +51,9 @@ router.get("/:id/cari/:kunci/hal/:hal", (_req, resp) => {
             lapak_id: _req.params.id,
             kataKunci: decodeURI(_req.params.kunci),
             publish: 1,
-            offset: _req.params.hal,
-            orderDateDesc: 1
+            offset: parseInt(_req.params.hal),
+            orderDateDesc: 1,
+            limit: 25
         })
             .then((data) => {
             return Renderer_1.render.halDepan.render({
@@ -66,40 +69,15 @@ router.get("/:id/cari/:kunci/hal/:hal", (_req, resp) => {
         })
             .catch((err) => {
             TokoLog_1.logT.log(err);
-            resp.status(500).send('Error');
+            resp.status(500).send(err.message);
         });
     }
     catch (err) {
         TokoLog_1.logT.log(err);
-        resp.status(500).send('Error');
+        resp.status(500).send(err.message);
     }
 });
-// lapakRouter.get("/:id", (_req: express.Request, resp: express.Response) => {
-// 	try {
-// 		barangSql.bacaPublish(0, 25, _req.params.id)
-// 			.then((data: any[]) => {
-// 				return render.halDepan.render({
-// 					barangData: data,
-// 					lapak: _req.params.id,
-// 					hal: 0,
-// 					jml: 0,
-// 					kataKunci: ''
-// 				});
-// 			})
-// 			.then((data: string) => {
-// 				resp.status(200).send(data);
-// 			})
-// 			.catch((err) => {
-// 				logT.log(err);
-// 				resp.status(500).send('Error');
-// 			});
-// 	}
-// 	catch (err) {
-// 		logT.log(err);
-// 		resp.status(500).send('Error');
-// 	}
-// })
-exports.lapakRouter.get("/:id/barang/:barangId", (_req, resp) => {
+router.get("/:id/barang/:barangId", (_req, resp) => {
     try {
         BarangSql_1.barangSql
             .baca({
@@ -112,6 +90,7 @@ exports.lapakRouter.get("/:id/barang/:barangId", (_req, resp) => {
             return Renderer_1.render.halBarang.render(_req.params.barangId, _req.params.id);
         })
             .then((data) => {
+            SessionData_1.session(_req).lapak = _req.params.id;
             resp.status(200).send(data);
         })
             .catch((err) => {

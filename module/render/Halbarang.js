@@ -7,11 +7,24 @@ const Util_1 = require("../Util");
 class HalBarang {
     async render(id, lapak) {
         console.log('render ' + id);
-        let barang = await BarangSql_1.barangSql.bacaId(id);
+        let opt = {
+            id: id
+        };
+        let barang = await BarangSql_1.barangSql.baca(opt);
+        // console.log(barang);
         let index = await Util_1.util.getFile("view/index.html");
         let header = await Util_1.util.getFile("view/header.html");
-        let barangStr = await this.renderBarangDetail(barang);
+        let barangStr = await this.renderBarangDetail(barang[0]);
         let js = await Util_1.util.getFile("view/item-page/js_hal_item.html");
+        index = index.replace("{{og_deskripsi}}", "Belanja Mudah, Murah dari Rumah");
+        index = index.replace("{{og_gambar}}", "");
+        if (lapak && lapak != '') {
+            index = index.replace("{{og_url}}", "http://aunistore.com/barang/lapak/" + lapak + "/barang/" + barang[0].id);
+            index = index.replace("{{og_gambar}}", barang[0].thumb);
+        }
+        else {
+            index = index.replace("{{og_url}}", "http://aunistore.com/barang/" + barang[0].id);
+        }
         header = header.replace("{{nama_toko}}", Config_1.config.namaToko);
         header = header.replace("{{motto}}", "");
         let hasil = index;

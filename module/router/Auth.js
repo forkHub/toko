@@ -18,6 +18,7 @@ exports.router.post("/login", (req, resp) => {
                 SessionData_1.session(req).statusLogin = true;
                 SessionData_1.session(req).lapak = h.lapak;
                 SessionData_1.session(req).id = h.id;
+                SessionData_1.session(req).user_id = h.user_id;
                 resp.status(200).send(h);
             }
             else {
@@ -39,9 +40,11 @@ exports.router.post("/login", (req, resp) => {
 exports.router.post("/status", (req, resp) => {
     try {
         let status = {
+            id: SessionData_1.session(req).id,
             level: SessionData_1.session(req).level,
             lapak: SessionData_1.session(req).lapak,
-            id: SessionData_1.session(req).id
+            user_id: SessionData_1.session(req).user_id,
+            password: ''
         };
         if (SessionData_1.session(req).statusLogin) {
             resp.status(200).send(status);

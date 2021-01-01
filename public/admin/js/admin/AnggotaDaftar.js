@@ -15,10 +15,13 @@ class AnggotaDaftar extends BaseComponent {
         super();
         this.idDipilih = '';
         this._template = `
-			<div class=''>
-				<p class='judul'>Daftar Anggota</p>
+			<div class='anggota setuju'>
+				<div class='nav'>
+					<button class='btn btn-primary tutup'>&lt;</button>
+					<p class='judul'>Daftar Anggota</p>
+				</div>
+
 				<div class='cont'></div>
-				<button class='btn btn-primary tutup'>Tutup</button>
 				<button class='btn btn-danger hapus'>Hapus</button>
 			</div>
 		`;
@@ -43,30 +46,30 @@ class AnggotaDaftar extends BaseComponent {
             }
         };
     }
-    set tutup(value) {
-        this._tutup = value;
-    }
     init() {
     }
     load() {
-        this.load2().then().catch(() => {
+        this.load2().then((items) => {
+            items.forEach((item) => {
+                let view = new Item();
+                view.id = item.id;
+                view.attach(this.cont);
+            });
+        }).catch(() => {
             dialog.tampil2(Util.resp.message);
         });
     }
     load2() {
         return __awaiter(this, void 0, void 0, function* () {
-            let data = yield Util.Ajax('post', Util.urlAnggotaDaftar, "");
-            let dataAr = JSON.parse(data);
-            // console.log(data);
-            // console.log(dataAr);
-            this.cont.innerHTML = '';
-            dataAr.forEach((item) => {
-                // console.log(item);
-                let view = new AnggotaDaftarItem();
-                view.id = item.id;
-                view.nama.innerHTML = item.id + '';
-                view.attach(this.cont);
-            });
+            let data;
+            let dataAr;
+            let opt;
+            opt = {
+                setuju: 0
+            };
+            data = yield Util.Ajax('post', Util.urlAnggotaDaftar, JSON.stringify(opt));
+            dataAr = JSON.parse(data);
+            return dataAr;
         });
     }
     hapus() {
@@ -86,13 +89,18 @@ class AnggotaDaftar extends BaseComponent {
     get cont() {
         return this.getEl('div.cont');
     }
+    set tutup(value) {
+        this._tutup = value;
+    }
 }
-class AnggotaDaftarItem extends BaseComponent {
+class Item extends BaseComponent {
     constructor() {
         super();
         this._template = `
 			<div class='item'>
 				<span class='nama'>nama</span>
+				<button class='btn btn-primary btn-sm menu ok'>✔</button>
+				<button class='btn btn-primary btn-sm menu tolak'>❌</button>
 			</div>
 		`;
         this.build();
@@ -105,6 +113,12 @@ class AnggotaDaftarItem extends BaseComponent {
     }
     get nama() {
         return this.getEl('span.nama');
+    }
+    get ok() {
+        return this.getEl('button.ok');
+    }
+    get tolak() {
+        return this.getEl('button.tolak');
     }
 }
 export var anggotaDaftar = new AnggotaDaftar();

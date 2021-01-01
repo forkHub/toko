@@ -4,9 +4,9 @@
 		width: 25%;
 	}	
 
-	/* header {
-		height: 150px;
-	} */
+	div.daftar-barang-cont div.item-fokus {
+		padding: 16px;
+	}
 
 	header p.deskripsi {
 		font-size: small;
@@ -19,6 +19,10 @@
 	div.daftar-barang-cont div.kolom {
 		width: 33%;
 	}
+	
+	div.daftar-barang-cont div.item-fokus {
+		padding: 16px;
+	}	
 
 	header {
 		text-align: center;
@@ -30,9 +34,6 @@
 		position: static;
 	}
 
-	/* header {
-		height: 100px;
-	} */
 
 	div.footer h1 {
 		font-size: small;

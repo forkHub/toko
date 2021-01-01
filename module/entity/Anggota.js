@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Connection_1 = require("../Connection");
 class Anggota {
     async baca(opt) {
+        console.log(opt);
         let whereQuery = 'WHERE 1 ';
         let data = [];
         if (opt.id) {
@@ -17,8 +18,9 @@ class Anggota {
             whereQuery += 'AND pengguna.password = ? ';
             data.push(opt.password);
         }
-        if (opt.setuju) {
+        if (!isNaN(opt.setuju)) {
             whereQuery += 'AND pengguna.setuju = ? ';
+            data.push(opt.setuju);
         }
         let query = ` SELECT * FROM pengguna ${whereQuery}`;
         console.log(query);
@@ -28,7 +30,7 @@ class Anggota {
                     reject(_err);
                 }
                 else {
-                    console.log(_rows);
+                    // console.log(_rows);
                     resolve(_rows);
                 }
             });

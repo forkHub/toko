@@ -1,6 +1,4 @@
 import { BaseComponent } from "./BaseComponent.js";
-// import { dialog } from "./Dialog.js";
-import { Util } from "./Util.js";
 class AppToko {
     constructor() {
         this.items = [];
@@ -14,47 +12,25 @@ class AppToko {
         this.formCari.onsubmit = () => {
             return this.cariBarangGet();
         };
+        this.shareTbl.onclick = () => {
+            console.log('share tombol klik');
+        };
     }
     cariBarangGet() {
         try {
-            window.top.location.href = Util.urlBarangCariGet + window.encodeURI(this.kataKunciInput.value) + "/0";
+            let lapak = this.formCari.getAttribute("lapak");
+            if (!lapak || lapak == "") {
+                window.top.location.href = "/cari/" + window.encodeURI(this.kataKunciInput.value) + "/hal/" + 0;
+            }
+            else {
+                window.top.location.href = "/lapak/" + lapak + "/cari/" + window.encodeURI(this.kataKunciInput.value) + "/hal/" + 0;
+            }
         }
         catch (e) {
             return false;
         }
         return false;
     }
-    // //TODO: depecreated diganti dengan get
-    // cariBarangPost(): boolean {
-    // 	try {
-    // 		Util.Ajax("post", Util.urlBarangCariPost, JSON.stringify({ kataKunci: this.kataKunciInput.value })).then((hasil: string) => {
-    // 			console.log('hasil ');
-    // 			if (!hasil || hasil == '' || hasil.length == 0) {
-    // 				dialog.tampil2('pencarian tidak menemukan hasil');
-    // 			}
-    // 			else {
-    // 				console.log(hasil);
-    // 				this.daftarBarang.innerHTML = hasil;
-    // 				this.daftarItem();
-    // 				this.atur();
-    // 				// this.halaman();
-    // 			}
-    // 			return false;
-    // 		}).catch((e) => {
-    // 			console.warn(e);
-    // 			dialog.tampil2(e.message);
-    // 			// loading.detach();
-    // 		});
-    // 	}
-    // 	catch (e) {
-    // 		console.warn(e.message);
-    // 		console.warn(e);
-    // 		dialog.tampil2(e.message);
-    // 		// loading.detach();
-    // 		return false;
-    // 	}
-    // 	return false;
-    // }
     daftarItem() {
         let nodes = document.querySelectorAll('div.item');
         this.items = [];
@@ -192,6 +168,9 @@ class AppToko {
     get halTerakhir() {
         return AppToko.getEl('div.halaman div.content span.terakhir');
     }
+    get shareTbl() {
+        return AppToko.getEl('button.share');
+    }
 }
 class Item extends BaseComponent {
     constructor() {
@@ -232,17 +211,6 @@ class Item extends BaseComponent {
                 window.top.location.href = '/lapak/' + this.lapakP.innerHTML + '/barang/' + this.idP.innerHTML;
             }
         };
-        // this.gbrKecil.onerror = () => {
-        // 	this.gbrKecil.onerror = null;
-        // 	this.gbrKecil.onload = null;
-        // 	this.gbrKecil.src = '/gambar/kosong.png';
-        // 	this.gbrKecil.style.minHeight = '100px';
-        // 	console.log(this.gbrKecil);
-        // }
-        // this.gbrKecil.src = this.gbrKecil.getAttribute('gbr');
-        // if (this.gbrKecil.src == null) {
-        // 	console.log(this.gbrKecil);
-        // }
     }
     get ukuranKecil() {
         return this._ukuranKecil;
@@ -282,4 +250,3 @@ window.onload = () => {
     console.log('window on load');
 };
 new AppToko();
-``;

@@ -11,6 +11,16 @@ import { data } from "./Data.js";
 // import { dialog } from "./Dialog.js";
 import { loading } from "./Loading.js";
 export class Util {
+    /*
+    static getUrl(url: string, params: string[]): string {
+        let urlHasil: string = url;
+        params.forEach((item: string) => {
+            urlHasil = urlHasil.replace(/\:[a-z]+/, item);
+        });
+
+        return urlHasil;
+    }
+    */
     static escape(str) {
         let hasil = str;
         while (hasil.indexOf("<") > -1) {
@@ -94,14 +104,15 @@ Util.urlAdmin = '/admin';
 Util.urlAnggotaDaftar = "/anggota/baca";
 Util.urlAnggotaBaru = "/anggota/baru";
 Util.urlAnggotaHapus = "/anggota/hapus";
-Util.urlAnggotaDaftarSetuju = '/anggota/daftar/setuju';
+Util.urlAnggotaBaca = '/anggota/baca';
+Util.urlAnggotaEdit = '/anggota/edit';
 Util.urlLoginStatus = '/auth/status';
 Util.urlLogin = '/auth/login';
 Util.urlLogout = '/auth/logout';
-Util.urlBarangBacalapak = '/barang/baca/lapak/';
+Util.urlBarangBaca = '/barang/baca/';
 Util.urlFileHapus = '/file/hapus/';
 Util.urlBarangCariPost = '/barang/cari';
-Util.urlBarangCariGet = '/cari/';
+// static readonly urlBarangCariGet = '/cari/';
 Util.sLapak = 'lapak'; //TODO: dihapus
 Util.sLapakId = 'lapak_id';
 Util._resp = {

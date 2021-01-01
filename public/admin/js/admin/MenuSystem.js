@@ -24,6 +24,10 @@ export class MenuSystem extends BaseComponent {
         this.setujuTbl.onclick = () => {
             this.detach();
             setuju.tampil();
+            setuju.tutup = () => {
+                setuju.view.detach();
+                this.attach(data.cont);
+            };
         };
         this.anggotaTbl.onclick = () => {
             //halaman daftar anggota

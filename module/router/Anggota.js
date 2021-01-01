@@ -6,21 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const Anggota_1 = require("../entity/Anggota");
 exports.router = express_1.default.Router();
-/*
-router.post("/baca/semua", (req: express.Request, resp: express.Response) => {
-    try {
-        anggota.baca().then((hasil: any) => {
-            resp.status(200).send(hasil);
-        }).catch((e) => {
-            resp.status(500).send(e.message);
-        });
-    }
-    catch (e) {
-        console.log(e);
-        resp.status(200).send(e.message);
-    }
-});
-*/
 exports.router.post("/baca/setuju/:status", (req, resp) => {
     try {
         Anggota_1.anggota.baca(null).then((hasil) => {
@@ -69,12 +54,14 @@ exports.router.post("/baru", (req, resp) => {
 });
 exports.router.post("/update/:id", (req, resp) => {
     try {
-        Anggota_1.anggota.update({
-            password: req.body.password,
-            level: req.body.level,
-            user_id: req.params.user_id,
-            lapak: req.body.lapak
-        }, req.params.id).then(() => {
+        let opt = {};
+        opt.deskripsi;
+        opt.lapak;
+        opt.level;
+        opt.password;
+        opt.setuju;
+        opt.user_id;
+        Anggota_1.anggota.update(opt, req.params.id).then(() => {
             resp.status(200).end();
         }).catch((e) => {
             resp.status(500).send(e.message);
@@ -82,5 +69,26 @@ exports.router.post("/update/:id", (req, resp) => {
     }
     catch (error) {
         resp.status(500).send(error.message);
+    }
+});
+exports.router.post("/baca", (req, resp) => {
+    try {
+        console.log(req.body);
+        Anggota_1.anggota.baca({
+            id: req.body.id,
+            lapak: req.body.lapak,
+            setuju: req.body.setuju,
+            deskripsi: req.body.deskripsi,
+            level: req.body.level,
+            password: req.body.password,
+            user_id: req.body.user_id
+        }).then((h) => {
+            resp.status(200).send(h);
+        }).catch((e) => {
+            resp.status(500).send(e.message);
+        });
+    }
+    catch (err) {
+        resp.status(500).send(err.message);
     }
 });

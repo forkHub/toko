@@ -11,8 +11,19 @@ class HalDepan {
         let cari = await Util_1.util.getFile("view/cari.html");
         let barang = await this.renderBerandaBarang(opt.barangData, opt.lapak);
         let halaman = await this.renderHalaman1(opt.hal, opt.jml, opt.kataKunci);
+        if (opt.lapak && opt.lapak != '') {
+            index = index.replace("{{og_deskripsi}}", "Belanja Mudah, Murah dari Rumah");
+            index = index.replace("{{og_gambar}}", "");
+            index = index.replace("{{og_url}}", "http://aunistore.com/lapak/" + opt.lapak);
+        }
+        else {
+            index = index.replace("{{og_deskripsi}}", "Belanja Mudah, Murah dari Rumah");
+            index = index.replace("{{og_gambar}}", "");
+            index = index.replace("{{og_url}}", "http://aunistore.com");
+        }
         header = header.replace("{{nama_toko}}", Config_1.config.namaToko);
         header = header.replace("{{motto}}", "");
+        cari = cari.replace("{{lapak}}", opt.lapak);
         let berandaUrl = "/";
         if (opt.lapak != '') {
             berandaUrl = '/lapak/' + opt.lapak;
@@ -53,12 +64,17 @@ class HalDepan {
         halaman = halaman.replace("{{terakhir}}", "<a href='" + url2 + "'>%gt%gt</a> ");
         return halaman;
     }
-    async renderBerandaBarang(barangData, lapak = 'auni') {
+    async renderBerandaBarang(barangData, lapak) {
         let view = await Util_1.util.getFile("view/item.html");
         let hasil = '';
         barangData.forEach((item) => {
+            let url = '/barang/' + item.id;
             let hasil2 = '';
+            if (lapak && lapak != '') {
+                url = '/lapak/' + lapak + '/barang/' + item.id;
+            }
             hasil2 = (view.replace("{{nama}}", item.nama));
+            hasil2 = hasil2.replace("{{url}}", url);
             hasil2 = (hasil2.replace("{{deskripsi}}", ""));
             hasil2 = (hasil2.replace("{{deskripsiPanjang}}", item.deskripsi_panjang));
             hasil2 = (hasil2.replace("{{harga}}", item.harga + ''));
@@ -69,9 +85,6 @@ class HalDepan {
             hasil2 = hasil2.replace("{{id}}", item.id);
             hasil2 = hasil2.replace("{{lapak}}", lapak);
             hasil += hasil2;
-            // console.log("thumb " + item.thumb + "|");
-            // console.log("thumb is null " + (item.thumb == null));
-            // console.log("thumb is null " + (item.thumb == "null"));
         });
         return hasil;
     }

@@ -40,6 +40,13 @@ div.daftar-barang-cont div.item p.chat {
 	display: none;
 }
 
+div.daftar-barang-cont div.item a,
+div.daftar-barang-cont div.item a.link,
+div.daftar-barang-cont div.item a.hover {
+	text-decoration:none;
+	color:black;
+}
+
 div.daftar-barang-cont div.item a.chat img {
 	max-width: 80%;
 }

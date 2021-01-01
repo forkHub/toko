@@ -9,48 +9,58 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { BaseComponent } from "../BaseComponent.js";
 import { data } from "../Data.js";
+import { dialog } from "../Dialog.js";
 import { Util } from "../Util.js";
 class Setuju {
     constructor() {
-        this.view = new View();
-        this.view.setujuTbl.click = () => {
-            if (0 == this.itemDipilih.item.setuju) {
-                //ajax: setuju
-            }
+        this._view = new View();
+        this._view.tutupTbl.onclick = () => {
+            console.log('tutup');
+            this._tutup();
         };
-        this.view.tolakTbl.click = () => {
-            if (1 == this.itemDipilih.item.setuju) {
-                //ajax: tolak
-            }
-        };
+    }
+    get view() {
+        return this._view;
     }
     tampil() {
         this.view.attach(data.cont);
-        //load data
-        this.data().then().catch();
+        this.renderData().then().catch((e) => {
+            dialog.tampil2(e.message);
+        });
     }
-    data() {
+    renderData() {
         return __awaiter(this, void 0, void 0, function* () {
             let hasil = yield this.loadData();
             this.view.listCont.innerHTML = '';
             hasil.forEach((item, idx) => {
                 let view = new ItemView();
-                view.nama.innerHTML = item.user_id + '/' + item.lapak;
+                view.nama.innerHTML = item.user_id + ' - ' + item.lapak;
                 view.item = item;
+                view.okTbl.onclick = () => {
+                    Util.Ajax("post", Util.urlAnggotaEdit, "").then().catch();
+                };
+                view.tolakTbl.onclick = () => {
+                    Util.Ajax("post", Util.urlAnggotaEdit, "").then().catch();
+                };
                 view.attach(this.view.listCont);
                 if (0 == idx) {
                     view.elHtml.classList.add('pilih');
-                    this.itemDipilih = view;
                 }
             });
         });
     }
     loadData() {
         return __awaiter(this, void 0, void 0, function* () {
-            let hasil = yield Util.Ajax("post", Util.urlAnggotaDaftarSetuju, '');
+            let opt = {
+                setuju: 0
+            };
+            let hasil = yield Util.Ajax("post", Util.urlAnggotaBaca, JSON.stringify(opt));
             let obj = JSON.parse(hasil);
             return obj;
         });
+    }
+    set tutup(value) {
+        this._tutup = value;
     }
 }
 class View extends BaseComponent {
@@ -58,10 +68,10 @@ class View extends BaseComponent {
         super();
         this._template = `
 			<div class='setuju'>
-				<h3>Persetujuan Anggota</h3>
-				<button class='btn btn-normal btn-primary refresh'>Refresh</button>
-				<button class='btn btn-normal btn-primary setuju'>Setuju</button>
-				<button class='btn btn-normal btn-danger tolak'>Tolak</button>
+				<div class='nav'>
+					<button class='btn btn-primary tutup'>&lt;</button>
+					<p class='judu'>Persetujuan Anggota</p>
+				</div>
 				<div class='list-cont'>
 
 				</div>
@@ -72,11 +82,8 @@ class View extends BaseComponent {
     get listCont() {
         return this.getEl('div.list-cont');
     }
-    get setujuTbl() {
-        return this.getEl('button.setuju');
-    }
-    get tolakTbl() {
-        return this.getEl('button.tolak');
+    get tutupTbl() {
+        return this.getEl('button.tutup');
     }
 }
 class ItemView extends BaseComponent {
@@ -84,13 +91,21 @@ class ItemView extends BaseComponent {
         super();
         this._template = `
 			<div class='item'>
-				<p class='nama'></p>
+				<span class='nama'></span>
+				<button class='btn btn-sm ok'>✔</button> 
+				<button class='btn btn-sm tolak'>❌</button>
 			</div>
 		`;
         this.build();
     }
     get nama() {
-        return this.getEl('p.nama');
+        return this.getEl('span.nama');
+    }
+    get okTbl() {
+        return this.getEl('button.ok');
+    }
+    get tolakTbl() {
+        return this.getEl('button.tolak');
     }
     get item() {
         return this._item;

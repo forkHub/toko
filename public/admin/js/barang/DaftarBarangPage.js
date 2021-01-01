@@ -95,22 +95,29 @@ class DaftarBarangPage extends BaseComponent {
         return __awaiter(this, void 0, void 0, function* () {
             console.log('load barang ');
             console.log(config);
-            Util.Ajax("post", Util.urlBarangBacalapak + window.sessionStorage.getItem('lapak'), "").then((str) => {
+            let lapak = window.sessionStorage.getItem(Util.sLapakId);
+            let obj = {};
+            if (lapak && lapak != '') {
+                obj.lapak_id = lapak;
+            }
+            console.log("lapak");
+            console.log(lapak);
+            Util.Ajax("post", Util.urlBarangBaca, JSON.stringify(obj)).then((str) => {
                 let barangAr = JSON.parse(str);
                 this.cont.innerHTML = '';
                 console.log('load ' + barangAr.length);
-                console.group('load str');
-                console.log(str);
-                console.groupEnd();
+                // console.group('load str');
+                // console.log(str);
+                // console.groupEnd();
                 barangAr.forEach((data) => {
                     let view = new ItemBarangView();
                     let item = (data);
-                    console.group('data');
-                    console.log(data);
-                    console.groupEnd();
-                    console.group('item');
-                    console.log(item);
-                    console.groupEnd();
+                    // console.group('data');
+                    // console.log(data);
+                    // console.groupEnd();
+                    // console.group('item');
+                    // console.log(item);
+                    // console.groupEnd();
                     view.namaP.innerHTML = item.nama + " (" + (item.publish ? "dipublish" : "draft") + ")";
                     view.gbr.src = item.thumb;
                     view.attach(this.cont);

@@ -1,10 +1,9 @@
 /* focused item */
 div.daftar-barang-cont div.item-fokus {
 	margin: 0px;
-	padding: 0px;
+	padding: 32px;
 	display: block;
 	background-color: white;
-	padding: 8px;
 	text-align: center;
 	width: 100%;
 }

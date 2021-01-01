@@ -7,88 +7,9 @@ const express_1 = __importDefault(require("express"));
 const BarangSql_1 = require("../entity/BarangSql");
 const TokoLog_1 = require("../TokoLog");
 const Auth_1 = require("../Auth");
-// import { render } from "../render/Renderer";
 const Util_1 = require("../Util");
 const Barang_1 = require("../controller/Barang");
-// import { barangController } from "../controller/Barang";
 exports.router = express_1.default.Router();
-exports.router.post("/hapus/:id", Auth_1.checkAuth, (req, resp) => {
-    try {
-        BarangSql_1.barangSql.hapus(req.params.id)
-            .then(() => {
-            resp.status(200).end();
-        }).catch((e) => {
-            TokoLog_1.logT.log(e);
-            resp.status(500).send(e);
-        });
-    }
-    catch (err) {
-        resp.status(500).send(err);
-    }
-});
-exports.router.post("/baru", Auth_1.checkAuth, (req, resp) => {
-    try {
-        let data = {
-            nama: req.body.nama,
-            deskripsi_panjang: req.body.deskripsi_panjang,
-            harga: req.body.harga,
-            wa: req.body.wa,
-            file_id: req.body.file_id,
-            publish: req.body.publish,
-            lapak: req.body.lapak,
-            lapak_id: req.body.lapak_id,
-            last_view: Util_1.util.buatDate()
-        };
-        BarangSql_1.barangSql.baru(data)
-            .then(() => {
-            resp.status(200).end();
-        }).catch((e) => {
-            TokoLog_1.logT.log(e);
-            resp.status(500).send(e);
-        });
-    }
-    catch (e) {
-        resp.status(500).send(e);
-    }
-});
-exports.router.post("/update/:id", Auth_1.checkAuth, (req, resp) => {
-    try {
-        BarangSql_1.barangSql.update({
-            nama: req.body.nama,
-            deskripsi_panjang: req.body.deskripsi_panjang,
-            harga: req.body.harga,
-            wa: req.body.wa,
-            file_id: req.body.file_id,
-            publish: req.body.publish,
-            lapak: req.body.lapak,
-            last_view: Util_1.util.buatDate(),
-            lapak_id: req.body.lapak_id
-        }, req.params.id)
-            .then(() => {
-            resp.status(200).end();
-        }).catch((e) => {
-            resp.status(500).send(e);
-        });
-    }
-    catch (error) {
-        resp.status(500).send(error);
-    }
-});
-// router.get("/:lapak/:id", (req: express.Request, resp: express.Response) => {
-// 	try {
-// 		barangController.lihat(req.params.id, req.params.lapak).then((hasil: string) => {
-// 			resp.status(200).send(hasil);
-// 		}).catch((err) => {
-// 			console.log('render hal barang error');
-// 			logT.log(err);
-// 			resp.status(500).send(err.message);
-// 		});
-// 	}
-// 	catch (e) {
-// 		logT.log(e);
-// 		resp.status(500).send("Error");
-// 	}
-// });
 exports.router.get("/:id", (req, resp) => {
     try {
         console.log(req.params);
@@ -118,5 +39,111 @@ exports.router.get("/:id", (req, resp) => {
     catch (err) {
         TokoLog_1.logT.log(err);
         resp.status(500).send(err.message);
+    }
+});
+exports.router.post("/hapus/:id", Auth_1.checkAuth, (req, resp) => {
+    try {
+        BarangSql_1.barangSql.hapus(req.params.id)
+            .then(() => {
+            resp.status(200).end();
+        }).catch((e) => {
+            TokoLog_1.logT.log(e);
+            resp.status(500).send(e);
+        });
+    }
+    catch (err) {
+        resp.status(500).send(err);
+    }
+});
+exports.router.post("/baru", Auth_1.checkAuth, (req, resp) => {
+    try {
+        let data = {
+            nama: req.body.nama,
+            deskripsi_panjang: req.body.deskripsi_panjang,
+            harga: req.body.harga,
+            wa: req.body.wa,
+            file_id: req.body.file_id,
+            publish: req.body.publish,
+            // lapak: req.body.lapak,
+            lapak_id: req.body.lapak_id,
+            last_view: Util_1.util.buatDate()
+        };
+        BarangSql_1.barangSql.baru(data)
+            .then(() => {
+            resp.status(200).end();
+        }).catch((e) => {
+            TokoLog_1.logT.log(e);
+            resp.status(500).send(e);
+        });
+    }
+    catch (e) {
+        resp.status(500).send(e);
+    }
+});
+exports.router.post("/update/:id", Auth_1.checkAuth, (req, resp) => {
+    try {
+        BarangSql_1.barangSql.update({
+            nama: req.body.nama,
+            deskripsi_panjang: req.body.deskripsi_panjang,
+            harga: req.body.harga,
+            wa: req.body.wa,
+            file_id: req.body.file_id,
+            publish: req.body.publish,
+            // lapak: req.body.lapak,
+            last_view: Util_1.util.buatDate(),
+            lapak_id: req.body.lapak_id
+        }, req.params.id)
+            .then(() => {
+            resp.status(200).end();
+        }).catch((e) => {
+            resp.status(500).send(e);
+        });
+    }
+    catch (error) {
+        resp.status(500).send(error);
+    }
+});
+exports.router.post("/baca/id/:id/lapak/:lapak/publish/:publish", Auth_1.checkAuth, (req, resp) => {
+    try {
+        BarangSql_1.barangSql.baca({
+            id: ("all" == req.params.id) ? null : req.params.id,
+            lapak_id: ("all" == req.params.lapak ? null : req.params.lapak),
+            publish: ("all" == req.params.publish ? null : parseInt(req.params.publish))
+        })
+            .then((rows) => {
+            resp.status(200).send(rows);
+        })
+            .catch((e) => {
+            TokoLog_1.logT.log(e);
+            resp.status(500).send(e);
+        });
+    }
+    catch (e) {
+        resp.status(500).send(e);
+    }
+});
+exports.router.post("/baca/", Auth_1.checkAuth, (req, resp) => {
+    try {
+        let param = req.body;
+        BarangSql_1.barangSql.baca({
+            id: param.id,
+            kataKunci: param.kataKunci,
+            lapak_id: param.lapak_id,
+            limit: param.limit,
+            offset: param.offset,
+            orderDateDesc: param.orderDateDesc,
+            orderNamaAsc: param.orderNamaAsc,
+            publish: param.publish
+        })
+            .then((rows) => {
+            resp.status(200).send(rows);
+        })
+            .catch((e) => {
+            TokoLog_1.logT.log(e);
+            resp.status(500).send(e);
+        });
+    }
+    catch (e) {
+        resp.status(500).send(e);
     }
 });

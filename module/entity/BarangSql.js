@@ -12,20 +12,21 @@ class BarangSql {
 											WHERE BARANG.lapak = ?
 											ORDER BY BARANG.nama 
 											;`;
-        this.bacaBarangSemua = `SELECT BARANG.*, FILE.thumb, FILE.gbr 
-											FROM BARANG
-											LEFT JOIN FILE
-											ON BARANG.file_id = FILE.id`;
+        // private bacaBarangSemua: string = `SELECT BARANG.*, FILE.thumb, FILE.gbr 
+        // 										FROM BARANG
+        // 										LEFT JOIN FILE
+        // 										ON BARANG.file_id = FILE.id`;
         this.hapusSql = `DELETE FROM BARANG WHERE ID = ?`;
         this.updateSql = `UPDATE BARANG SET ? WHERE ID = ?`;
         this.baruSql = `INSERT INTO BARANG SET ?`;
-        this.bacaIdSql = `
-		SELECT BARANG.*, FILE.thumb, FILE.gbr 
-		FROM BARANG
-		LEFT JOIN FILE
-		ON BARANG.file_id = FILE.id
-		WHERE BARANG.id = ?`;
     }
+    // private bacaIdSql: string = `
+    // SELECT BARANG.*, FILE.thumb, FILE.gbr 
+    // FROM BARANG
+    // LEFT JOIN FILE
+    // ON BARANG.file_id = FILE.id
+    // WHERE BARANG.id = ?`;
+    //TODO: depecreated
     query(query, resolve, reject) {
         Connection_1.Connection.pool.query(query, (_err, _rows) => {
             if (_err) {
@@ -36,29 +37,32 @@ class BarangSql {
             }
         });
     }
-    async queryBaca(query) {
-        return new Promise((resolve, reject) => {
-            try {
-                this.query(query, resolve, reject);
-            }
-            catch (err) {
-                assert_1.rejects(err.message);
-            }
-        });
-    }
-    //TODO: type buat return
-    async bacaId(id) {
-        return new Promise((resolve, reject) => {
-            Connection_1.Connection.pool.query(this.bacaIdSql, [id], (_err, _rows) => {
-                if (_err) {
-                    reject(_err);
-                }
-                else {
-                    resolve(_rows[0]);
-                }
-            });
-        });
-    }
+    //TODO: depecreated
+    // private async queryBaca(query: string): Promise<any> {
+    // 	return new Promise((resolve, reject) => {
+    // 		try {
+    // 			this.query(query, resolve, reject);
+    // 		} catch (err) {
+    // 			rejects(err.message)
+    // 		}
+    // 	})
+    // }
+    //TODO: depecreated
+    // async bacaId(id: string): Promise<any> {
+    // 	return new Promise((resolve, reject) => {
+    // 		Connection.pool.query(
+    // 			this.bacaIdSql, [id],
+    // 			(_err: any, _rows: any) => {
+    // 				if (_err) {
+    // 					reject(_err);
+    // 				}
+    // 				else {
+    // 					resolve(_rows[0]);
+    // 				}
+    // 			});
+    // 	});
+    // }
+    //TODO: depcreated
     async cari(kataKunci, offset, _lapak) {
         let lapakQuery = ''; //TODO:
         let query = `SELECT BARANG.*, FILE.thumb, FILE.gbr
@@ -116,9 +120,10 @@ class BarangSql {
             }
         });
     }
-    async bacaSemua() {
-        return this.queryBaca(this.bacaBarangSemua);
-    }
+    //TODO: depecreated
+    // async bacaSemua(): Promise<any> {
+    // 	return this.queryBaca(this.bacaBarangSemua);
+    // }
     async jumlah() {
         let query = `SELECT COUNT(*) as jumlah
 			FROM BARANG
@@ -140,7 +145,7 @@ class BarangSql {
             }
         });
     }
-    //TODO: pakai paging
+    //TODO: pakai paging, depecreated
     async bacaPublish(_mulai, _jml, lapak) {
         let query = `
 			SELECT BARANG.*, FILE.thumb, FILE.gbr 
@@ -178,7 +183,7 @@ class BarangSql {
             });
         });
     }
-    //TODO belum kepake
+    //TODO depecreated
     async bacaLapakPublishDate() {
         let query = `
 		SELECT BARANG.*, FILE.thumb, FILE.gbr
@@ -199,20 +204,7 @@ class BarangSql {
             });
         });
     }
-    // async bacalapakPublish(lapak: string): Promise<any> {
-    // 	return new Promise((resolve, reject) => {
-    // 		Connection.pool.query(
-    // 			this.bacaBaranglapakPulish, [lapak],
-    // 			(_err: any, _rows: any) => {
-    // 				if (_err) {
-    // 					reject(_err);
-    // 				}
-    // 				else {
-    // 					resolve(_rows);
-    // 				}
-    // 			});
-    // 	});
-    // }
+    //TODO depecreated
     async bacalapak(lapak) {
         return new Promise((resolve, reject) => {
             Connection_1.Connection.pool.query(this.bacaBaranglapak, [lapak], (_err, _rows) => {
@@ -231,8 +223,10 @@ class BarangSql {
         let limitQuery = '';
         let orderQuery = '';
         let data = [];
+        console.log('Barang baca ');
+        console.log(opt);
         if (opt.id) {
-            whereQuery += 'AND BARANG.lapak_id = ? ';
+            whereQuery += 'AND BARANG.id = ? ';
             data.push(opt.id);
         }
         if (opt.lapak_id) {
@@ -240,17 +234,21 @@ class BarangSql {
             data.push(opt.lapak_id);
         }
         if (opt.kataKunci) {
-            whereQuery += ` AND (BARANG.nama like ?
-							OR BARANG.deskripsi_panjang like ?) `;
-            data.push(opt.kataKunci);
+            whereQuery += `AND (BARANG.nama like ? OR BARANG.deskripsi_panjang like ?) `;
+            data.push('%' + opt.kataKunci + '%');
+            data.push('%' + opt.kataKunci + '%');
         }
-        if (opt.offset) {
-            offsetQuery = 'OFFSET = ? ';
-            data.push(opt.offset);
+        if (opt.publish) {
+            whereQuery += `AND BARANG.publish = ? `;
+            data.push(opt.publish);
         }
-        if (opt.limit) {
+        if (!isNaN(opt.limit)) {
             limitQuery = 'LIMIT ? ';
             data.push(opt.limit);
+        }
+        if (!isNaN(opt.offset)) {
+            offsetQuery = 'OFFSET ? ';
+            data.push(opt.offset);
         }
         if (opt.orderDateDesc) {
             orderQuery = 'ORDER BY last_view DESC ';
@@ -258,17 +256,13 @@ class BarangSql {
         else if (opt.orderNamaAsc) {
             orderQuery = 'ORDER BY BARANG.nama ASC ';
         }
-        let query = `
-			SELECT BARANG.*, FILE.thumb, FILE.gbr 
-			FROM BARANG
-			LEFT JOIN FILE
-			ON BARANG.file_id = FILE.id
-			${whereQuery}
-			${offsetQuery}
-			${limitQuery}
-			${orderQuery}
-		`;
-        console.log(query);
+        let query = `SELECT BARANG.*, FILE.thumb, FILE.gbr FROM BARANG LEFT JOIN FILE ON BARANG.file_id = FILE.id ${whereQuery} ${orderQuery} ${limitQuery}  ${offsetQuery}`;
+        // console.log(query);
+        // console.log(limitQuery);
+        // console.log(offsetQuery);
+        // console.log(opt.offset);
+        // console.log(opt.limit);
+        // console.log(data);
         return new Promise((resolve, reject) => {
             Connection_1.Connection.pool.query(query, data, (_err, _rows) => {
                 if (_err) {
@@ -276,6 +270,7 @@ class BarangSql {
                 }
                 else {
                     resolve(_rows);
+                    // console.log(_rows);
                 }
             });
         });

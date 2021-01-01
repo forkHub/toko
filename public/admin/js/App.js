@@ -20,6 +20,9 @@ class App {
         dialog.detach();
         data.cont = App.getEl('div.main-cont');
         this.loginStatus();
+        // console.log("test");
+        // console.log(Util.urlBarangBaca);
+        // console.log(Util.getUrl(Util.urlBarangBaca, ["all", "all", "all"]));
     }
     query() {
     }
