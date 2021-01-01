@@ -4,11 +4,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const Auth_1 = require("../Auth");
 const Anggota_1 = require("../entity/Anggota");
 exports.router = express_1.default.Router();
-exports.router.post("/baca/setuju/:status", (req, resp) => {
+exports.router.post("/baca/setuju/:setuju", Auth_1.checkAuth, (req, resp) => {
     try {
-        Anggota_1.anggota.baca(null).then((hasil) => {
+        Anggota_1.anggota.baca({
+            setuju: parseInt(req.params.setuju)
+        }).then((hasil) => {
             resp.status(200).send(hasil);
         }).catch((e) => {
             resp.status(500).send(e.message);
@@ -19,7 +22,7 @@ exports.router.post("/baca/setuju/:status", (req, resp) => {
         resp.status(200).send(e.message);
     }
 });
-exports.router.post("/hapus", (req, resp) => {
+exports.router.post("/hapus", Auth_1.checkAuth, (req, resp) => {
     try {
         Anggota_1.anggota.hapus(req.params.id).then(() => {
             resp.status(200).end();
@@ -31,7 +34,7 @@ exports.router.post("/hapus", (req, resp) => {
         resp.status(500).send(err.message);
     }
 });
-exports.router.post("/baru", (req, resp) => {
+exports.router.post("/baru", Auth_1.checkAuth, (req, resp) => {
     try {
         let data = {
             password: req.body.password,
@@ -52,7 +55,7 @@ exports.router.post("/baru", (req, resp) => {
         resp.status(500).send(e.message);
     }
 });
-exports.router.post("/update/:id", (req, resp) => {
+exports.router.post("/update/:id", Auth_1.checkAuth, (req, resp) => {
     try {
         let opt = {};
         opt.deskripsi;
@@ -61,6 +64,21 @@ exports.router.post("/update/:id", (req, resp) => {
         opt.password;
         opt.setuju;
         opt.user_id;
+        Anggota_1.anggota.update(opt, req.params.id).then(() => {
+            resp.status(200).end();
+        }).catch((e) => {
+            resp.status(500).send(e.message);
+        });
+    }
+    catch (error) {
+        resp.status(500).send(error.message);
+    }
+});
+exports.router.post("/update/id/:id/setuju/:setuju", Auth_1.checkAuth, (req, resp) => {
+    try {
+        let opt = {
+            setuju: parseInt(req.params.setuju)
+        };
         Anggota_1.anggota.update(opt, req.params.id).then(() => {
             resp.status(200).end();
         }).catch((e) => {

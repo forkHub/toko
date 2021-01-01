@@ -37,10 +37,22 @@ class Setuju {
                 view.nama.innerHTML = item.user_id + ' - ' + item.lapak;
                 view.item = item;
                 view.okTbl.onclick = () => {
-                    Util.Ajax("post", Util.urlAnggotaEdit, "").then().catch();
+                    Util.Ajax("post", Util.getUrl(Util.urlAnggotaUpdateSetuju, [item.id, "1"]), "")
+                        .then(() => {
+                        this.renderData();
+                    })
+                        .catch((e) => {
+                        dialog.tampil2(e.message);
+                    });
                 };
                 view.tolakTbl.onclick = () => {
-                    Util.Ajax("post", Util.urlAnggotaEdit, "").then().catch();
+                    Util.Ajax("post", Util.getUrl(Util.urlAnggotaUpdateSetuju, [item.id, "2"]), "")
+                        .then(() => {
+                        this.renderData();
+                    })
+                        .catch((e) => {
+                        dialog.tampil2(e.message);
+                    });
                 };
                 view.attach(this.view.listCont);
                 if (0 == idx) {
@@ -51,10 +63,7 @@ class Setuju {
     }
     loadData() {
         return __awaiter(this, void 0, void 0, function* () {
-            let opt = {
-                setuju: 0
-            };
-            let hasil = yield Util.Ajax("post", Util.urlAnggotaBaca, JSON.stringify(opt));
+            let hasil = yield Util.Ajax("post", Util.getUrl(Util.urlAnggotaBacaDisetujui, ["0"]), "");
             let obj = JSON.parse(hasil);
             return obj;
         });

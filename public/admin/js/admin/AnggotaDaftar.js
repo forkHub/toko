@@ -8,8 +8,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { BaseComponent } from "../BaseComponent.js";
+import { data } from "../Data.js";
 import { dialog } from "../Dialog.js";
 import { Util } from "../Util.js";
+import { anggotaDetail } from "./AnggotaDetail.js";
 class AnggotaDaftar extends BaseComponent {
     constructor() {
         super();
@@ -29,22 +31,6 @@ class AnggotaDaftar extends BaseComponent {
         this.tutupTbl.onclick = () => {
             this._tutup();
         };
-        this.hapusTbl.onclick = () => {
-            if (this.idDipilih == '') {
-                dialog.tampil2('Belum ada anggota yang dipilih');
-            }
-            let ok = window.confirm('Hapus Data?');
-            if (ok) {
-                this.hapus().then(() => {
-                    dialog.tampil2('Sukses');
-                    dialog.okTbl.onclick = () => {
-                        this.load();
-                    };
-                }).catch(() => {
-                    dialog.tampil2('Error');
-                });
-            }
-        };
     }
     init() {
     }
@@ -53,6 +39,17 @@ class AnggotaDaftar extends BaseComponent {
             items.forEach((item) => {
                 let view = new Item();
                 view.id = item.id;
+                view.nama.innerHTML = item.user_id + "-" + item.lapak;
+                view.hapus.onclick = () => {
+                    dialog.tampil2('Fitur belum tersedia');
+                };
+                view.lihat.onclick = () => {
+                    this.detach();
+                    anggotaDetail.tampil(item);
+                    anggotaDetail.tutup = () => {
+                        this.attach(data.cont);
+                    };
+                };
                 view.attach(this.cont);
             });
         }).catch(() => {
@@ -63,11 +60,7 @@ class AnggotaDaftar extends BaseComponent {
         return __awaiter(this, void 0, void 0, function* () {
             let data;
             let dataAr;
-            let opt;
-            opt = {
-                setuju: 0
-            };
-            data = yield Util.Ajax('post', Util.urlAnggotaDaftar, JSON.stringify(opt));
+            data = yield Util.Ajax('post', Util.getUrl(Util.urlAnggotaBacaDisetujui, ["1"]), "");
             dataAr = JSON.parse(data);
             return dataAr;
         });
@@ -99,8 +92,8 @@ class Item extends BaseComponent {
         this._template = `
 			<div class='item'>
 				<span class='nama'>nama</span>
-				<button class='btn btn-primary btn-sm menu ok'>✔</button>
-				<button class='btn btn-primary btn-sm menu tolak'>❌</button>
+				<button class='btn btn-primary btn-sm menu lihat'>👁️</button> 
+				<button class='btn btn-primary btn-sm menu hapus'>❌</button>
 			</div>
 		`;
         this.build();
@@ -114,11 +107,11 @@ class Item extends BaseComponent {
     get nama() {
         return this.getEl('span.nama');
     }
-    get ok() {
-        return this.getEl('button.ok');
+    get lihat() {
+        return this.getEl('button.lihat');
     }
-    get tolak() {
-        return this.getEl('button.tolak');
+    get hapus() {
+        return this.getEl('button.hapus');
     }
 }
 export var anggotaDaftar = new AnggotaDaftar();

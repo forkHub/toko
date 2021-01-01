@@ -30,9 +30,12 @@ export class MenuSystem extends BaseComponent {
             };
         };
         this.anggotaTbl.onclick = () => {
-            //halaman daftar anggota
             this.detach();
             anggotaDaftar.attach(data.cont);
+            anggotaDaftar.tutup = () => {
+                anggotaDaftar.detach();
+                this.attach(data.cont);
+            };
             anggotaDaftar.load();
         };
     }

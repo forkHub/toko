@@ -106,18 +106,9 @@ class DaftarBarangPage extends BaseComponent {
                 let barangAr = JSON.parse(str);
                 this.cont.innerHTML = '';
                 console.log('load ' + barangAr.length);
-                // console.group('load str');
-                // console.log(str);
-                // console.groupEnd();
                 barangAr.forEach((data) => {
                     let view = new ItemBarangView();
                     let item = (data);
-                    // console.group('data');
-                    // console.log(data);
-                    // console.groupEnd();
-                    // console.group('item');
-                    // console.log(item);
-                    // console.groupEnd();
                     view.namaP.innerHTML = item.nama + " (" + (item.publish ? "dipublish" : "draft") + ")";
                     view.gbr.src = item.thumb;
                     view.attach(this.cont);
@@ -127,6 +118,8 @@ class DaftarBarangPage extends BaseComponent {
                     view.hapusTbl.onclick = () => {
                         this.barangHapusClick(item);
                     };
+                    let lapakId = window.sessionStorage.getItem(Util.sLapakId);
+                    view.shareTbl.href = "whatsapp://send?text=http://aunistore.com/lapak/" + lapakId + '/barang/' + item.id;
                 });
             }).catch((e) => {
                 if (Util.resp.code == 401) {
@@ -162,8 +155,10 @@ class ItemBarangView extends BaseComponent {
 					<div class='deskripsi'>
 						<p class='nama'></p>
 						<div class='bawah'>
-							<button type='button' class='btn btn-sm btn-primary edit'>Edit</button>
-							<button type='button' class='btn btn-sm btn-danger hapus'>Hapus</button>
+
+						<a class='share'>Share WA</a>
+						<button type='button' class='btn btn-sm btn-primary edit'>Edit</button>
+						<button type='button' class='btn btn-sm btn-danger hapus'>Hapus</button>
 						</div>
 					</div>
 				</div>
@@ -177,6 +172,9 @@ class ItemBarangView extends BaseComponent {
     }
     get hapusTbl() {
         return this.getEl('button.hapus');
+    }
+    get shareTbl() {
+        return this.getEl('a.share');
     }
     get gbr() {
         return this.getEl('img');
