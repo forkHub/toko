@@ -108,3 +108,33 @@ div.foto-page form div.foto-cont canvas {
 div.foto-page form p.foto {
 	display:none;
 }
+
+div.nav-cont {
+	display: flex;
+	padding: 8px;
+	box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.52);
+}
+
+div.nav-cont
+p.judul {
+	margin: 8px;
+	font-weight: bold;
+}
+
+div.list-cont {
+	padding: 8px;
+}
+
+div.daftar-anggota-baru 
+div.item {
+	display: flex;
+	border-bottom: 1px solid lightgray;
+	padding-bottom: 8px;
+	padding-top: 8px;
+}
+
+div.daftar-anggota-baru 
+div.item 
+span.nama {
+	flex-grow: 1;
+}

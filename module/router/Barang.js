@@ -9,6 +9,8 @@ const TokoLog_1 = require("../TokoLog");
 const Auth_1 = require("../Auth");
 const Util_1 = require("../Util");
 const Barang_1 = require("../controller/Barang");
+const SessionData_1 = require("../SessionData");
+// import { session } from "../SessionData";
 exports.router = express_1.default.Router();
 exports.router.get("/:id", (req, resp) => {
     try {
@@ -82,6 +84,10 @@ exports.router.post("/baru", Auth_1.checkAuth, (req, resp) => {
 });
 exports.router.post("/update/:id", Auth_1.checkAuth, (req, resp) => {
     try {
+        if (SessionData_1.session(req).id != req.params.id) {
+            resp.status(401).send('');
+            return;
+        }
         BarangSql_1.barangSql.update({
             nama: req.body.nama,
             deskripsi_panjang: req.body.deskripsi_panjang,
@@ -103,12 +109,11 @@ exports.router.post("/update/:id", Auth_1.checkAuth, (req, resp) => {
         resp.status(500).send(error);
     }
 });
-exports.router.post("/baca/id/:id/lapak/:lapak/publish/:publish", Auth_1.checkAuth, (req, resp) => {
+exports.router.post("/baca/lapak/:lapak/publish/:publish", Auth_1.checkAuth, (req, resp) => {
     try {
         BarangSql_1.barangSql.baca({
-            id: ("all" == req.params.id) ? null : req.params.id,
-            lapak_id: ("all" == req.params.lapak ? null : req.params.lapak),
-            publish: ("all" == req.params.publish ? null : parseInt(req.params.publish))
+            lapak_id: req.params.lapak,
+            publish: parseInt(req.params.publish)
         })
             .then((rows) => {
             resp.status(200).send(rows);

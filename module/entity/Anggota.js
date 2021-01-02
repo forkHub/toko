@@ -68,7 +68,7 @@ class Anggota {
     }
     async hapus(id) {
         return new Promise((resolve, reject) => {
-            Connection_1.Connection.pool.query("DELETE FROM BARANG WHERE ID = ?", [id], (_err, _rows) => {
+            Connection_1.Connection.pool.query("DELETE FROM pengguna WHERE ID = ?", [id], (_err, _rows) => {
                 if (_err) {
                     reject(_err);
                 }

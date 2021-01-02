@@ -13,8 +13,11 @@ import { loading } from "./Loading.js";
 export class Util {
     static getUrl(url, params) {
         let urlHasil = url;
+        console.log('get url');
         params.forEach((item) => {
             urlHasil = urlHasil.replace(/\:[a-z]+/, item);
+            console.log('item ' + item);
+            console.log('url ' + urlHasil);
         });
         return urlHasil;
     }
@@ -99,7 +102,7 @@ export class Util {
 }
 Util.urlAdmin = '/admin';
 Util.urlAnggotaBaru = "/anggota/baru";
-Util.urlAnggotaHapus = "/anggota/hapus";
+Util.urlAnggotaHapus = "/anggota/hapus/:id";
 Util.urlAnggotaBacaDisetujui = '/anggota/baca/setuju/:setuju';
 Util.urlAnggotaEdit = '/anggota/edit';
 Util.urlAnggotaUpdateSetuju = '/anggota/update/id/:id/setuju/:setuju';

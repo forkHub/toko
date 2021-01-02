@@ -22,7 +22,7 @@ exports.router.post("/baca/setuju/:setuju", Auth_1.checkAuth, (req, resp) => {
         resp.status(200).send(e.message);
     }
 });
-exports.router.post("/hapus", Auth_1.checkAuth, (req, resp) => {
+exports.router.post("/hapus/:id", Auth_1.checkAuth, (req, resp) => {
     try {
         Anggota_1.anggota.hapus(req.params.id).then(() => {
             resp.status(200).end();
@@ -34,13 +34,14 @@ exports.router.post("/hapus", Auth_1.checkAuth, (req, resp) => {
         resp.status(500).send(err.message);
     }
 });
-exports.router.post("/baru", Auth_1.checkAuth, (req, resp) => {
+exports.router.post("/baru", (req, resp) => {
     try {
         let data = {
             password: req.body.password,
             level: req.body.level,
             user_id: req.body.user_id,
-            lapak: req.body.lapak
+            lapak: req.body.lapak,
+            deskripsi: req.body.deskripsi
         };
         Anggota_1.anggota.baru(data)
             .then(() => {

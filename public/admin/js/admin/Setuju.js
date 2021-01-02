@@ -46,13 +46,19 @@ class Setuju {
                     });
                 };
                 view.tolakTbl.onclick = () => {
-                    Util.Ajax("post", Util.getUrl(Util.urlAnggotaUpdateSetuju, [item.id, "2"]), "")
-                        .then(() => {
-                        this.renderData();
-                    })
-                        .catch((e) => {
-                        dialog.tampil2(e.message);
-                    });
+                    let p = window.confirm("Apakah anda ingin menolak permintaan ini?");
+                    if (p) {
+                        Util.Ajax("post", Util.getUrl(Util.urlAnggotaHapus, [item.id]), "")
+                            .then(() => {
+                            this.renderData();
+                        })
+                            .catch((e) => {
+                            dialog.tampil2(e.message);
+                        });
+                    }
+                    else {
+                        console.log(p);
+                    }
                 };
                 view.attach(this.view.listCont);
                 if (0 == idx) {
@@ -76,11 +82,12 @@ class View extends BaseComponent {
     constructor() {
         super();
         this._template = `
-			<div class='setuju'>
-				<div class='nav'>
+			<div class='daftar-anggota-baru'>
+				<div class="nav-cont">
 					<button class='btn btn-primary tutup'>&lt;</button>
-					<p class='judu'>Persetujuan Anggota</p>
+					<p class='judul'>Persetujuan Anggota</p>
 				</div>
+				<hr/>
 				<div class='list-cont'>
 
 				</div>
@@ -100,6 +107,7 @@ class ItemView extends BaseComponent {
         super();
         this._template = `
 			<div class='item'>
+
 				<span class='nama'></span>
 				<button class='btn btn-sm ok'>✔</button> 
 				<button class='btn btn-sm tolak'>❌</button>

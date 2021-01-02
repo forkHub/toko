@@ -18,6 +18,7 @@ import { Util } from "../Util.js";
 class DaftarBarangPage extends BaseComponent {
     constructor() {
         super();
+        this.totalBaramg = 0;
         this._template = `
 			<div class='daftar-barang-page'>
 				<h1>Daftar Barang</h1>
@@ -42,7 +43,8 @@ class DaftarBarangPage extends BaseComponent {
             this.logoutClick();
         };
         this.lihatTbl.onclick = () => {
-            if (config.sofwan) {
+            let session = window.sessionStorage;
+            if (session.lapak != '') {
                 window.top.location.href = "/lapak/" + window.sessionStorage.getItem('lapak');
             }
             else {
@@ -56,6 +58,11 @@ class DaftarBarangPage extends BaseComponent {
         window.top.location.href = Util.urlLogout;
     }
     tambahClick() {
+        //TODO: masukkan config
+        if (this.totalBaramg >= 25) {
+            dialog.tampil2('Maaf, Karena keterbatasan tempat, Anda hanya boleh menjual maksimal 25 barang');
+            return;
+        }
         this.detach();
         form.view.attach(data.cont);
         form.editMode = false;
@@ -106,6 +113,7 @@ class DaftarBarangPage extends BaseComponent {
                 let barangAr = JSON.parse(str);
                 this.cont.innerHTML = '';
                 console.log('load ' + barangAr.length);
+                this.totalBaramg = barangAr.length;
                 barangAr.forEach((data) => {
                     let view = new ItemBarangView();
                     let item = (data);

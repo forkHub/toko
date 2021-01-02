@@ -1,26 +1,24 @@
-import { anggotaDaftar } from "./AnggotaDaftar.js";
+// import { anggotaDaftar } from "./AnggotaDaftar.js";
 import { BaseComponent } from "../BaseComponent.js";
-import { daftarBarangPage } from "../barang/DaftarBarangPage.js";
+// import { daftarBarangPage } from "../barang/DaftarBarangPage.js";
 import { data } from "../Data.js";
+// import { dialog } from "../Dialog.js";
+import { Util } from "../Util.js";
 import { setuju } from "./Setuju.js";
 export class MenuSystem extends BaseComponent {
     constructor() {
         super();
+        //TODO: daftar anggota menu
         this._template = `
 			<div class='menu-system'>
-				<h3>Admin</h3>
-				<button class='btn btn-primary barang'>Daftar Barang</button><br/><br/>
+			
+				<h4>Hal Admin</h4>
+				<hr/>
 				<button class='btn btn-primary setuju'>Persetujuan Anggota</button><br/><br/>
-				<button class='btn btn-primary anggota'>Daftar Anggota</button><br/><br/>
+				<button class='btn btn-primary logout'>Logout</button><br/><br/>
 			</div>
 		`;
         this.build();
-        this.barangTbl.onclick = () => {
-            //halaman barang
-            this.detach();
-            daftarBarangPage.attach(data.cont);
-            daftarBarangPage.load2();
-        };
         this.setujuTbl.onclick = () => {
             this.detach();
             setuju.tampil();
@@ -29,26 +27,37 @@ export class MenuSystem extends BaseComponent {
                 this.attach(data.cont);
             };
         };
-        this.anggotaTbl.onclick = () => {
-            this.detach();
-            anggotaDaftar.attach(data.cont);
-            anggotaDaftar.tutup = () => {
-                anggotaDaftar.detach();
-                this.attach(data.cont);
-            };
-            anggotaDaftar.load();
+        this.logoutTbl.onclick = () => {
+            window.top.location.href = Util.urlLogout;
+            // Util.Ajax('post', Util.urlLogout, '').then(() => {
+            // 	window.top.location.reload();
+            // }).catch((e) => {
+            // 	dialog.tampil2(e.message);
+            // })
         };
+        //TODO: aktifkan nanti
+        // this.barangTbl.onclick = () => {
+        // 	this.detach();
+        // 	daftarBarangPage.attach(data.cont);
+        // 	daftarBarangPage.load2();
+        // }
+        // this.anggotaTbl.onclick = () => {
+        // 	this.detach();
+        // 	anggotaDaftar.attach(data.cont);
+        // 	anggotaDaftar.tutup = () => {
+        // 		anggotaDaftar.detach();
+        // 		this.attach(data.cont);
+        // 	}
+        // 	anggotaDaftar.load();
+        // }
     }
     init() {
     }
     get setujuTbl() {
         return this.getEl('button.setuju');
     }
-    get barangTbl() {
-        return this.getEl('button.barang');
-    }
-    get anggotaTbl() {
-        return this.getEl('button.anggota');
+    get logoutTbl() {
+        return this.getEl('button.logout');
     }
 }
 // export var menuSystem: MenuSystem = new MenuSystem();

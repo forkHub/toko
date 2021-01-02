@@ -31,6 +31,11 @@ class AnggotaBaru extends BaseComponent {
 					</div>
 
 					<div class="form-group">
+						<label for="deskripsi">Deskripsi:</label>
+						<textarea type="text" class="form-control deskripsi" name="dekripsi" id="dekripsi" required maxlength=100/></textarea>
+					</div>
+
+					<div class="form-group">
 						<label for="password_anggota">Password 1:</label>
 						<input type="password" class="form-control password_anggota" name="password_anggota" id="password_anggota" required />
 					</div>
@@ -65,7 +70,7 @@ class AnggotaBaru extends BaseComponent {
                     return false;
                 }
                 this.daftar().then(() => {
-                    dialog.tampil2('Terima kasih. Pendaftaran Anda menunggu persetujuan dari admin');
+                    dialog.tampil2('Terima kasih. Silahkan konfirmasi di group agar pendaftaran disetujui');
                     dialog.okTbl.onclick = () => {
                         // this._selesai();
                         window.top.location.href = '/';
@@ -76,6 +81,7 @@ class AnggotaBaru extends BaseComponent {
             }
             catch (e) {
                 console.error(e);
+                dialog.tampil2(e.message);
             }
             return false;
         };
@@ -89,10 +95,11 @@ class AnggotaBaru extends BaseComponent {
     }
     form2Obj() {
         let obj = {
-            user_id: this.nama.value,
+            user_id: Util.escape(this.nama.value),
             password: md5(this.password.value),
             level: 'user',
-            lapak: this.lapak.value
+            lapak: Util.escape(this.lapak.value),
+            deskripsi: Util.escape(this.deskripsi.value)
         };
         return JSON.stringify(obj);
     }
@@ -116,6 +123,9 @@ class AnggotaBaru extends BaseComponent {
     }
     get lapak() {
         return this.getEl('input.lapak');
+    }
+    get deskripsi() {
+        return this.getEl('textarea.deskripsi');
     }
 }
 export var anggotaBaru = new AnggotaBaru();
