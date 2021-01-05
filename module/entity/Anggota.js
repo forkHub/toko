@@ -1,11 +1,28 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const Connection_1 = require("../Connection");
+const Util_1 = require("../Util");
 class Anggota {
+    async bacaDaftarLapakAktif() {
+        let query = ` SELECT * FROM pengguna`;
+        console.log(query);
+        return new Promise((resolve, reject) => {
+            Connection_1.Connection.pool.query(query, [], (_err, _rows) => {
+                if (_err) {
+                    reject(_err);
+                }
+                else {
+                    // console.log(_rows);
+                    resolve(_rows);
+                }
+            });
+        });
+    }
     async baca(opt) {
         console.log(opt);
         let whereQuery = 'WHERE 1 ';
         let data = [];
+        let kolom = '* ';
         if (opt.id) {
             whereQuery += 'AND pengguna.id = ? ';
             data.push(opt.id);
@@ -22,7 +39,10 @@ class Anggota {
             whereQuery += 'AND pengguna.setuju = ? ';
             data.push(opt.setuju);
         }
-        let query = ` SELECT * FROM pengguna ${whereQuery}`;
+        if (opt.kolom && opt.kolom.length > 0) {
+            kolom = Util_1.util.arr2String(opt.kolom);
+        }
+        let query = ` SELECT ${kolom} FROM pengguna ${whereQuery}`;
         console.log(query);
         return new Promise((resolve, reject) => {
             Connection_1.Connection.pool.query(query, data, (_err, _rows) => {

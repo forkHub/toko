@@ -9,8 +9,28 @@ const BarangSql_1 = require("../entity/BarangSql");
 const Renderer_1 = require("../render/Renderer");
 const Config_1 = require("../Config");
 const SessionData_1 = require("../SessionData");
+const Anggota_1 = require("../entity/Anggota");
+const Table_1 = require("../../Table");
 exports.lapakRouter = express_1.default.Router();
 var router = exports.lapakRouter;
+router.get("/:id/daftarlapak", (req, resp) => {
+    try {
+        Anggota_1.anggota.baca({
+            kolom: [Table_1.table.pengguna.id, Table_1.table.pengguna.lapak, Table_1.table.pengguna.deskripsi],
+            setuju: 1
+        }).then((h) => {
+            return Renderer_1.render.halDaftarLapak.render({ lapakData: h, hal: 0, jml: 0, lapakId: '' });
+        }).then((page) => {
+            resp.status(200).send(page);
+        }).catch((e) => {
+            resp.status(500).send(e.message);
+        });
+    }
+    catch (e) {
+        TokoLog_1.logT.log(e);
+        resp.status(500).send(e.message);
+    }
+});
 router.get("/:id", (_req, resp) => {
     console.log('render lapak ' + _req.params.id);
     try {
@@ -24,7 +44,7 @@ router.get("/:id", (_req, resp) => {
             return Renderer_1.render.halDepan
                 .render({
                 barangData: data,
-                lapak: _req.params.id,
+                lapakId: _req.params.id,
                 hal: parseInt(_req.params.hal),
                 jml: Config_1.config.jmlPerHal,
                 kataKunci: _req.params.kunci
@@ -58,7 +78,7 @@ router.get("/:id/cari/:kunci/hal/:hal", (_req, resp) => {
             .then((data) => {
             return Renderer_1.render.halDepan.render({
                 barangData: data,
-                lapak: _req.params.id,
+                lapakId: _req.params.id,
                 hal: parseInt(_req.params.hal),
                 jml: Config_1.config.jmlPerHal,
                 kataKunci: _req.params.kunci

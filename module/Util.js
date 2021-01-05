@@ -13,6 +13,19 @@ class Util {
         let date = new Date();
         return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
     }
+    arr2String(ar) {
+        let hasil = ' ';
+        ar.forEach((item, idx) => {
+            if (0 === idx) {
+                hasil += item;
+            }
+            else {
+                hasil += " ," + item;
+            }
+        });
+        hasil += ' ';
+        return hasil;
+    }
     buatRandom() {
         this._randId = '';
         for (let i = 0; i < 10; i++) {

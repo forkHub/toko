@@ -9,12 +9,12 @@ class HalDepan {
         let header = await Util_1.util.getFile("view/header.html");
         let js = await Util_1.util.getFile("view/js.html");
         let cari = await Util_1.util.getFile("view/cari.html");
-        let barang = await this.renderBerandaBarang(opt.barangData, opt.lapak);
+        let barang = await this.renderBerandaBarang(opt.barangData, opt.lapakId);
         let halaman = await this.renderHalaman1(opt.hal, opt.jml, opt.kataKunci);
-        if (opt.lapak && opt.lapak != '') {
+        if (opt.lapakId && opt.lapakId != '') {
             index = index.replace("{{og_deskripsi}}", "Belanja Mudah, Murah dari Rumah");
             index = index.replace("{{og_gambar}}", "");
-            index = index.replace("{{og_url}}", "http://aunistore.com/lapak/" + opt.lapak);
+            index = index.replace("{{og_url}}", "http://aunistore.com/lapak/" + opt.lapakId);
         }
         else {
             index = index.replace("{{og_deskripsi}}", "Belanja Mudah, Murah dari Rumah");
@@ -23,21 +23,27 @@ class HalDepan {
         }
         header = header.replace("{{nama_toko}}", Config_1.config.namaToko);
         header = header.replace("{{motto}}", "");
-        cari = cari.replace("{{lapak}}", opt.lapak);
+        cari = cari.replace("{{lapak}}", opt.lapakId);
         let berandaUrl = "/";
-        if (opt.lapak != '') {
-            berandaUrl = '/lapak/' + opt.lapak;
+        if (opt.lapakId != '') {
+            berandaUrl = '/lapak/' + opt.lapakId;
         }
         else {
             berandaUrl = '/';
         }
+        let lapakUrl = "/daftarlapak";
+        if (opt.lapakId != '') {
+            lapakUrl = `/lapak/${opt.lapakId}/daftar`;
+        }
         let hasil = index;
         hasil = hasil.replace("{{cari}}", cari);
         hasil = hasil.replace("{{nav_src}}", berandaUrl);
+        hasil = hasil.replace("{{lapak_daftar_src}}", lapakUrl);
         hasil = hasil.replace("{{header}}", header);
         hasil = hasil.replace("{{content}}", barang);
         hasil = hasil.replace("{{js}}", js);
         hasil = hasil.replace("{{halaman}}", halaman);
+        hasil = hasil.replace("{{daftar-barang-cont-class}}", "daftar-barang-cont");
         console.log('render beranda selesai');
         return hasil;
     }

@@ -16,7 +16,7 @@ class Barang {
         let jml = await BarangSql_1.barangSql.cariJml(kataKunci);
         return await Renderer_1.render.halDepan.render({
             barangData: barangAr,
-            lapak: lapak,
+            lapakId: lapak,
             hal: hal,
             jml: jml,
             kataKunci: kataKunci

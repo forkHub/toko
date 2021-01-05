@@ -19,6 +19,31 @@ class BarangSql {
         this.hapusSql = `DELETE FROM BARANG WHERE ID = ?`;
         this.updateSql = `UPDATE BARANG SET ? WHERE ID = ?`;
         this.baruSql = `INSERT INTO BARANG SET ?`;
+        //TODO: depecreated
+        // private async queryBaca(query: string): Promise<any> {
+        // 	return new Promise((resolve, reject) => {
+        // 		try {
+        // 			this.query(query, resolve, reject);
+        // 		} catch (err) {
+        // 			rejects(err.message)
+        // 		}
+        // 	})
+        // }
+        //TODO: depecreated
+        // async bacaId(id: string): Promise<any> {
+        // 	return new Promise((resolve, reject) => {
+        // 		Connection.pool.query(
+        // 			this.bacaIdSql, [id],
+        // 			(_err: any, _rows: any) => {
+        // 				if (_err) {
+        // 					reject(_err);
+        // 				}
+        // 				else {
+        // 					resolve(_rows[0]);
+        // 				}
+        // 			});
+        // 	});
+        // }	
     }
     // private bacaIdSql: string = `
     // SELECT BARANG.*, FILE.thumb, FILE.gbr 
@@ -27,7 +52,7 @@ class BarangSql {
     // ON BARANG.file_id = FILE.id
     // WHERE BARANG.id = ?`;
     //TODO: depecreated
-    query(query, resolve, reject) {
+    query3(query, resolve, reject) {
         Connection_1.Connection.pool.query(query, (_err, _rows) => {
             if (_err) {
                 reject(_err.message);
@@ -37,31 +62,6 @@ class BarangSql {
             }
         });
     }
-    //TODO: depecreated
-    // private async queryBaca(query: string): Promise<any> {
-    // 	return new Promise((resolve, reject) => {
-    // 		try {
-    // 			this.query(query, resolve, reject);
-    // 		} catch (err) {
-    // 			rejects(err.message)
-    // 		}
-    // 	})
-    // }
-    //TODO: depecreated
-    // async bacaId(id: string): Promise<any> {
-    // 	return new Promise((resolve, reject) => {
-    // 		Connection.pool.query(
-    // 			this.bacaIdSql, [id],
-    // 			(_err: any, _rows: any) => {
-    // 				if (_err) {
-    // 					reject(_err);
-    // 				}
-    // 				else {
-    // 					resolve(_rows[0]);
-    // 				}
-    // 			});
-    // 	});
-    // }
     //TODO: depcreated
     async cari(kataKunci, offset, _lapak) {
         let lapakQuery = ''; //TODO:
@@ -120,10 +120,6 @@ class BarangSql {
             }
         });
     }
-    //TODO: depecreated
-    // async bacaSemua(): Promise<any> {
-    // 	return this.queryBaca(this.bacaBarangSemua);
-    // }
     async jumlah() {
         let query = `SELECT COUNT(*) as jumlah
 			FROM BARANG
@@ -161,7 +157,7 @@ class BarangSql {
 		`;
         return new Promise((resolve, reject) => {
             try {
-                this.query(query, resolve, reject);
+                this.query3(query, resolve, reject);
             }
             catch (err) {
                 assert_1.rejects(err.message);
@@ -217,6 +213,18 @@ class BarangSql {
             });
         });
     }
+    async query(query, data) {
+        return new Promise((resolve, reject) => {
+            Connection_1.Connection.pool.query(query, data, (_err, _rows) => {
+                if (_err) {
+                    reject(_err);
+                }
+                else {
+                    resolve(_rows);
+                }
+            });
+        });
+    }
     async baca(opt) {
         let whereQuery = 'WHERE 1 ';
         let offsetQuery = '';
@@ -257,12 +265,6 @@ class BarangSql {
             orderQuery = 'ORDER BY BARANG.nama ASC ';
         }
         let query = `SELECT BARANG.*, FILE.thumb, FILE.gbr FROM BARANG LEFT JOIN FILE ON BARANG.file_id = FILE.id ${whereQuery} ${orderQuery} ${limitQuery}  ${offsetQuery}`;
-        // console.log(query);
-        // console.log(limitQuery);
-        // console.log(offsetQuery);
-        // console.log(opt.offset);
-        // console.log(opt.limit);
-        // console.log(data);
         return new Promise((resolve, reject) => {
             Connection_1.Connection.pool.query(query, data, (_err, _rows) => {
                 if (_err) {

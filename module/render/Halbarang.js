@@ -42,6 +42,7 @@ class HalBarang {
         hasil = hasil.replace("{{content}}", barangStr);
         hasil = hasil.replace("{{js}}", js);
         hasil = hasil.replace("{{halaman}}", "");
+        hasil = hasil.replace("{{daftar-barang-cont-class}}", "daftar-barang-cont");
         console.log('hasil');
         return hasil;
     }

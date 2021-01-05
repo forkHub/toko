@@ -125,14 +125,19 @@ form.cari input.cari {
 }
 
 /* daftar barang */
-div.daftar-barang-cont {
+div.daftar-barang-cont,
+div.daftar-barang-cont-lapak {
 	text-align: center;
 	display: table;
 	width: 100%;
+}
+
+div.daftar-barang-cont {
 	visibility: hidden;
 }
 
-div.daftar-barang-cont div.kolom {
+div.daftar-barang-cont div.kolom,
+div.daftar-barang-cont-lapak div.kolom {
 	display:table-cell;
 	width: 20%;
 	vertical-align:top;
@@ -171,4 +176,12 @@ div.footer p {
 div.clear {
 	float: none;
 	clear: both;
+}
+
+div.flex {
+	display: flex;
+}
+
+div.grow {
+	flex-grow: 1;
 }
