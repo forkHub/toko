@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const Util_1 = require("../Util");
 const Config_1 = require("../Config");
+const Anggota_1 = require("../entity/Anggota");
 class HalDepan {
     async render(opt) {
         console.log('render beranda');
@@ -12,14 +13,17 @@ class HalDepan {
         let barang = await this.renderBerandaBarang(opt.barangData, opt.lapakId);
         let halaman = await this.renderHalaman1(opt.hal, opt.jml, opt.kataKunci);
         if (opt.lapakId && opt.lapakId != '') {
-            index = index.replace("{{og_deskripsi}}", "Belanja Mudah, Murah dari Rumah");
+            let lapak = await Anggota_1.anggota.baca({ id: opt.lapakId });
+            index = index.replace("{{og_deskripsi}}", lapak[0].deskripsi);
             index = index.replace("{{og_gambar}}", "");
             index = index.replace("{{og_url}}", "http://aunistore.com/lapak/" + opt.lapakId);
+            index = index.replace("{{og_title}}", lapak[0].lapak);
         }
         else {
             index = index.replace("{{og_deskripsi}}", "Belanja Mudah, Murah dari Rumah");
             index = index.replace("{{og_gambar}}", "");
             index = index.replace("{{og_url}}", "http://aunistore.com");
+            index = index.replace("{{og_title}}", "Auni Store");
         }
         header = header.replace("{{nama_toko}}", Config_1.config.namaToko);
         header = header.replace("{{motto}}", "");
@@ -31,7 +35,7 @@ class HalDepan {
         else {
             berandaUrl = '/';
         }
-        let lapakUrl = "/daftarlapak";
+        let lapakUrl = "/lapak/daftar";
         if (opt.lapakId != '') {
             lapakUrl = `/lapak/${opt.lapakId}/daftar`;
         }

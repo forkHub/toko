@@ -12,10 +12,15 @@ class BarangSql {
 											WHERE BARANG.lapak = ?
 											ORDER BY BARANG.nama 
 											;`;
-        // private bacaBarangSemua: string = `SELECT BARANG.*, FILE.thumb, FILE.gbr 
-        // 										FROM BARANG
-        // 										LEFT JOIN FILE
-        // 										ON BARANG.file_id = FILE.id`;
+        this.bacaBarangTerkait = `
+		SELECT BARANG.*, FILE.thumb, FILE.gbr
+		FROM BARANG
+		LEFT JOIN FILE
+		ON BARANG.file_id = File.id
+		WHERE BARANG.publish = 1
+		ORDER BY BARANG.last_view
+		LIMIT 5 
+	`;
         this.hapusSql = `DELETE FROM BARANG WHERE ID = ?`;
         this.updateSql = `UPDATE BARANG SET ? WHERE ID = ?`;
         this.baruSql = `INSERT INTO BARANG SET ?`;
@@ -265,6 +270,8 @@ class BarangSql {
             orderQuery = 'ORDER BY BARANG.nama ASC ';
         }
         let query = `SELECT BARANG.*, FILE.thumb, FILE.gbr FROM BARANG LEFT JOIN FILE ON BARANG.file_id = FILE.id ${whereQuery} ${orderQuery} ${limitQuery}  ${offsetQuery}`;
+        // console.log(query);
+        // console.log(data);
         return new Promise((resolve, reject) => {
             Connection_1.Connection.pool.query(query, data, (_err, _rows) => {
                 if (_err) {

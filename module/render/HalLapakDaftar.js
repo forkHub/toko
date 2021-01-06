@@ -28,7 +28,7 @@ class HalDaftarLapak {
         else {
             berandaUrl = '/';
         }
-        let lapakUrl = "/daftarlapak";
+        let lapakUrl = "/lapak/daftar";
         if (opt.lapakId != '') {
             lapakUrl = `/lapak/${opt.lapakId}/daftar`;
         }

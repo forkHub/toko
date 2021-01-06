@@ -13,6 +13,7 @@ class Loading extends BaseComponent {
         this.build();
     }
     tampil() {
+        console.log('loading tampil');
         this.attach(document.body);
     }
 }

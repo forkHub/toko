@@ -13,6 +13,14 @@ class Util {
         let date = new Date();
         return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
     }
+    //TODO:
+    query(query) {
+        let ar = query.match(/\:[a-zA-Z]+/);
+        ar.forEach((item) => {
+            query = query.replace(item, "");
+        });
+        return query;
+    }
     arr2String(ar) {
         let hasil = ' ';
         ar.forEach((item, idx) => {

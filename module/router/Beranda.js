@@ -13,6 +13,7 @@ const Barang_1 = require("../controller/Barang");
 const Auth_1 = require("../Auth");
 const Util_1 = require("../Util");
 const SessionData_1 = require("../SessionData");
+// import { IPengguna } from "../Type";
 // import { anggota } from "../entity/Anggota";
 // import { table } from "../../Table";
 // import { IPengguna } from "../Type";
@@ -62,37 +63,6 @@ exports.berandaRouter.get("/", (_req, resp) => {
         resp.status(500).send('Error');
     }
 });
-exports.berandaRouter.get("/daftarlapak", (_req, resp) => {
-    try {
-        BarangSql_1.barangSql.query(`
-			SELECT id, lapak, deskripsi
-			FROM pengguna
-			WHERE level = 'user'
-			AND setuju = 1
-		`, [])
-            .then((data) => {
-            return Renderer_1.render.halDaftarLapak.render({
-                lapakData: data,
-                hal: 0,
-                jml: 0,
-                lapakId: ""
-            });
-        })
-            .then((data) => {
-            SessionData_1.session(_req).lapak = '';
-            resp.status(200).send(data);
-        })
-            .catch((err) => {
-            TokoLog_1.logT.log(err);
-            resp.status(500).send('Error');
-        });
-    }
-    catch (err) {
-        TokoLog_1.logT.log(err);
-        resp.status(500).send('Error');
-    }
-});
-//TODO: pindahin ke
 exports.berandaRouter.get("/daftar", (_req, resp) => {
     try {
         Util_1.util.getFile('view/daftar.html').then((h) => {
