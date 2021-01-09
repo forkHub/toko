@@ -88,7 +88,7 @@ router.get("/:id", (_req, resp) => {
                 barangData: data,
                 lapakId: _req.params.id,
                 hal: parseInt(_req.params.hal),
-                jml: Config_1.config.jmlPerHal,
+                jml: parseInt(Config_1.config.getNilai(Config_1.Config.JML_PER_HAL)),
                 kataKunci: _req.params.kunci
             });
         })
@@ -122,7 +122,7 @@ router.get("/:id/cari/:kunci/hal/:hal", (_req, resp) => {
                 barangData: data,
                 lapakId: _req.params.id,
                 hal: parseInt(_req.params.hal),
-                jml: Config_1.config.jmlPerHal,
+                jml: parseInt(Config_1.config.getNilai(Config_1.Config.JML_PER_HAL)),
                 kataKunci: _req.params.kunci
             });
         })

@@ -9,6 +9,7 @@ class HalDaftarLapak {
         let index = await Util_1.util.getFile("view/index.html");
         let header = await Util_1.util.getFile("view/header.html");
         let lapakStr = await this.renderLapak(opt.lapakData);
+        lapakStr = `<h2>Daftar Lapak: </h2>` + lapakStr;
         if (opt.lapakId && opt.lapakId != '') {
             index = index.replace("{{og_deskripsi}}", "Belanja Mudah, Murah dari Rumah");
             index = index.replace("{{og_gambar}}", "");
@@ -19,30 +20,20 @@ class HalDaftarLapak {
             index = index.replace("{{og_gambar}}", "");
             index = index.replace("{{og_url}}", "http://aunistore.com");
         }
-        header = header.replace("{{nama_toko}}", Config_1.config.namaToko);
+        header = header.replace("{{nama_toko}}", Config_1.config.getNilai(Config_1.Config.NAMA_TOKO));
         header = header.replace("{{motto}}", "");
-        let berandaUrl = "/";
-        if (opt.lapakId != '') {
-            berandaUrl = '/lapak/' + opt.lapakId;
-        }
-        else {
-            berandaUrl = '/';
-        }
-        let lapakUrl = "/lapak/daftar";
-        if (opt.lapakId != '') {
-            lapakUrl = `/lapak/${opt.lapakId}/daftar`;
-        }
-        let hasil = index;
-        hasil = hasil.replace("{{cari}}", "");
-        hasil = hasil.replace("{{nav_src}}", berandaUrl);
-        hasil = hasil.replace("{{lapak_daftar_src}}", lapakUrl);
-        hasil = hasil.replace("{{header}}", header);
-        hasil = hasil.replace("{{content}}", lapakStr);
-        hasil = hasil.replace("{{js}}", "");
-        hasil = hasil.replace("{{halaman}}", "");
-        hasil = hasil.replace("{{daftar-barang-cont-class}}", "daftar-barang-cont-lapak");
+        // let hasil: string = index;
+        index = index.replace("{{cari}}", "");
+        index = index.replace("{{header}}", header);
+        index = index.replace("{{nav_beranda}}", this._renderUtil.renderNavBeranda(opt.lapakId));
+        index = index.replace("{{nav_daftar_lapak}}", this._renderUtil.renderNavDaftarLapak(opt.lapakId));
+        index = index.replace("{{content}}", lapakStr);
+        index = index.replace("{{js}}", "");
+        index = index.replace("{{halaman}}", "");
+        index = index.replace("{{daftar-barang-cont-class}}", "daftar-barang-cont-lapak");
+        index = index.replace("{{footer}}", Config_1.config.getNilai(Config_1.Config.FOOTER));
         console.log('render hal daftar lapak selesai');
-        return hasil;
+        return index;
     }
     async renderLapak(lapakAr) {
         let view = await Util_1.util.getFile("view/daftar_lapak.html");
@@ -51,10 +42,16 @@ class HalDaftarLapak {
             let view2 = view;
             view2 = view2.replace("{{url}}", "/lapak/" + item.id);
             view2 = view2.replace("{{nama}}", item.lapak);
-            view2 = view2.replace("{{deskripsi}}", item.deskripsi);
+            view2 = view2.replace("{{deskripsi}}", item.deskripsi ? item.deskripsi : ' - deskripsi tidak tersedia - ');
             hasil += view2;
         });
+        if (hasil == '') {
+            return `<p>Tidak ada lapak yang terdaftar</p>`;
+        }
         return hasil;
+    }
+    set renderUtil(value) {
+        this._renderUtil = value;
     }
 }
 exports.HalDaftarLapak = HalDaftarLapak;

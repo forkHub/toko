@@ -10,6 +10,7 @@ const Auth_1 = require("../Auth");
 const Util_1 = require("../Util");
 const Barang_1 = require("../controller/Barang");
 const SessionData_1 = require("../SessionData");
+const Config_1 = require("../Config");
 // import { table } from "../Table";
 // import { session } from "../SessionData";
 exports.router = express_1.default.Router();
@@ -155,6 +156,10 @@ exports.router.post("/baca/", Auth_1.checkAuth, (req, resp) => {
 });
 exports.router.post("/terkait", (_req, resp) => {
     try {
+        if (Config_1.config.getNilai(Config_1.Config.TERKAIT) == '0') {
+            resp.status(200).send([]);
+            return;
+        }
         BarangSql_1.barangSql.query(BarangSql_1.barangSql.bacaBarangTerkait, [])
             .then((hasil) => {
             resp.status(200).send(hasil);

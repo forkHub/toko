@@ -86,7 +86,7 @@ class BarangSql {
                 Connection_1.Connection.pool.query(query, [
                     '%' + kataKunci + '%',
                     '%' + kataKunci + '%',
-                    Config_1.config.jmlPerHal,
+                    Config_1.config.getNilai(Config_1.Config.JML_PER_HAL),
                     offset
                 ], (_err, _rows) => {
                     if (_err) {

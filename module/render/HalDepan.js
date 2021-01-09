@@ -12,6 +12,7 @@ class HalDepan {
         let cari = await Util_1.util.getFile("view/cari.html");
         let barang = await this.renderBerandaBarang(opt.barangData, opt.lapakId);
         let halaman = await this.renderHalaman1(opt.hal, opt.jml, opt.kataKunci);
+        //OG
         if (opt.lapakId && opt.lapakId != '') {
             let lapak = await Anggota_1.anggota.baca({ id: opt.lapakId });
             index = index.replace("{{og_deskripsi}}", lapak[0].deskripsi);
@@ -25,31 +26,38 @@ class HalDepan {
             index = index.replace("{{og_url}}", "http://aunistore.com");
             index = index.replace("{{og_title}}", "Auni Store");
         }
-        header = header.replace("{{nama_toko}}", Config_1.config.namaToko);
+        header = header.replace("{{nama_toko}}", Config_1.config.getNilai(Config_1.Config.NAMA_TOKO));
         header = header.replace("{{motto}}", "");
         cari = cari.replace("{{lapak}}", opt.lapakId);
-        let berandaUrl = "/";
+        index = index.replace("{{cari}}", cari);
+        index = index.replace("{{nav_beranda}}", this.renderNavBeranda(opt));
+        index = index.replace("{{nav_daftar_lapak}}", this.renderNavDaftarLapak(opt));
+        index = index.replace("{{header}}", header);
+        index = index.replace("{{content}}", barang);
+        index = index.replace("{{js}}", js);
+        index = index.replace("{{halaman}}", halaman);
+        index = index.replace("{{daftar-barang-cont-class}}", "daftar-barang-cont");
+        index = index.replace("{{footer}}", Config_1.config.getNilai(Config_1.Config.FOOTER));
+        console.log('render beranda selesai');
+        return index;
+    }
+    renderNavBeranda(opt) {
+        let url = "/";
         if (opt.lapakId != '') {
-            berandaUrl = '/lapak/' + opt.lapakId;
+            url = '/lapak/' + opt.lapakId;
         }
         else {
-            berandaUrl = '/';
+            url = '/';
         }
+        return `<a href="${url}">BERANDA</a>`;
+    }
+    renderNavDaftarLapak(opt) {
+        //lapak
         let lapakUrl = "/lapak/daftar";
         if (opt.lapakId != '') {
             lapakUrl = `/lapak/${opt.lapakId}/daftar`;
         }
-        let hasil = index;
-        hasil = hasil.replace("{{cari}}", cari);
-        hasil = hasil.replace("{{nav_src}}", berandaUrl);
-        hasil = hasil.replace("{{lapak_daftar_src}}", lapakUrl);
-        hasil = hasil.replace("{{header}}", header);
-        hasil = hasil.replace("{{content}}", barang);
-        hasil = hasil.replace("{{js}}", js);
-        hasil = hasil.replace("{{halaman}}", halaman);
-        hasil = hasil.replace("{{daftar-barang-cont-class}}", "daftar-barang-cont");
-        console.log('render beranda selesai');
-        return hasil;
+        return ` | <a href="${lapakUrl}">LAPAK</a>`;
     }
     //
     async renderHalaman1(hal, jml, kataKunci) {
@@ -96,6 +104,9 @@ class HalDepan {
             hasil2 = hasil2.replace("{{lapak}}", lapak);
             hasil += hasil2;
         });
+        if (hasil == '') {
+            hasil = "<p>Belum Ada Barang</p>";
+        }
         return hasil;
     }
 }
