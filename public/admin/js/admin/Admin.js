@@ -1,7 +1,7 @@
-import { MenuSystem } from "./MenuSystem.js";
+import { MenuAdmin } from "./MenuAdmin.js";
 class Admin {
     constructor() {
-        this._menu = new MenuSystem();
+        this._menu = new MenuAdmin();
     }
     get menu() {
         return this._menu;

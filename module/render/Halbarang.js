@@ -10,10 +10,6 @@ class HalBarang {
             id: id
         };
         let barang = await BarangSql_1.barangSql.baca(opt);
-        // console.log(barang);
-        // console.log("lapak " + lapak);
-        // console.log("gambar " + barang[0].thumb);
-        // console.log(barang[0]);
         let index = await Util_1.util.getFile("view/index.html");
         let header = await Util_1.util.getFile("view/header.html");
         let barangStr = await this.renderBarangDetail(barang[0]);
@@ -49,6 +45,7 @@ class HalBarang {
         hasil = hasil.replace("{{harga}}", barang.harga);
         hasil = hasil.replace("{{deskripsiPanjang}}", barang.deskripsi_panjang);
         hasil = hasil.replace("{{wa-link}}", Util_1.util.buatWa(barang.wa, barang.nama));
+        hasil = hasil.replace("{{data-id}}", barang.id);
         return hasil;
     }
     set util(value) {

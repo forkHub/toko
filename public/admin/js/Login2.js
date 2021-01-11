@@ -1,5 +1,5 @@
 import { BaseComponent } from "./BaseComponent.js";
-import { config } from "./Config.js";
+// import { config } from "./Config.js";
 import { dialog } from "./Dialog.js";
 import { Util } from "./Util.js";
 class Login2 extends BaseComponent {
@@ -11,20 +11,10 @@ class Login2 extends BaseComponent {
         this.form.onsubmit = () => {
             return this.formOnSubmit();
         };
-        if (!config.sofwan) {
-            console.log('config auni');
-            this.lapakInput.value = 'auni';
-            this.lapakInput.readOnly = true;
-            this.lapakInput.type = 'hidden';
-            this.lapakLabel.style.visibility = 'hidden';
-        }
-        else {
-            console.log('config sofwan');
-            this.lapakInput.value = "";
-            this.lapakInput.readOnly = false;
-            this.lapakInput.type = 'text';
-            this.lapakLabel.style.visibility = 'visible';
-        }
+        // this.lapakInput.value = "";
+        // this.lapakInput.readOnly = false;
+        // this.lapakInput.type = 'text';
+        // this.lapakLabel.style.visibility = 'visible'; 
     }
     formOnSubmit() {
         try {
@@ -59,12 +49,6 @@ class Login2 extends BaseComponent {
     }
     get password() {
         return this.getEl('input.password');
-    }
-    get lapakInput() {
-        return this.getEl('input.lapak');
-    }
-    get lapakLabel() {
-        return this.getEl('label.lapak');
     }
 }
 export var login = new Login2();

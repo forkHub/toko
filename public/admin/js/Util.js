@@ -7,6 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+import { config } from "./Config.js";
 import { data } from "./Data.js";
 // import { dialog } from "./Dialog.js";
 import { loading } from "./Loading.js";
@@ -48,6 +49,15 @@ export class Util {
             return hasil;
         });
     }
+    static updateConfigDariServer() {
+        return __awaiter(this, void 0, void 0, function* () {
+            let hasil = yield Util.Ajax('post', Util.urlConfigBaca, '');
+            let hasilAr = JSON.parse(hasil);
+            hasilAr.forEach((item) => {
+                config.updateNilai(item.kunci, item.nilai);
+            });
+        });
+    }
     static Ajax(type, url, dataStr) {
         return __awaiter(this, void 0, void 0, function* () {
             return new Promise((resolve, reject) => {
@@ -59,7 +69,7 @@ export class Util {
                     let xhr = new XMLHttpRequest();
                     xhr.onload = () => {
                         if (200 == xhr.status) {
-                            Util._resp.code = 200;
+                            Util._resp.code = xhr.status;
                             loading.detach();
                             resolve(xhr.responseText);
                         }
@@ -74,15 +84,13 @@ export class Util {
                     xhr.onerror = (e) => {
                         console.log('xhr error');
                         console.log(e);
-                        Util._resp.code = 500;
+                        Util._resp.code = xhr.status;
                         Util._resp.message = e.message;
                         loading.detach();
                         reject(new Error('Error'));
                     };
                     xhr.open(type, url, true);
                     xhr.setRequestHeader('Content-type', 'application/json');
-                    // data = window.encodeURIComponent(data);
-                    // console.log(data);
                     xhr.send(dataStr);
                 }
                 catch (e) {
@@ -113,8 +121,13 @@ Util.urlFileHapus = '/file/hapus/';
 Util.urlBarangBaca = '/barang/baca/';
 Util.urlBarangCariPost = '/barang/cari';
 Util.urlBarangTerkait = '/barang/terkait';
+Util.urlBarangUpdateTerakhirDilihat = '/barang/update/lastview/:id';
+Util.urlConfigUpdate = '/konfig/update/:id';
+Util.urlConfigReload = '/konfig/reload';
+Util.urlConfigBaca = '/konfig/baca';
 Util.sLapak = 'lapak'; //TODO: dihapus
 Util.sLapakId = 'lapak_id';
+Util.sLevel = 'level';
 Util._resp = {
     code: 0,
     message: ''

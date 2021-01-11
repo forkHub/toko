@@ -24,31 +24,6 @@ class BarangSql {
         this.hapusSql = `DELETE FROM BARANG WHERE ID = ?`;
         this.updateSql = `UPDATE BARANG SET ? WHERE ID = ?`;
         this.baruSql = `INSERT INTO BARANG SET ?`;
-        //TODO: depecreated
-        // private async queryBaca(query: string): Promise<any> {
-        // 	return new Promise((resolve, reject) => {
-        // 		try {
-        // 			this.query(query, resolve, reject);
-        // 		} catch (err) {
-        // 			rejects(err.message)
-        // 		}
-        // 	})
-        // }
-        //TODO: depecreated
-        // async bacaId(id: string): Promise<any> {
-        // 	return new Promise((resolve, reject) => {
-        // 		Connection.pool.query(
-        // 			this.bacaIdSql, [id],
-        // 			(_err: any, _rows: any) => {
-        // 				if (_err) {
-        // 					reject(_err);
-        // 				}
-        // 				else {
-        // 					resolve(_rows[0]);
-        // 				}
-        // 			});
-        // 	});
-        // }	
     }
     // private bacaIdSql: string = `
     // SELECT BARANG.*, FILE.thumb, FILE.gbr 
@@ -169,21 +144,6 @@ class BarangSql {
             }
         });
     }
-    async updateLastViewDate(id) {
-        return new Promise((resolve, reject) => {
-            let query = `
-		update BARANG set LAST_VIEW = NOW() where ID = ?
-			`;
-            Connection_1.Connection.pool.query(query, [id], (_err, _rows) => {
-                if (_err) {
-                    reject(_err);
-                }
-                else {
-                    resolve(_rows);
-                }
-            });
-        });
-    }
     //TODO depecreated
     async bacaLapakPublishDate() {
         let query = `
@@ -287,6 +247,21 @@ class BarangSql {
     async hapus(id) {
         return new Promise((resolve, reject) => {
             Connection_1.Connection.pool.query(this.hapusSql, [id], (_err, _rows) => {
+                if (_err) {
+                    reject(_err);
+                }
+                else {
+                    resolve(_rows);
+                }
+            });
+        });
+    }
+    async updateLastViewDate(id) {
+        return new Promise((resolve, reject) => {
+            let query = `
+				update BARANG set LAST_VIEW = NOW() where id = ?
+			`;
+            Connection_1.Connection.pool.query(query, [id], (_err, _rows) => {
                 if (_err) {
                     reject(_err);
                 }

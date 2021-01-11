@@ -18,7 +18,6 @@ window.onload = () => {
     };
     img.src = img.getAttribute('gbr');
     document.body.querySelector('div.daftar-barang-cont').style.visibility = 'visible';
-    //load barang terkait
     console.log('load barang terkait');
     Util.Ajax("post", Util.urlBarangTerkait, '')
         .then((hasil) => {
@@ -37,8 +36,8 @@ window.onload = () => {
     })
         .then(() => {
         console.log('update last view');
-        //update last view
-        // return Util.Ajax('', '', '');
+        let id = document.body.querySelector('div.data').getAttribute('id');
+        return Util.Ajax('post', Util.getUrl(Util.urlBarangUpdateTerakhirDilihat, [id]), '');
     })
         .catch((e) => {
         console.error(e);

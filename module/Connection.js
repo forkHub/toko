@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mysql_1 = __importDefault(require("mysql"));
 const TokoLog_1 = require("./TokoLog");
-// import { config } from "./Config";
 const ConfigDB_1 = require("./ConfigDB");
 class Connection {
     static get pool() {

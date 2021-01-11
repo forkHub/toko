@@ -1,38 +1,53 @@
 "use strict";
+//NOTE: FINAL
 Object.defineProperty(exports, "__esModule", { value: true });
 class Config {
     constructor() {
         this.settingAr = [];
         this.settingAr = [{
-                key: Config.NAV_LAPAK,
+                kunci: Config.NAV_LAPAK,
                 nilai: '0',
                 deskripsi: 'Tampilkan navigasi lapak di halaman depan'
             },
             {
-                key: Config.TERKAIT,
+                kunci: Config.TERKAIT,
                 nilai: '0',
                 deskripsi: 'Tampilkan barang terkait'
             },
             {
-                key: Config.NAMA_TOKO,
+                kunci: Config.NAMA_TOKO,
                 nilai: 'Auni Store',
                 deskripsi: 'Nama toko'
             },
             {
-                key: Config.JML_PER_HAL,
+                kunci: Config.JML_PER_HAL,
                 nilai: '25',
                 deskripsi: 'Jumlah item per halaman'
             },
             {
-                key: Config.FOOTER,
+                kunci: Config.FOOTER,
                 nilai: `<H3>Auni Store</H3>Perum Taman Melati Blok FE 07 Bojong Sari - Sawangan - Depok<br/><br/>`,
-                deskripsi: 'Jumlah item per halaman'
+                deskripsi: 'Footer'
             }
         ];
     }
+    bacaSemua() {
+        return this.settingAr;
+    }
+    updateNilai(key, nilai) {
+        this.getSetting(key).nilai = nilai;
+    }
+    getSetting(key) {
+        for (let i = 0; i < this.settingAr.length; i++) {
+            if (this.settingAr[i].kunci == key) {
+                return this.settingAr[i];
+            }
+        }
+        return null;
+    }
     getNilai(key) {
         for (let i = 0; i < this.settingAr.length; i++) {
-            if (this.settingAr[i].key == key) {
+            if (this.settingAr[i].kunci == key) {
                 return this.settingAr[i].nilai;
             }
         }
@@ -40,24 +55,9 @@ class Config {
     }
 }
 exports.Config = Config;
-//key
-Config.NAV_LAPAK = 'nav lapak';
+Config.NAV_LAPAK = 'nav_lapak';
 Config.TERKAIT = 'terkait';
 Config.NAMA_TOKO = 'nama_toko';
-Config.JML_PER_HAL = 'jumlah per halaman';
+Config.JML_PER_HAL = 'jml_per_hal';
 Config.FOOTER = 'footer';
 exports.config = new Config();
-// interface IConfig {
-// 	sofwan: boolean,
-// 	namaToko: string,
-// 	moto: string,
-// 	jmlPerHal: number,
-// 	base: string
-// }
-// export var config: IConfig = {
-// 	sofwan: false,
-// 	jmlPerHal: 25,
-// 	base: 'http://localhost/',
-// 	namaToko: 'Auni Store',
-// 	moto: 'Belanja cepat, mudah, murah dari rumah'
-// } 

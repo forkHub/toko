@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const winston_1 = __importDefault(require("winston"));
+//NOTE: final
 const logW = winston_1.default.createLogger({
     level: 'info',
     format: winston_1.default.format.simple(),

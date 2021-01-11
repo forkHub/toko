@@ -84,6 +84,20 @@ exports.router.post("/baru", Auth_1.checkAuth, (req, resp) => {
         resp.status(500).send(e);
     }
 });
+exports.router.post("/update/lastview/:id", (req, resp) => {
+    try {
+        TokoLog_1.logT.log('update terakhir dilihat, id ' + req.params.id);
+        BarangSql_1.barangSql.updateLastViewDate(req.params.id)
+            .then(() => {
+            resp.status(200).end();
+        }).catch((e) => {
+            resp.status(500).send(e.message);
+        });
+    }
+    catch (error) {
+        resp.status(500).send(error.message);
+    }
+});
 exports.router.post("/update/:id", Auth_1.checkAuth, (req, resp) => {
     try {
         if (SessionData_1.session(req).id != req.params.id) {

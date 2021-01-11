@@ -18,6 +18,7 @@ const cookie_session_1 = __importDefault(require("cookie-session"));
 const Beranda_1 = require("./module/router/Beranda");
 // import { routerApiBarang } from "./module/admin/router/Barang";
 const Util_1 = require("./module/Util");
+const Config_1 = require("./module/router/Config");
 Util_1.util.buatRandom();
 const app = express_1.default();
 const port = 3000;
@@ -40,6 +41,7 @@ app.use("/sys", Install_1.router);
 app.use("/toko_test", TokoTest_1.router);
 app.use("/anggota", Anggota_1.router);
 app.use("/lapak", Lapak_1.lapakRouter);
+app.use("/konfig", Config_1.configRouter);
 app.use("/", Beranda_1.berandaRouter);
 app.use((_req, _resp, _next) => {
     TokoLog_1.logT.log(_req.path);

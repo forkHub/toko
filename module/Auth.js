@@ -22,6 +22,10 @@ class Auth {
             password: ''
         };
     }
+    async checkLevel(level) {
+        //TODO:
+        return false;
+    }
 }
 exports.auth = new Auth();
 //check auth middle ware
