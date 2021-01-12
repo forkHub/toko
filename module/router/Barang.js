@@ -8,43 +8,59 @@ const BarangSql_1 = require("../entity/BarangSql");
 const TokoLog_1 = require("../TokoLog");
 const Auth_1 = require("../Auth");
 const Util_1 = require("../Util");
-const Barang_1 = require("../controller/Barang");
+// import { barangController } from "../controller/Barang";
 const SessionData_1 = require("../SessionData");
 const Config_1 = require("../Config");
+const Renderer_1 = require("../render/Renderer");
 // import { table } from "../Table";
 // import { session } from "../SessionData";
 exports.router = express_1.default.Router();
-exports.router.get("/:id", (req, resp) => {
+exports.router.get("/:id", (_req, resp) => {
     try {
-        console.log(req.params);
-        console.log('router render barang id ' + req.params.id + "|");
-        if (!req.params.id) {
-            console.log("id is null");
-            throw new Error('id null');
-        }
-        else {
-            console.log(req.params.id);
-        }
-        if (req.params.id == null) {
-            console.log("id is null");
-            throw new Error('id null');
-        }
-        else {
-            console.log(req.params.id);
-        }
-        Barang_1.barangController.lihat(req.params.id, "").then((hasil) => {
-            resp.status(200).send(hasil);
-        }).catch((err) => {
-            console.log('render hal barang error');
+        Renderer_1.render.halBarang.render(_req.params.id, '')
+            .then((data) => {
+            // session(_req).lapak = _req.params.id;
+            resp.status(200).send(data);
+        })
+            .catch((err) => {
             TokoLog_1.logT.log(err);
-            resp.status(500).send(err.message);
+            resp.status(500).send('Error');
         });
     }
     catch (err) {
         TokoLog_1.logT.log(err);
-        resp.status(500).send(err.message);
+        resp.status(500).send('Error');
     }
 });
+// 	try {
+// 		console.log(req.params);
+// 		console.log('router render barang id ' + req.params.id + "|");
+// 		if (!req.params.id) {
+// 			console.log("id is null");
+// 			throw new Error('id null');
+// 		}
+// 		else {
+// 			console.log(req.params.id);
+// 		}
+// 		if (req.params.id == null) {
+// 			console.log("id is null");
+// 			throw new Error('id null');
+// 		} else {
+// 			console.log(req.params.id);
+// 		}
+// 		barangController.lihat(req.params.id, "").then((hasil: string) => {
+// 			resp.status(200).send(hasil);
+// 		}).catch((err) => {
+// 			console.log('render hal barang error');
+// 			logT.log(err);
+// 			resp.status(500).send(err.message);
+// 		});
+// 	}
+// 	catch (err) {
+// 		logT.log(err);
+// 		resp.status(500).send(err.message);
+// 	}
+// })
 exports.router.post("/hapus/:id", Auth_1.checkAuth, (req, resp) => {
     try {
         BarangSql_1.barangSql.hapus(req.params.id)

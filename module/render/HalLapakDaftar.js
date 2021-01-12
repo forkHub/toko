@@ -25,6 +25,7 @@ class HalDaftarLapak {
         // let hasil: string = index;
         index = index.replace("{{cari}}", "");
         index = index.replace("{{header}}", header);
+        index = index.replace("{{nav_hal_utama}}", this._renderUtil.renderNavTokoUtama(opt.lapakId));
         index = index.replace("{{nav_beranda}}", this._renderUtil.renderNavBeranda(opt.lapakId));
         index = index.replace("{{nav_daftar_lapak}}", this._renderUtil.renderNavDaftarLapak(opt.lapakId));
         index = index.replace("{{content}}", lapakStr);
@@ -32,6 +33,7 @@ class HalDaftarLapak {
         index = index.replace("{{halaman}}", "");
         index = index.replace("{{daftar-barang-cont-class}}", "daftar-barang-cont-lapak");
         index = index.replace("{{footer}}", Config_1.config.getNilai(Config_1.Config.FOOTER));
+        index = this._renderUtil.cache(index, Util_1.util.randId);
         console.log('render hal daftar lapak selesai');
         return index;
     }

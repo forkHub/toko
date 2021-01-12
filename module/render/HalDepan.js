@@ -4,6 +4,9 @@ const Util_1 = require("../Util");
 const Config_1 = require("../Config");
 const Anggota_1 = require("../entity/Anggota");
 class HalDepan {
+    set util(value) {
+        this._util = value;
+    }
     async render(opt) {
         console.log('render beranda');
         let index = await Util_1.util.getFile("view/index.html");
@@ -30,6 +33,7 @@ class HalDepan {
         header = header.replace("{{motto}}", "");
         cari = cari.replace("{{lapak}}", opt.lapakId);
         index = index.replace("{{cari}}", cari);
+        index = index.replace("{{nav_hal_utama}}", this._util.renderNavTokoUtama(opt.lapakId));
         index = index.replace("{{nav_beranda}}", this.renderNavBeranda(opt));
         index = index.replace("{{nav_daftar_lapak}}", this.renderNavDaftarLapak(opt));
         index = index.replace("{{header}}", header);
@@ -38,6 +42,8 @@ class HalDepan {
         index = index.replace("{{halaman}}", halaman);
         index = index.replace("{{daftar-barang-cont-class}}", "daftar-barang-cont");
         index = index.replace("{{footer}}", Config_1.config.getNilai(Config_1.Config.FOOTER));
+        //cache
+        index = this._util.cache(index, Util_1.util.randId);
         console.log('render beranda selesai');
         return index;
     }

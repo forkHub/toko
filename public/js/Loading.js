@@ -5,7 +5,7 @@ class Loading extends BaseComponent {
         this._template = `
 			<div class='loading'>
 				<div class='box'>
-					<img src='/admin/gbr/loading.gif'/>
+					<img src='/gbr/loading.gif'/>
 					<p>Memuat</p> 
 				</div>
 			</div>

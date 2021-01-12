@@ -16,10 +16,10 @@
 	<meta property="og:url" content="{{og_url}}">
 	<meta property="og:updated_time" content="1440432930" />
 
-	<link rel='stylesheet' href="/admin/css/css.css" />
-	<link rel='stylesheet' href="/admin/css/item.css" />
-	<link rel='stylesheet' href="/admin/css/hal-item.css" />
-	<link rel='stylesheet' href="/admin/css/media.css" />
+	<link rel='stylesheet' href="/css/css.css?r={{cache}}" />
+	<link rel='stylesheet' href="/css/item.css?r={{cache}}" />
+	<link rel='stylesheet' href="/css/hal-item.css?r={{cache}}" />
+	<link rel='stylesheet' href="/css/media.css?r={{cache}}" />
 </head>
 
 <body>
@@ -33,6 +33,7 @@
 	</div>
 
 	<div class='nav-cont'>
+		{{nav_hal_utama}}
 		{{nav_beranda}}
 		{{nav_daftar_lapak}}
 		<!-- <a class='nav' href='{{nav_src}}'>BERANDA</a> | -->

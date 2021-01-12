@@ -17,6 +17,7 @@ class Renderer {
         this.util = new Util_1.RenderUtil();
         this._halBarang.util = this.util;
         this.halDaftarLapak.renderUtil = this.util;
+        this._halDepan.util = this.util;
     }
     get halDaftarLapak() {
         return this._halDaftarLapak;

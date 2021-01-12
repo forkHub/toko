@@ -27,6 +27,7 @@ class HalBarang {
         header = header.replace("{{motto}}", "");
         index = index.replace("{{header}}", header);
         index = index.replace("{{cari}}", "");
+        index = index.replace("{{nav_hal_utama}}", this._util.renderNavTokoUtama(lapak));
         index = index.replace("{{nav_beranda}}", this._util.renderNavBeranda(lapak));
         index = index.replace("{{nav_daftar_lapak}}", this._util.renderNavDaftarLapak(lapak));
         index = index.replace("{{content}}", barangStr);
@@ -34,7 +35,7 @@ class HalBarang {
         index = index.replace("{{halaman}}", "");
         index = index.replace("{{daftar-barang-cont-class}}", "daftar-barang-cont");
         index = index.replace("{{footer}}", Config_1.config.getNilai(Config_1.Config.FOOTER));
-        console.log('hasil');
+        index = this._util.cache(index, Util_1.util.randId);
         return index;
     }
     async renderBarangDetail(barang) {

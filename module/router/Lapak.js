@@ -141,18 +141,9 @@ router.get("/:id/cari/:kunci/hal/:hal", (_req, resp) => {
 });
 router.get("/:id/barang/:barangId", (_req, resp) => {
     try {
-        BarangSql_1.barangSql
-            .baca({
-            lapak_id: _req.params.id,
-            publish: 1,
-            orderDateDesc: 1,
-            id: _req.params.barangId
-        })
+        Renderer_1.render.halBarang.render(_req.params.barangId, _req.params.id)
             .then((data) => {
-            return Renderer_1.render.halBarang.render(_req.params.barangId, _req.params.id);
-        })
-            .then((data) => {
-            SessionData_1.session(_req).lapak = _req.params.id;
+            // session(_req).lapak = _req.params.id;
             resp.status(200).send(data);
         })
             .catch((err) => {
