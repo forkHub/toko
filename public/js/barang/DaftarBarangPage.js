@@ -45,7 +45,7 @@ class DaftarBarangPage extends BaseComponent {
         this.lihatTbl.onclick = () => {
             let session = window.sessionStorage;
             if (session.lapak != '') {
-                window.top.location.href = "/lapak/" + window.sessionStorage.getItem('lapak');
+                window.top.location.href = "/lapak/" + window.sessionStorage.getItem(Util.sLapakId);
             }
             else {
                 window.top.location.href = "/";

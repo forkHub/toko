@@ -34,7 +34,6 @@ app.use(helmet_1.default.contentSecurityPolicy({
     }
 }));
 app.use("/barang", Barang_1.router);
-// app.use("/barang", routerApiBarang); //TODO: pakai API
 app.use("/file", File_1.router);
 app.use("/auth", Auth_1.router);
 app.use("/sys", Install_1.router);

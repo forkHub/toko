@@ -32,35 +32,6 @@ exports.router.get("/:id", (_req, resp) => {
         resp.status(500).send('Error');
     }
 });
-// 	try {
-// 		console.log(req.params);
-// 		console.log('router render barang id ' + req.params.id + "|");
-// 		if (!req.params.id) {
-// 			console.log("id is null");
-// 			throw new Error('id null');
-// 		}
-// 		else {
-// 			console.log(req.params.id);
-// 		}
-// 		if (req.params.id == null) {
-// 			console.log("id is null");
-// 			throw new Error('id null');
-// 		} else {
-// 			console.log(req.params.id);
-// 		}
-// 		barangController.lihat(req.params.id, "").then((hasil: string) => {
-// 			resp.status(200).send(hasil);
-// 		}).catch((err) => {
-// 			console.log('render hal barang error');
-// 			logT.log(err);
-// 			resp.status(500).send(err.message);
-// 		});
-// 	}
-// 	catch (err) {
-// 		logT.log(err);
-// 		resp.status(500).send(err.message);
-// 	}
-// })
 exports.router.post("/hapus/:id", Auth_1.checkAuth, (req, resp) => {
     try {
         BarangSql_1.barangSql.hapus(req.params.id)
@@ -94,6 +65,36 @@ exports.router.post("/baru", Auth_1.checkAuth, (req, resp) => {
         }).catch((e) => {
             TokoLog_1.logT.log(e);
             resp.status(500).send(e);
+        });
+    }
+    catch (e) {
+        resp.status(500).send(e);
+    }
+});
+exports.router.post("/clone/:id", Auth_1.checkAuth, (req, resp) => {
+    try {
+        let data = {
+            id: req.params.id
+        };
+        BarangSql_1.barangSql.baca(data).then((h) => {
+            if (h.length > 0) {
+                let item = h[0];
+                return BarangSql_1.barangSql.baru({
+                    deskripsi_panjang: item.deskripsi_panjang,
+                    harga: item.harga,
+                    lapak_id: item.lapak_id,
+                    nama: item.nama,
+                    publish: item.publish,
+                    wa: item.wa
+                });
+            }
+            else {
+                return Promise.resolve();
+            }
+        }).then(() => {
+            resp.status(200).send('');
+        }).catch((e) => {
+            resp.status(500).send(e.message);
         });
     }
     catch (e) {

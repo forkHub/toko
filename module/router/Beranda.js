@@ -113,6 +113,11 @@ exports.berandaRouter.get("/admin", (_req, resp) => {
     try {
         Util_1.util.getFile('view/admin.html').then((h) => {
             h = h.replace("{{cache}}", Util_1.util.randId);
+            h = h.replace("{{cache}}", Util_1.util.randId);
+            h = h.replace("{{cache}}", Util_1.util.randId);
+            h = h.replace("{{cache}}", Util_1.util.randId);
+            h = h.replace("{{cache}}", Util_1.util.randId);
+            h = h.replace("{{cache}}", Util_1.util.randId);
             resp.status(200).send(h);
         }).catch((e) => {
             resp.status(500).send(e.message);
