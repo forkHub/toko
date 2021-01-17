@@ -128,8 +128,7 @@ class File {
     }
     async hapus(id) {
         let file = await this.bacaId(id);
-        console.log('hapus');
-        console.log('file');
+        console.log('hapus file');
         console.log(file);
         console.log('hapus db id ' + id);
         await this.hapusDb(id);

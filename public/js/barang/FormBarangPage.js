@@ -23,6 +23,7 @@ class FormBarangPage {
         if (_edit) {
             this.copyKeDataLama(item);
             this.view.gambarHtml.src = item.thumb;
+            this.objToForm(item);
         }
         else {
             this.dataLama = null;
@@ -104,6 +105,7 @@ class FormBarangPage {
     kirim(publish) {
         return __awaiter(this, void 0, void 0, function* () {
             let barang = this.formToObj(publish);
+            console.log('simpan barang ' + barang);
             if (false == this.checkPerubahan()) {
                 console.log('tidak berubah');
                 return;
@@ -114,10 +116,11 @@ class FormBarangPage {
             if (this.upload && this.upload.statusUpload) {
                 let id = yield this.upload.upload();
                 barang.file_id = id;
+                yield Util.Ajax('post', Util.getUrl(Util.urlFileHapus, [this.dataLama.file_id]), '').catch((e) => {
+                    console.log(e.message);
+                });
             }
             barang.lapak_id = window.sessionStorage.getItem(Util.sLapakId);
-            // console.log(window.localStorage);
-            // console.log(window.localStorage.getItem(Util.sLapakId));
             if (this._editMode) {
                 yield Util.Ajax('post', Util.getUrl(Util.urlBarangUpdate, [this.dataLama.id]), JSON.stringify(barang));
             }
@@ -162,6 +165,7 @@ class FormBarangPage {
         this.view.wa.value = data.wa;
         this.view.inputFileId.value = data.file_id;
         this.view.lapakIdInput.value = data.lapak_id;
+        console.log('obj to form');
     }
     buatDate() {
         let date = new Date();

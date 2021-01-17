@@ -63,7 +63,7 @@ exports.router.get("/logout", (req, resp) => {
     try {
         TokoLog_1.logT.log('logout');
         req.session = null;
-        resp.redirect('/');
+        resp.redirect('/admin');
     }
     catch (e) {
         TokoLog_1.logT.log(e);

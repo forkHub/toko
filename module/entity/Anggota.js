@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const Connection_1 = require("../Connection");
 const Util_1 = require("../Util");
+const BarangSql_1 = require("./BarangSql");
 class Anggota {
     async nonAktifkanAnggota(id) {
         return new Promise((resolve, reject) => {
@@ -87,6 +88,7 @@ class Anggota {
         });
     }
     async hapus(id) {
+        await BarangSql_1.barangSql.hapusByLapakId(id);
         return new Promise((resolve, reject) => {
             Connection_1.Connection.pool.query("DELETE FROM pengguna WHERE ID = ?", [id], (_err, _rows) => {
                 if (_err) {

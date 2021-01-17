@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const Connection_1 = require("../Connection");
+const File_1 = require("./File");
 // import { Config, config } from "../Config";
 class BarangSql {
     constructor() {
@@ -83,10 +84,14 @@ class BarangSql {
             });
         });
     }
-    //TODO: hapus file
     async hapusByLapakId(id) {
         console.log('hapus barang, id ' + id);
-        Promise.resolve().then().catch(); //TODO:
+        let barang = await this.baca({
+            lapak_id: id
+        });
+        for (let i = 0; i < barang.length; i++) {
+            await this.hapus(barang[i].id);
+        }
         return new Promise((resolve, reject) => {
             Connection_1.Connection.pool.query(`DELETE FROM BARANG WHERE lapak_id = ?`, [id], (_err, _rows) => {
                 if (_err) {
@@ -98,9 +103,14 @@ class BarangSql {
             });
         });
     }
-    //TODO: hapus file
     async hapus(id) {
         console.log('hapus barang, id ' + id);
+        let barang = await this.baca({
+            id: id
+        });
+        await File_1.file.hapus(barang[0].file_id).catch((e) => {
+            console.log(e.message);
+        });
         return new Promise((resolve, reject) => {
             Connection_1.Connection.pool.query(this.hapusSql, [id], (_err, _rows) => {
                 if (_err) {

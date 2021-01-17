@@ -90,9 +90,10 @@ exports.router.post("/baca/disk/kosong", Auth_1.checkAuth, (req, resp) => {
         resp.status(500).send(e);
     }
 });
-exports.router.post("/hapus/", Auth_1.checkAuth, (req, resp) => {
+exports.router.post("/hapus/:id", Auth_1.checkAuth, (req, resp) => {
     try {
-        File_1.file.hapus(req.body.id).then(() => {
+        console.log('file hapus ' + req.params.id);
+        File_1.file.hapus(req.params.id).then(() => {
             resp.status(200).send('');
         }).catch((e) => {
             console.log(e);

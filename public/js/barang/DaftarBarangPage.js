@@ -15,6 +15,7 @@ import { form } from "./FormBarangPage.js";
 import { login } from "../Login2.js";
 // import { upload } from "../PhotoUploadPage.js";
 import { Util } from "../Util.js";
+import { MenuPopup } from "../MenuPopUp.js";
 class DaftarBarangPage extends BaseComponent {
     constructor() {
         super();
@@ -22,12 +23,15 @@ class DaftarBarangPage extends BaseComponent {
         this._template = `
 			<div class='daftar-barang-page cont container'>
 				<h1>Daftar Barang</h1>
-				<button type='button' class='btn btn-primary btn-small tambah'>Tambah Data</button>
-				<button type='button' class='btn btn-primary btn-small lihat'>Lihat Lapak</button>
-				<button type='button' class='btn btn-primary btn-small profile'>Profile</button>
-				<button type='button' class='btn btn-primary btn-small logout'>Logout</button>
-				<br/>
-				<br/>
+				<div class='tombol-cont'>
+					<button type='button' class='btn btn-primary btn-small tambah'>Tambah Data</button>
+					<button type='button' class='btn btn-primary btn-small lihat'>Lihat Lapak</button>
+					<button type='button' class='btn btn-primary btn-small profile'>Profile</button>
+					<button type='button' class='btn btn-primary btn-small logout'>Logout</button>
+					<button type='button' class='btn btn-primary btn-small menu'>|||</button>
+					<br/>
+					<br/>
+				</div>
 				<div class='cont'>
 					
 				</div>
@@ -55,6 +59,41 @@ class DaftarBarangPage extends BaseComponent {
         //TODO: profile page
         this.profileTbl.onclick = () => {
             dialog.tampil2('Dalam Pengembangan');
+        };
+        this.menuTbl.onclick = () => {
+            let menu = new MenuPopup();
+            menu.tampil([
+                {
+                    label: 'logout',
+                    f: () => {
+                        window.top.location.href = Util.urlLogout;
+                    }
+                },
+                {
+                    label: 'logout',
+                    f: () => {
+                        window.top.location.href = Util.urlLogout;
+                    }
+                },
+                {
+                    label: 'logout',
+                    f: () => {
+                        window.top.location.href = Util.urlLogout;
+                    }
+                },
+                {
+                    label: 'logout',
+                    f: () => {
+                        window.top.location.href = Util.urlLogout;
+                    }
+                },
+                {
+                    label: 'logout',
+                    f: () => {
+                        window.top.location.href = Util.urlLogout;
+                    }
+                },
+            ]);
         };
     }
     tampil() {
@@ -154,6 +193,9 @@ class DaftarBarangPage extends BaseComponent {
                 }
             });
         });
+    }
+    get menuTbl() {
+        return this.getEl('button.menu');
     }
     get tambahTbl() {
         return this.getEl('button.tambah');

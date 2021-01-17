@@ -42,8 +42,18 @@ class AnggotaNonAktif {
                 view.id = item.id;
                 view.nama.innerHTML = item.user_id + "-" + item.lapak;
                 view.hapus.onclick = () => {
-                    //TODO: next
-                    dialog.tampil2('fitur dalam pengembangan');
+                    let confirm = window.confirm('Apakah anda akan menghapus data anggota?');
+                    if (confirm) {
+                        Util.Ajax('post', Util.getUrl(Util.urlAnggotaHapus, [view.id]), '').then(() => {
+                            dialog.tampil2('anggota telah dihapus');
+                            dialog.okTbl.onclick = () => {
+                                this.render();
+                                dialog.detach();
+                            };
+                        }).catch((e) => {
+                            dialog.tampil2(e.message);
+                        });
+                    }
                 };
                 view.lihat.onclick = () => {
                     this._view.hal.detach();

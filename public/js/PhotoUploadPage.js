@@ -100,21 +100,19 @@ export class PhotoUploadPage {
         };
         return JSON.stringify(obj);
     }
-    hapusFileLama(id) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                if (id && id != '') {
-                    yield Util.Ajax('post', Util.urlFileHapus, JSON.stringify({ id: id }));
-                }
-                else {
-                    console.log('hapus file di batalkan, id null');
-                }
-            }
-            catch (e) {
-                console.log(e);
-            }
-        });
-    }
+    // async hapusFileLama(id: string): Promise<void> {
+    // 	try {
+    // 		if (id && id != '') {
+    // 			await Util.Ajax('post', Util.urlFileHapus, JSON.stringify({ id: id }));
+    // 		}
+    // 		else {
+    // 			console.log('hapus file di batalkan, id null');
+    // 		}
+    // 	}
+    // 	catch (e) {
+    // 		console.log(e);
+    // 	}
+    // }
     upload() {
         return __awaiter(this, void 0, void 0, function* () {
             console.log('upload file');

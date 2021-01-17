@@ -44,6 +44,7 @@ exports.router.post("/hapus/:id", Auth_1.checkAuth, (req, resp) => {
 });
 exports.router.post("/baru", Auth_1.checkAuth, (req, resp) => {
     try {
+        console.log('barang baru');
         let data = {
             nama: req.body.nama,
             deskripsi_panjang: req.body.deskripsi_panjang,
