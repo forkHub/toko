@@ -11,14 +11,28 @@ import { BaseComponent } from "./BaseComponent.js";
 import { dialog } from "./Dialog.js";
 import { loading } from "./Loading.js";
 import { Util } from "./Util.js";
-class PhotoUploadPage {
+export class PhotoUploadPage {
     constructor() {
         this._selesai = null;
-        this._insertedId = '';
-        this._gbrUrl = '';
+        // private _insertedId: string = '';
+        // private _gbrUrl: string = '';
         this._view = new View();
+        // private _idLama: string;
+        this._statusUpload = false;
+        // public get insertedId(): string {
+        // return this._insertedId;
+        // }
+        // public get gbrUrl(): string {
+        // 	return this._gbrUrl;
+        // }
+        // public get idLama(): string {
+        // 	return this._idLama;
+        // }
+        // public set idLama(value: string) {
+        // 	this._idLama = value;
+        // }
     }
-    createName(prefix, pjg = 12) {
+    buatNama(prefix, pjg = 12) {
         let hasil = prefix;
         let karakter = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
         let date = new Date();
@@ -30,54 +44,33 @@ class PhotoUploadPage {
         console.log('nama: ' + hasil);
         return hasil;
     }
-    reset() {
-        this._view.fotoCont.innerHTML = '';
-        this._view.thumbCont.innerHTML = '';
-    }
     init() {
-        this.initInput(this.view.input);
+        this._view.uploadTbl.style.display = 'none';
+        this._view.input.onchange = () => {
+            this._view.uploadTbl.style.display = 'initial';
+            this.loadImage(this._view.input).then(() => {
+                loading.detach();
+            }).catch((e) => {
+                dialog.p.innerHTML = e.message;
+                dialog.tampil();
+            });
+        };
+        this._view.tutupTbl.onclick = () => {
+            this._statusUpload = false;
+            this._selesai();
+        };
         this.view.form.onsubmit = () => {
             try {
-                loading.tampil();
-                this.uploadProcess().then(() => {
-                    dialog.p.innerText = 'Sukses';
-                    loading.detach();
-                    dialog.tampil(false);
-                    dialog.okTbl.onclick = () => {
-                        this._idLama = null;
-                        while (this._view.fotoCont.firstElementChild) {
-                            this._view.fotoCont.removeChild(this._view.fotoCont.firstElementChild);
-                        }
-                        while (this._view.thumbCont.firstElementChild) {
-                            this._view.thumbCont.removeChild(this._view.thumbCont.firstElementChild);
-                        }
-                        dialog.detach();
-                        this.reset();
-                        this._selesai();
-                    };
-                }).catch((e) => {
-                    dialog.p.innerText = e.message;
-                    loading.detach();
-                    dialog.tampil(false);
-                    dialog.okTbl.onclick = () => {
-                        dialog.detach();
-                    };
-                });
+                this._statusUpload = true;
             }
             catch (e) {
-                dialog.p.innerText = e.message;
-                loading.detach();
-                dialog.tampil(false);
-                dialog.okTbl.onclick = () => {
-                    dialog.detach();
-                };
                 return false;
             }
+            this._selesai();
             return false;
         };
-        console.groupEnd();
     }
-    loadImage3(file) {
+    loadImage(file) {
         return __awaiter(this, void 0, void 0, function* () {
             yield this.loadImage2(file, 800, 800, "gbr_besar", this.view.fotoCont);
             yield this.loadImage2(file, 128, 128, "thumb", this.view.thumbCont);
@@ -102,31 +95,11 @@ class PhotoUploadPage {
         let obj = {
             gbr_besar: this.view.canvasBesar.toDataURL(),
             gbr_kecil: this.view.canvasThumb.toDataURL(),
-            gbr_besar_nama: this.createName('gbr_besar_', 8),
-            gbr_kecil_nama: this.createName('gbr_kecil_', 8)
+            gbr_besar_nama: this.buatNama('gbr_besar_', 8),
+            gbr_kecil_nama: this.buatNama('gbr_kecil_', 8)
         };
         return JSON.stringify(obj);
     }
-    initInput(input) {
-        loading.tampil();
-        input.onchange = () => {
-            this.loadImage3(input).then(() => {
-                loading.detach();
-            }).catch((e) => {
-                dialog.p.innerHTML = e.message;
-                dialog.tampil();
-            });
-        };
-    }
-    /*
-    async upload2(): Promise<void> {
-        let hasil: string = await Util.Ajax('post', '/file/baru', this.populateJson());
-        console.log(hasil);
-        let hasilObj: any = JSON.parse(hasil);
-        this._insertedId = hasilObj.baris_info.insertId;
-        this._gbrUrl = hasilObj.gbr_url;
-    }
-    */
     hapusFileLama(id) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -142,44 +115,28 @@ class PhotoUploadPage {
             }
         });
     }
-    fileBaru() {
-        return __awaiter(this, void 0, void 0, function* () {
-            return yield Util.Ajax('post', '/file/baru', this.populateJson());
-        });
-    }
-    uploadProcess() {
+    upload() {
         return __awaiter(this, void 0, void 0, function* () {
             console.log('upload file');
-            loading.tampil();
-            let hasil = yield this.fileBaru();
+            let hasil = yield Util.Ajax('post', Util.urlFileUpload, this.populateJson());
             console.log(hasil);
-            let hasilObj = JSON.parse(hasil);
-            this._insertedId = hasilObj.baris_info.insertId;
-            this._gbrUrl = hasilObj.gbr_url;
-            console.log('hapus file lama ' + this._idLama);
-            yield this.hapusFileLama(this._idLama);
+            return JSON.parse(hasil).baris_info.insertId;
+            // let hasilObj: any = JSON.parse(hasil);
+            // this._insertedId = hasilObj.baris_info.insertId;
+            // this._gbrUrl = hasilObj.gbr_url;
+            //TODO: dipindah ke parent
+            // console.log('hapus file lama ' + this._idLama);
+            // await this.hapusFileLama(this._idLama);
         });
     }
     get view() {
         return this._view;
     }
-    // public get selesai(): Function {
-    // 	return this._selesai;
-    // }
+    get statusUpload() {
+        return this._statusUpload;
+    }
     set selesai(value) {
         this._selesai = value;
-    }
-    get insertedId() {
-        return this._insertedId;
-    }
-    get gbrUrl() {
-        return this._gbrUrl;
-    }
-    get idLama() {
-        return this._idLama;
-    }
-    set idLama(value) {
-        this._idLama = value;
     }
 }
 class View extends BaseComponent {
@@ -215,4 +172,4 @@ class View extends BaseComponent {
         return this.getEl('div.thumb-cont');
     }
 }
-export var upload = new PhotoUploadPage();
+// export var upload: PhotoUploadPage = new PhotoUploadPage();

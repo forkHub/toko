@@ -28,6 +28,11 @@ class Config {
                 kunci: Config.FOOTER,
                 nilai: `<H3>Auni Store</H3>Perum Taman Melati Blok FE 07 Bojong Sari - Sawangan - Depok<br/><br/>`,
                 deskripsi: 'Footer'
+            },
+            {
+                kunci: Config.MODE_SINGLE,
+                nilai: '1',
+                deskripsi: 'Mode single atau multiple'
             }
         ];
     }
@@ -60,4 +65,5 @@ Config.TERKAIT = 'terkait';
 Config.NAMA_TOKO = 'nama_toko';
 Config.JML_PER_HAL = 'jml_per_hal';
 Config.FOOTER = 'footer';
+Config.MODE_SINGLE = 'mode_single';
 exports.config = new Config();

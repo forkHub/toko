@@ -10,43 +10,59 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import { BaseComponent } from "../BaseComponent.js";
 import { data } from "../Data.js";
 import { dialog } from "../Dialog.js";
+import { Nav } from "../template/Nav.js";
 import { Util } from "../Util.js";
 import { anggotaDetail } from "./AnggotaDetail.js";
+import { AnggotaItem } from "./AnggotaItem.js";
 class AnggotaDaftar extends BaseComponent {
     constructor() {
         super();
         this.idDipilih = '';
+        this.nav = new Nav();
         this._template = `
 			<div class='anggota setuju'>
-				<div class='nav'>
-					<button class='btn btn-primary tutup'>&lt;</button>
-					<p class='judul'>Daftar Anggota</p>
+				<div class="nav-cont">
 				</div>
+				<br/>
 
 				<div class='cont'></div>
-				<button class='btn btn-danger hapus'>Hapus</button>
 			</div>
 		`;
         this.build();
-        this.tutupTbl.onclick = () => {
-            this._tutup();
+        this.nav.judulP.innerHTML = 'Daftar Anggota';
+        this.nav.attach(this.navCont);
+        this.nav.tutupTbl.onclick = () => {
+            this._selesai();
         };
     }
     init() {
     }
-    load() {
-        this.load2().then((items) => {
+    tampil() {
+        this.render();
+    }
+    render() {
+        this.cont.innerHTML = '';
+        this.loadJSON().then((items) => {
             items.forEach((item) => {
-                let view = new Item();
+                let view = new AnggotaItem();
                 view.id = item.id;
                 view.nama.innerHTML = item.user_id + "-" + item.lapak;
                 view.hapus.onclick = () => {
-                    dialog.tampil2('Fitur belum tersedia');
+                    let ok = window.confirm('Apakah Anda ingin menonaktifkan Anggota ini?');
+                    if (ok) {
+                        Util.Ajax('post', Util.getUrl(Util.urlAnggotaUpdateSetuju, [view.id, '2']), '').then(() => {
+                            this.render();
+                        }).catch((e) => {
+                            dialog.tampil2(e.message);
+                        });
+                    }
+                    else {
+                    }
                 };
                 view.lihat.onclick = () => {
                     this.detach();
                     anggotaDetail.tampil(item);
-                    anggotaDetail.tutup = () => {
+                    anggotaDetail.selesai = () => {
                         this.attach(data.cont);
                     };
                 };
@@ -56,11 +72,14 @@ class AnggotaDaftar extends BaseComponent {
             dialog.tampil2(Util.resp.message);
         });
     }
-    load2() {
+    // async nonAktifkan(id: string): Promise<void> {
+    // 	await Util.Ajax('post', Util.getUrl(Util.urlAnggotaUpdateSetuju, [id, '2']), '');
+    // }
+    loadJSON() {
         return __awaiter(this, void 0, void 0, function* () {
             let data;
             let dataAr;
-            data = yield Util.Ajax('post', Util.getUrl(Util.urlAnggotaBacaDisetujui, ["1"]), "");
+            data = yield Util.Ajax('post', Util.getUrl(Util.urlAnggotaBacaBerdasarPersetujuan, ["1"]), "");
             dataAr = JSON.parse(data);
             return dataAr;
         });
@@ -76,42 +95,14 @@ class AnggotaDaftar extends BaseComponent {
     get hapusTbl() {
         return this.getEl('button.hapus');
     }
-    get tutupTbl() {
-        return this.getEl('button.tutup');
-    }
     get cont() {
         return this.getEl('div.cont');
     }
+    get navCont() {
+        return this.getEl('div.nav-cont');
+    }
     set tutup(value) {
-        this._tutup = value;
-    }
-}
-class Item extends BaseComponent {
-    constructor() {
-        super();
-        this._template = `
-			<div class='item'>
-				<span class='nama'>nama</span>
-				<button class='btn btn-primary btn-sm menu lihat'>👁️</button> 
-				<button class='btn btn-primary btn-sm menu hapus'>❌</button>
-			</div>
-		`;
-        this.build();
-    }
-    get id() {
-        return this._id;
-    }
-    set id(value) {
-        this._id = value;
-    }
-    get nama() {
-        return this.getEl('span.nama');
-    }
-    get lihat() {
-        return this.getEl('button.lihat');
-    }
-    get hapus() {
-        return this.getEl('button.hapus');
+        this._selesai = value;
     }
 }
 export var anggotaDaftar = new AnggotaDaftar();

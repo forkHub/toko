@@ -138,3 +138,12 @@ div.item
 span.nama {
 	flex-grow: 1;
 }
+
+/*umum*/
+div.flex {
+	display: flex;
+}
+
+div.grow {
+	flex-grow: 1;
+}

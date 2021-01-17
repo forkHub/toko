@@ -14,7 +14,7 @@ import { data } from "./Data.js";
 import { dialog } from "./Dialog.js";
 import { form } from "./barang/FormBarangPage.js";
 import { login } from "./Login2.js";
-import { upload } from "./PhotoUploadPage.js";
+// import { upload } from "./PhotoUploadPage.js";
 import { Util } from "./Util.js";
 // import { admin } from "./admin/Admin.js";
 import { Config, config } from "./Config.js";
@@ -25,7 +25,7 @@ class App {
         console.log('App init');
         dialog.init();
         form.init();
-        upload.init();
+        // upload.init();
         login.init();
         anggotaDaftar.init();
         daftarBarangPage.init();

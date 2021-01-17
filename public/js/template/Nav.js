@@ -5,7 +5,7 @@ export class Nav extends BaseComponent {
         this._template = `
 		<div class="nav">
 			<button class='btn btn-primary tutup'>&lt;</button>
-			<p class='judul'>Edit Konfigurasi</p>
+			<p class='judul'></p>
 		</div>`;
         this.build();
     }

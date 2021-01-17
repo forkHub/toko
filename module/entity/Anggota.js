@@ -3,16 +3,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Connection_1 = require("../Connection");
 const Util_1 = require("../Util");
 class Anggota {
-    async bacaDaftarLapakAktif() {
-        let query = ` SELECT * FROM pengguna`;
-        console.log(query);
+    async nonAktifkanAnggota(id) {
         return new Promise((resolve, reject) => {
-            Connection_1.Connection.pool.query(query, [], (_err, _rows) => {
+            Connection_1.Connection.pool.query(`update pengguna set setuju = 2 WHERE id = ?`, [id], (_err, _rows) => {
                 if (_err) {
                     reject(_err);
                 }
                 else {
-                    // console.log(_rows);
+                    console.log(_rows);
                     resolve(_rows);
                 }
             });
@@ -39,6 +37,10 @@ class Anggota {
             whereQuery += 'AND pengguna.setuju = ? ';
             data.push(opt.setuju);
         }
+        if (opt.level) {
+            whereQuery += 'AND pengguna.level = ? ';
+            data.push(opt.level);
+        }
         if (opt.kolom && opt.kolom.length > 0) {
             kolom = Util_1.util.arr2String(opt.kolom);
         }
@@ -58,8 +60,6 @@ class Anggota {
     }
     async baru(data) {
         return new Promise((resolve, reject) => {
-            // console.log('anggota baru');
-            // console.log(data);
             Connection_1.Connection.pool.query(`INSERT INTO pengguna SET ?`, data, (_err, _rows) => {
                 if (_err) {
                     reject(_err);

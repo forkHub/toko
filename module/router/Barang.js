@@ -8,12 +8,8 @@ const BarangSql_1 = require("../entity/BarangSql");
 const TokoLog_1 = require("../TokoLog");
 const Auth_1 = require("../Auth");
 const Util_1 = require("../Util");
-// import { barangController } from "../controller/Barang";
-const SessionData_1 = require("../SessionData");
 const Config_1 = require("../Config");
 const Renderer_1 = require("../render/Renderer");
-// import { table } from "../Table";
-// import { session } from "../SessionData";
 exports.router = express_1.default.Router();
 exports.router.get("/:id", (_req, resp) => {
     try {
@@ -117,10 +113,6 @@ exports.router.post("/update/lastview/:id", (req, resp) => {
 });
 exports.router.post("/update/:id", Auth_1.checkAuth, (req, resp) => {
     try {
-        if (SessionData_1.session(req).id != req.params.id) {
-            resp.status(401).send('');
-            return;
-        }
         BarangSql_1.barangSql.update({
             nama: req.body.nama,
             deskripsi_panjang: req.body.deskripsi_panjang,

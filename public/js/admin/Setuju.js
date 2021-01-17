@@ -69,7 +69,7 @@ class Setuju {
     }
     loadData() {
         return __awaiter(this, void 0, void 0, function* () {
-            let hasil = yield Util.Ajax("post", Util.getUrl(Util.urlAnggotaBacaDisetujui, ["0"]), "");
+            let hasil = yield Util.Ajax("post", Util.getUrl(Util.urlAnggotaBacaBerdasarPersetujuan, ["0"]), "");
             let obj = JSON.parse(hasil);
             return obj;
         });

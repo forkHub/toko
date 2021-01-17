@@ -109,9 +109,10 @@ export class Util {
     }
 }
 Util.urlAdmin = '/admin';
+Util.urlFileUpload = '/file/baru';
 Util.urlAnggotaBaru = "/anggota/baru";
 Util.urlAnggotaHapus = "/anggota/hapus/:id";
-Util.urlAnggotaBacaDisetujui = '/anggota/baca/setuju/:setuju';
+Util.urlAnggotaBacaBerdasarPersetujuan = '/anggota/baca/setuju/:setuju';
 Util.urlAnggotaEdit = '/anggota/edit';
 Util.urlAnggotaUpdateSetuju = '/anggota/update/id/:id/setuju/:setuju';
 Util.urlLoginStatus = '/auth/status';
@@ -119,6 +120,8 @@ Util.urlLogin = '/auth/login';
 Util.urlLogout = '/auth/logout';
 Util.urlFileHapus = '/file/hapus/';
 Util.urlBarangBaca = '/barang/baca/';
+Util.urlBarangBaru = '/barang/baru/';
+Util.urlBarangUpdate = '/barang/update/:id';
 Util.urlBarangCariPost = '/barang/cari';
 Util.urlBarangTerkait = '/barang/terkait';
 Util.urlBarangUpdateTerakhirDilihat = '/barang/update/lastview/:id';

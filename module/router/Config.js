@@ -6,11 +6,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const Auth_1 = require("../Auth");
 const Config_1 = require("../Config");
-// import { config, ISetting } from "../Config";
 const ConfigController_1 = require("../ConfigController");
 const ConfigSql_1 = require("../entity/ConfigSql");
 const TokoLog_1 = require("../TokoLog");
-// import { IConfigDb } from "../Type";
 exports.configRouter = express_1.default.Router();
 var router = exports.configRouter;
 router.get("/simpan", Auth_1.checkAuth, (req, resp) => {

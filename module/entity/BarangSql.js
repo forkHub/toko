@@ -1,17 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const Connection_1 = require("../Connection");
-const assert_1 = require("assert");
-const Config_1 = require("../Config");
+// import { Config, config } from "../Config";
 class BarangSql {
     constructor() {
-        this.bacaBaranglapak = `SELECT BARANG.*, FILE.thumb, FILE.gbr 
-											FROM BARANG
-											LEFT JOIN FILE
-											ON BARANG.file_id = FILE.id
-											WHERE BARANG.lapak = ?
-											ORDER BY BARANG.nama 
-											;`;
         this.bacaBarangTerkait = `
 		SELECT BARANG.*, FILE.thumb, FILE.gbr
 		FROM BARANG
@@ -24,159 +16,6 @@ class BarangSql {
         this.hapusSql = `DELETE FROM BARANG WHERE ID = ?`;
         this.updateSql = `UPDATE BARANG SET ? WHERE ID = ?`;
         this.baruSql = `INSERT INTO BARANG SET ?`;
-    }
-    // private bacaIdSql: string = `
-    // SELECT BARANG.*, FILE.thumb, FILE.gbr 
-    // FROM BARANG
-    // LEFT JOIN FILE
-    // ON BARANG.file_id = FILE.id
-    // WHERE BARANG.id = ?`;
-    //TODO: depecreated
-    query3(query, resolve, reject) {
-        Connection_1.Connection.pool.query(query, (_err, _rows) => {
-            if (_err) {
-                reject(_err.message);
-            }
-            else {
-                resolve(_rows);
-            }
-        });
-    }
-    //TODO: depcreated
-    async cari(kataKunci, offset, _lapak) {
-        let lapakQuery = ''; //TODO:
-        let query = `SELECT BARANG.*, FILE.thumb, FILE.gbr
-			FROM BARANG
-			LEFT JOIN FILE
-			ON BARANG.file_id = FILE.id
-			WHERE BARANG.publish = 1
-			AND (BARANG.nama like ?
-			OR BARANG.deskripsi_panjang like ?)
-			${lapakQuery}
-			LIMIT ?
-			OFFSET ?
-			`;
-        return new Promise((resolve, reject) => {
-            try {
-                Connection_1.Connection.pool.query(query, [
-                    '%' + kataKunci + '%',
-                    '%' + kataKunci + '%',
-                    Config_1.config.getNilai(Config_1.Config.JML_PER_HAL),
-                    offset
-                ], (_err, _rows) => {
-                    if (_err) {
-                        reject(_err.message);
-                    }
-                    else {
-                        resolve(_rows);
-                    }
-                });
-            }
-            catch (err) {
-                assert_1.rejects(err.message);
-            }
-        });
-    }
-    async cariJml(kataKunci) {
-        let query = `SELECT COUNT(*) as JML
-			FROM BARANG
-			WHERE BARANG.publish = 1
-			AND (BARANG.nama like ?
-			OR BARANG.deskripsi_panjang like ?)
-			`;
-        return new Promise((resolve, reject) => {
-            try {
-                Connection_1.Connection.pool.query(query, ['%' + kataKunci + '%', '%' + kataKunci + '%'], (_err, _rows) => {
-                    if (_err) {
-                        reject(_err.message);
-                    }
-                    else {
-                        resolve(_rows[0].JML);
-                    }
-                });
-            }
-            catch (err) {
-                assert_1.rejects(err.message);
-            }
-        });
-    }
-    async jumlah() {
-        let query = `SELECT COUNT(*) as jumlah
-			FROM BARANG
-			WHERE BARANG.publish = 1
-			`;
-        return new Promise((resolve, reject) => {
-            try {
-                Connection_1.Connection.pool.query(query, (_err, _rows) => {
-                    if (_err) {
-                        reject(_err.message);
-                    }
-                    else {
-                        resolve(_rows[0].jumlah);
-                    }
-                });
-            }
-            catch (err) {
-                assert_1.rejects(err.message);
-            }
-        });
-    }
-    //TODO: pakai paging, depecreated
-    async bacaPublish(_mulai, _jml, lapak) {
-        let query = `
-			SELECT BARANG.*, FILE.thumb, FILE.gbr 
-			FROM BARANG
-			LEFT JOIN FILE
-			ON BARANG.file_id = FILE.id
-			WHERE BARANG.publish = 1`;
-        if (lapak != '') {
-            query += `AND lapak_id = ` + lapak;
-        }
-        query += `
-			ORDER BY BARANG.last_view DESC
-		`;
-        return new Promise((resolve, reject) => {
-            try {
-                this.query3(query, resolve, reject);
-            }
-            catch (err) {
-                assert_1.rejects(err.message);
-            }
-        });
-    }
-    //TODO depecreated
-    async bacaLapakPublishDate() {
-        let query = `
-		SELECT BARANG.*, FILE.thumb, FILE.gbr
-		FROM BARANG
-		LEFT JOIN FILE
-		ON BARANG.file_id = FILE.id
-		WHERE BARANG.publish = 1
-		ORDER BY BARANG.LAST_VIEW
-			; `;
-        return new Promise((resolve, reject) => {
-            Connection_1.Connection.pool.query(query, [], (_err, _rows) => {
-                if (_err) {
-                    reject(_err);
-                }
-                else {
-                    resolve(_rows);
-                }
-            });
-        });
-    }
-    //TODO depecreated
-    async bacalapak(lapak) {
-        return new Promise((resolve, reject) => {
-            Connection_1.Connection.pool.query(this.bacaBaranglapak, [lapak], (_err, _rows) => {
-                if (_err) {
-                    reject(_err);
-                }
-                else {
-                    resolve(_rows);
-                }
-            });
-        });
     }
     async query(query, data) {
         return new Promise((resolve, reject) => {
@@ -244,7 +83,24 @@ class BarangSql {
             });
         });
     }
+    //TODO: hapus file
+    async hapusByLapakId(id) {
+        console.log('hapus barang, id ' + id);
+        Promise.resolve().then().catch(); //TODO:
+        return new Promise((resolve, reject) => {
+            Connection_1.Connection.pool.query(`DELETE FROM BARANG WHERE lapak_id = ?`, [id], (_err, _rows) => {
+                if (_err) {
+                    reject(_err);
+                }
+                else {
+                    resolve(_rows);
+                }
+            });
+        });
+    }
+    //TODO: hapus file
     async hapus(id) {
+        console.log('hapus barang, id ' + id);
         return new Promise((resolve, reject) => {
             Connection_1.Connection.pool.query(this.hapusSql, [id], (_err, _rows) => {
                 if (_err) {

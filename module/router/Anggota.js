@@ -5,12 +5,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const Auth_1 = require("../Auth");
+// import { barangController } from "../controller/Barang";
 const Anggota_1 = require("../entity/Anggota");
+const BarangSql_1 = require("../entity/BarangSql");
+// import { IBarangObj, IPengguna } from "../Type";
 exports.router = express_1.default.Router();
 exports.router.post("/baca/setuju/:setuju", Auth_1.checkAuth, (req, resp) => {
     try {
         Anggota_1.anggota.baca({
-            setuju: parseInt(req.params.setuju)
+            setuju: parseInt(req.params.setuju),
+            level: 'user'
         }).then((hasil) => {
             resp.status(200).send(hasil);
         }).catch((e) => {
@@ -24,11 +28,33 @@ exports.router.post("/baca/setuju/:setuju", Auth_1.checkAuth, (req, resp) => {
 });
 exports.router.post("/hapus/:id", Auth_1.checkAuth, (req, resp) => {
     try {
-        Anggota_1.anggota.hapus(req.params.id).then(() => {
-            resp.status(200).end();
+        BarangSql_1.barangSql.hapusByLapakId(req.params.id).then(() => {
+            return Anggota_1.anggota.hapus(req.params.id);
+        }).then(() => {
+            resp.status(200).send('');
         }).catch((e) => {
             resp.status(500).send(e.message);
         });
+        /*
+        barangSql.baca({
+            lapak_id: req.params.id
+        }).then((items: IBarangObj[]) => {
+            let p: Promise<void> = Promise.resolve();
+            items.forEach((item: IBarangObj) => {
+                p = p.then(() => {
+                    return barangSql.hapus(item.id);
+                });
+            });
+
+            return p;
+        }).then(() => {
+            return anggota.hapus(req.params.id);
+        }).then(() => {
+            resp.status(200).send('');
+        }).catch((e) => {
+            resp.status(500).send(e.message);
+        });
+        */
     }
     catch (err) {
         resp.status(500).send(err.message);
@@ -78,7 +104,7 @@ exports.router.post("/update/:id", Auth_1.checkAuth, (req, resp) => {
 exports.router.post("/update/id/:id/setuju/:setuju", Auth_1.checkAuth, (req, resp) => {
     try {
         let opt = {
-            setuju: parseInt(req.params.setuju)
+            setuju: parseInt(req.params.setuju),
         };
         Anggota_1.anggota.update(opt, req.params.id).then(() => {
             resp.status(200).end();

@@ -13,17 +13,18 @@ import { data } from "../Data.js";
 import { dialog } from "../Dialog.js";
 import { form } from "./FormBarangPage.js";
 import { login } from "../Login2.js";
-import { upload } from "../PhotoUploadPage.js";
+// import { upload } from "../PhotoUploadPage.js";
 import { Util } from "../Util.js";
 class DaftarBarangPage extends BaseComponent {
     constructor() {
         super();
         this.totalBaramg = 0;
         this._template = `
-			<div class='daftar-barang-page'>
+			<div class='daftar-barang-page cont container'>
 				<h1>Daftar Barang</h1>
 				<button type='button' class='btn btn-primary btn-small tambah'>Tambah Data</button>
 				<button type='button' class='btn btn-primary btn-small lihat'>Lihat Lapak</button>
+				<button type='button' class='btn btn-primary btn-small profile'>Profile</button>
 				<button type='button' class='btn btn-primary btn-small logout'>Logout</button>
 				<br/>
 				<br/>
@@ -51,6 +52,10 @@ class DaftarBarangPage extends BaseComponent {
                 window.top.location.href = "/";
             }
         };
+        //TODO: profile page
+        this.profileTbl.onclick = () => {
+            dialog.tampil2('Dalam Pengembangan');
+        };
     }
     tampil() {
     }
@@ -64,22 +69,32 @@ class DaftarBarangPage extends BaseComponent {
             return;
         }
         this.detach();
-        form.view.attach(data.cont);
-        form.editMode = false;
-        form.default();
-        form.resetTinyMCE();
-        form.tampil(null, true);
+        form.tampil(null, false);
+        form.selesai = () => {
+            form.view.detach();
+            this.attach(data.cont);
+        };
+        // this.detach();
+        // form.view.attach(data.cont);
+        // form.editMode = false;
+        // form.default();
+        // form.resetTinyMCE();
+        // form.tampil(null, true);
     }
     barangEditlick(item) {
         console.log(item);
         this.detach();
-        form.view.attach(data.cont);
-        form.objToForm(item);
-        form.view.gambarHtml.src = item.thumb;
-        form.editMode = true;
-        form.resetTinyMCE();
-        upload.idLama = item.file_id;
-        form.tampil(item, false);
+        form.tampil(item, true);
+        form.selesai = () => {
+            form.view.detach();
+            this.attach(data.cont);
+        };
+        // form.view.attach(data.cont);
+        // form.objToForm(item);
+        // form.view.gambarHtml.src = item.thumb;
+        // form.editMode = true;
+        // form.resetTinyMCE();
+        // upload.idLama = item.file_id;
     }
     barangHapusClick(item) {
         let hasil = confirm("Hapus Data?");
@@ -151,6 +166,9 @@ class DaftarBarangPage extends BaseComponent {
     }
     get logoutTbl() {
         return this.getEl('button.logout');
+    }
+    get profileTbl() {
+        return this.getEl('button.profile');
     }
 }
 class ItemBarangView extends BaseComponent {
