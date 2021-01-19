@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 // import { anggotaBaru } from "./reg/AnggotaBaru.js";
-import { anggotaDaftar } from "./admin/AnggotaDaftar.js";
+import { anggotaDaftar } from "./admin/anggota/AnggotaDaftar.js";
 import { daftarBarangPage } from "./barang/DaftarBarangPage.js";
 import { data } from "./Data.js";
 import { dialog } from "./Dialog.js";

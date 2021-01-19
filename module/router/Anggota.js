@@ -10,6 +10,7 @@ const Anggota_1 = require("../entity/Anggota");
 const BarangSql_1 = require("../entity/BarangSql");
 // import { IBarangObj, IPengguna } from "../Type";
 exports.router = express_1.default.Router();
+//TODO: di rubah ke baca
 exports.router.post("/baca/setuju/:setuju", Auth_1.checkAuth, (req, resp) => {
     try {
         Anggota_1.anggota.baca({
@@ -82,16 +83,20 @@ exports.router.post("/baru", (req, resp) => {
         resp.status(500).send(e.message);
     }
 });
-exports.router.post("/update/:id", Auth_1.checkAuth, (req, resp) => {
+exports.router.post("/update", Auth_1.checkAuth, (req, resp) => {
     try {
         let opt = {};
-        opt.deskripsi;
-        opt.lapak;
-        opt.level;
-        opt.password;
-        opt.setuju;
-        opt.user_id;
-        Anggota_1.anggota.update(opt, req.params.id).then(() => {
+        if (req.body.deskripsi)
+            opt.deskripsi = req.body.deskripsi;
+        if (req.body.lapak)
+            opt.lapak = req.body.lapak;
+        if (req.body.password)
+            opt.password = req.body.password;
+        if (req.body.setuju)
+            opt.setuju = req.body.setuju;
+        if (req.body.user_id)
+            opt.user_id = req.body.user_id;
+        Anggota_1.anggota.update(opt, req.body.id).then(() => {
             resp.status(200).end();
         }).catch((e) => {
             resp.status(500).send(e.message);
@@ -101,6 +106,7 @@ exports.router.post("/update/:id", Auth_1.checkAuth, (req, resp) => {
         resp.status(500).send(error.message);
     }
 });
+//TODO: di rubah ke update
 exports.router.post("/update/id/:id/setuju/:setuju", Auth_1.checkAuth, (req, resp) => {
     try {
         let opt = {

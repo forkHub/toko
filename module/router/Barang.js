@@ -48,6 +48,7 @@ exports.router.post("/baru", Auth_1.checkAuth, (req, resp) => {
         let data = {
             nama: req.body.nama,
             deskripsi_panjang: req.body.deskripsi_panjang,
+            deskripsi: req.body.deskripsi,
             harga: req.body.harga,
             wa: req.body.wa,
             file_id: req.body.file_id,
@@ -117,6 +118,7 @@ exports.router.post("/update/:id", Auth_1.checkAuth, (req, resp) => {
         BarangSql_1.barangSql.update({
             nama: req.body.nama,
             deskripsi_panjang: req.body.deskripsi_panjang,
+            deskripsi: req.body.deskripsi,
             harga: req.body.harga,
             wa: req.body.wa,
             file_id: req.body.file_id,

@@ -7,12 +7,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { BaseComponent } from "../BaseComponent.js";
-import { data } from "../Data.js";
-import { dialog } from "../Dialog.js";
-import { Nav } from "../template/Nav.js";
-import { Util } from "../Util.js";
-import { anggotaDetail } from "./AnggotaDetail.js";
+import { BaseComponent } from "../../BaseComponent.js";
+import { data } from "../../Data.js";
+import { dialog } from "../../Dialog.js";
+import { Nav } from "../../template/Nav.js";
+import { Util } from "../../Util.js";
+import { anggotaDetailPage } from "./AnggotaDetailPage.js";
 import { AnggotaItem } from "./AnggotaItem.js";
 class AnggotaDaftar extends BaseComponent {
     constructor() {
@@ -61,8 +61,8 @@ class AnggotaDaftar extends BaseComponent {
                 };
                 view.lihat.onclick = () => {
                     this.detach();
-                    anggotaDetail.tampil(view.id);
-                    anggotaDetail.selesai = () => {
+                    anggotaDetailPage.tampil(view.id, true);
+                    anggotaDetailPage.selesai = () => {
                         this.attach(data.cont);
                     };
                 };

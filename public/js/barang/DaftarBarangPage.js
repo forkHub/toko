@@ -16,6 +16,7 @@ import { login } from "../Login2.js";
 // import { upload } from "../PhotoUploadPage.js";
 import { Util } from "../Util.js";
 import { MenuPopup } from "../MenuPopUp.js";
+import { anggotaDetailPage } from "../admin/anggota/AnggotaDetailPage.js";
 class DaftarBarangPage extends BaseComponent {
     constructor() {
         super();
@@ -24,11 +25,9 @@ class DaftarBarangPage extends BaseComponent {
 			<div class='daftar-barang-page cont container'>
 				<h1>Daftar Barang</h1>
 				<div class='tombol-cont'>
+					<button type='button' class='btn btn-primary btn-small menu'>|||</button>
 					<button type='button' class='btn btn-primary btn-small tambah'>Tambah Data</button>
 					<button type='button' class='btn btn-primary btn-small lihat'>Lihat Lapak</button>
-					<button type='button' class='btn btn-primary btn-small profile'>Profile</button>
-					<button type='button' class='btn btn-primary btn-small logout'>Logout</button>
-					<button type='button' class='btn btn-primary btn-small menu'>|||</button>
 					<br/>
 					<br/>
 				</div>
@@ -44,9 +43,6 @@ class DaftarBarangPage extends BaseComponent {
         this.tambahTbl.onclick = () => {
             this.tambahClick();
         };
-        this.logoutTbl.onclick = () => {
-            this.logoutClick();
-        };
         this.lihatTbl.onclick = () => {
             let session = window.sessionStorage;
             if (session.lapak != '') {
@@ -56,43 +52,26 @@ class DaftarBarangPage extends BaseComponent {
                 window.top.location.href = "/";
             }
         };
-        //TODO: profile page
-        this.profileTbl.onclick = () => {
-            dialog.tampil2('Dalam Pengembangan');
-        };
         this.menuTbl.onclick = () => {
             let menu = new MenuPopup();
             menu.tampil([
                 {
-                    label: 'logout',
+                    label: 'Profile',
                     f: () => {
-                        window.top.location.href = Util.urlLogout;
+                        this.detach();
+                        console.log(Util.sLapakId);
+                        anggotaDetailPage.tampil(window.sessionStorage.getItem(Util.sLapakId), true);
+                        anggotaDetailPage.selesai = () => {
+                            this.attach(data.cont);
+                        };
                     }
                 },
                 {
-                    label: 'logout',
+                    label: 'Logout',
                     f: () => {
                         window.top.location.href = Util.urlLogout;
                     }
-                },
-                {
-                    label: 'logout',
-                    f: () => {
-                        window.top.location.href = Util.urlLogout;
-                    }
-                },
-                {
-                    label: 'logout',
-                    f: () => {
-                        window.top.location.href = Util.urlLogout;
-                    }
-                },
-                {
-                    label: 'logout',
-                    f: () => {
-                        window.top.location.href = Util.urlLogout;
-                    }
-                },
+                }
             ]);
         };
     }
@@ -205,12 +184,6 @@ class DaftarBarangPage extends BaseComponent {
     }
     get lihatTbl() {
         return this.getEl('button.lihat');
-    }
-    get logoutTbl() {
-        return this.getEl('button.logout');
-    }
-    get profileTbl() {
-        return this.getEl('button.profile');
     }
 }
 class ItemBarangView extends BaseComponent {

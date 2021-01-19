@@ -1,7 +1,7 @@
 import { BaseComponent } from "../BaseComponent.js";
 import { Nav } from "./Nav.js";
 export class HalTemplate extends BaseComponent {
-    constructor() {
+    constructor(judul) {
         super();
         this._nav = new Nav();
         this._template = `
@@ -16,6 +16,7 @@ export class HalTemplate extends BaseComponent {
 			`;
         this.build();
         this.nav.attach(this.navCont);
+        this.nav.judulP.innerHTML = judul;
     }
     get nav() {
         return this._nav;
@@ -28,5 +29,8 @@ export class HalTemplate extends BaseComponent {
     }
     get navCont() {
         return this.getEl('div.nav-cont');
+    }
+    get bodyCont() {
+        return this.getEl('div.body-cont');
     }
 }

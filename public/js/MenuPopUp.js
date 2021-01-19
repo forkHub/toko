@@ -23,6 +23,7 @@ export class MenuPopup {
         button.textContent = t.label;
         button.onclick = (e) => {
             e.stopPropagation();
+            this.view.detach();
             t.f();
         };
         this.view.box.appendChild(button);

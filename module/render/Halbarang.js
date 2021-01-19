@@ -14,7 +14,7 @@ class HalBarang {
         let header = await Util_1.util.getFile("view/header.html");
         let barangStr = await this.renderBarangDetail(barang[0]);
         let js = await Util_1.util.getFile("view/item-page/js_hal_item.html");
-        index = index.replace("{{og_deskripsi}}", "Belanja Mudah, Murah dari Rumah");
+        index = index.replace("{{og_deskripsi}}", barang[0].deskripsi);
         if (lapak && lapak != '') {
             index = index.replace("{{og_url}}", "http://aunistore.com/barang/lapak/" + lapak + "/barang/" + barang[0].id);
             index = index.replace("{{og_gambar}}", "http://aunistore.com" + barang[0].thumb);

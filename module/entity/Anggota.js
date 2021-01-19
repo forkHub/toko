@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const Connection_1 = require("../Connection");
-const Util_1 = require("../Util");
+// import { util } from "../Util";
 const BarangSql_1 = require("./BarangSql");
 class Anggota {
     async nonAktifkanAnggota(id) {
@@ -41,9 +41,6 @@ class Anggota {
         if (opt.level) {
             whereQuery += 'AND pengguna.level = ? ';
             data.push(opt.level);
-        }
-        if (opt.kolom && opt.kolom.length > 0) {
-            kolom = Util_1.util.arr2String(opt.kolom);
         }
         let query = ` SELECT ${kolom} FROM pengguna ${whereQuery}`;
         console.log(query);

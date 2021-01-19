@@ -178,15 +178,6 @@ div.clear {
 	clear: both;
 }
 
-div.flex {
-	display: flex;
-}
-
-div.grow {
-	flex-grow: 1;
-}
-
-
 /*halaman daftar lapak */
 div.daftar-barang-cont-lapak {
 	text-align: left;
@@ -214,4 +205,17 @@ div.panah {
 
 div.daftar-barang-cont-lapak a {
 	text-decoration: none;
+}
+
+div.flex {
+	display: flex;
+}
+
+div.grow {
+	flex-grow: 1;
+}
+
+button.tbl-blok {
+	display: block;
+	margin-bottom: 8px;
 }

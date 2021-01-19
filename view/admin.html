@@ -27,48 +27,57 @@
 			<h3>Form Barang</h3>
 			<div class='foto-cont'>
 				<img src='' class='foto'>
-				<button class='btn btn-primary edit-foto'>edit foto</button>
+				<button type="button" class='btn btn-primary edit-foto'>edit foto</button>
 				<br />
 				<br />
 			</div>
 			<form action="">
 				<div class="form-group">
 					<label for="nama-barang">Nama:</label>
-					<input type="text" class="form-control nama-barang" name="nama-barang" id="nama-barang" required />
+					<input type="text" class="form-control nama-barang" name="nama-barang" id="nama-barang"
+						maxlength="50" placeholder="nama barang" required />
+				</div>
+
+				<div class="form-group deskripsi-barang">
+					<label for="deskripsi-barang">Deskripsi Singkat:</label>
+					<input type="text" class="form-control deskripsi-barang" name="deskripsi-barang"
+						id="deskripsi-barang" placeholder="deskripsi singkat" required maxlength="128" />
 				</div>
 
 				<div class="form-group deskripsi-barang-panjang">
-					<label for="deskripsi-barang-panjang">Deskripsi:</label>
+					<label for="deskripsi-barang-panjang">Deskripsi Panjang:</label>
 					<textarea rows="20" class="form-control" id="deskripsi-barang-panjang"
-						name="deskripsi-barang-panjang" required></textarea>
+						name="deskripsi-barang-panjang" placeholder="deskripsi panjang" maxlength="500"></textarea>
 				</div>
 
 				<div class="form-group">
 					<label for="harga-barang">Harga:</label>
-					<input type="text" class="form-control" id="harga-barang" name="harga-barang" required />
+					<input type="text" class="form-control" id="harga-barang" name="harga-barang" required
+						placeholder="Rp. 1000.000,-" />
 				</div>
 
 				<div class="form-group">
-					<label for="wa">WA:</label>
-					<input type="text" class="form-control" id="wa" name="wa" required />
+					<label for="wa">WA (62xxx):</label>
+					<input type="text" class="form-control" id="wa" name="wa" placeholder="6212345678" required />
 				</div>
 
 				<div class="form-group lapak">
 					<label for="lapak">lapak:</label>
-					<input type="text" class="form-control lapak" id="lapak" name="lapak" required readonly />
+					<input type="hidden" class="form-control lapak" id="lapak" name="lapak" required readonly />
 				</div>
 
 				<div class="form-group lapak_id">
 					<label for="lapak_id">lapak:</label>
-					<input type="text" class="form-control lapak_id" id="lapak_id" name="lapak_id" required readonly />
+					<input type="hidden" class="form-control lapak_id" id="lapak_id" name="lapak_id" required
+						readonly />
 				</div>
 
 				<input type="hidden" class='file_id' value="">
 				<input type="hidden" class='post_id' value="">
-				<button type="submit" class="btn btn-primary btn-sm submit">Publish</button>
-				<button type="button" class="btn btn-secondary btn-sm draft">Simpan Draft</button>
-				<button type="button" class="btn btn-danger btn-sm tutup">Tutup</button>
-				<br />
+				<button type="submit" class="btn btn-primary btn-sm submit tbl-blok">Publikasikan</button>
+				<button type="button" class="btn btn-secondary btn-sm draft tbl-blok">Simpan Sebagai
+					Draft</button>
+				<button type="button" class="btn btn-danger btn-sm tutup tbl-blok">Batal</button>
 			</form>
 		</div>
 

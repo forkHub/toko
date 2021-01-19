@@ -14,10 +14,7 @@ import { Util } from "./Util.js";
 export class PhotoUploadPage {
     constructor() {
         this._selesai = null;
-        // private _insertedId: string = '';
-        // private _gbrUrl: string = '';
         this._view = new View();
-        // private _idLama: string;
         this._statusUpload = false;
         // public get insertedId(): string {
         // return this._insertedId;
@@ -48,6 +45,8 @@ export class PhotoUploadPage {
         this._view.uploadTbl.style.display = 'none';
         this._view.input.onchange = () => {
             this._view.uploadTbl.style.display = 'initial';
+            this._view.fotoCont.innerHTML = '';
+            this._view.thumbCont.innerHTML = '';
             this.loadImage(this._view.input).then(() => {
                 loading.detach();
             }).catch((e) => {

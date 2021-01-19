@@ -120,6 +120,9 @@ class FormBarangPage {
                     console.log(e.message);
                 });
             }
+            else if (this._editMode) {
+                barang.file_id = this.dataLama.file_id;
+            }
             barang.lapak_id = window.sessionStorage.getItem(Util.sLapakId);
             if (this._editMode) {
                 yield Util.Ajax('post', Util.getUrl(Util.urlBarangUpdate, [this.dataLama.id]), JSON.stringify(barang));
@@ -129,42 +132,21 @@ class FormBarangPage {
             }
         });
     }
-    // simpanKirim(publish: number): void {
-    // 	try {
-    // 		let barang: IBarangObj = this.formToObj(publish);
-    // 		Util.Ajax('post', Util.urlBarangBaru, JSON.stringify(this.formToObj(publish)))
-    // 			.then((hasil) => {
-    // 				console.log(hasil);
-    // 				dialog.p.innerText = 'Sukses';
-    // 				dialog.tampil(false);
-    // 				dialog.okTbl.onclick = () => {
-    // 					window.top.location.href = Util.urlAdmin;
-    // 				}
-    // 			})
-    // 			.catch((_err) => {
-    // 				dialog.p.innerHTML = _err;
-    // 				dialog.tampil();
-    // 			});
-    // 	}
-    // 	catch (e) {
-    // 		dialog.p.innerHTML = e;
-    // 		dialog.tampil();
-    // 	}
-    // }
     default() {
         // let lapak: string = window.sessionStorage.getItem(Util.sLapakId);
-        this.view.namaInput.value = 'nama';
-        this.view.deskripsiPanjangInput.value = 'Deskripsi Barang';
-        this.view.hargaBarangInput.value = 'Rp. 1000';
+        // this.view.namaInput.value = 'nama';
+        // this.view.deskripsiPanjangInput.value = 'Deskripsi Barang';
+        // this.view.hargaBarangInput.value = 'Rp. 1000';
         // this.view.lapakInput.value = lapak;
     }
     objToForm(data) {
         this.view.namaInput.value = data.nama;
+        this.view.deskripsiInput.value = data.deskripsi;
         this.view.deskripsiPanjangInput.value = data.deskripsi_panjang;
         this.view.hargaBarangInput.value = data.harga + '';
         this.view.wa.value = data.wa;
-        this.view.inputFileId.value = data.file_id;
-        this.view.lapakIdInput.value = data.lapak_id;
+        // this.view.inputFileId.value = data.file_id;
+        // this.view.lapakIdInput.value = data.lapak_id;
         console.log('obj to form');
     }
     buatDate() {
@@ -174,15 +156,16 @@ class FormBarangPage {
     formToObj(publish) {
         let desc = this._view.deskripsiPanjangInput.value;
         return {
-            deskripsi_panjang: desc,
-            file_id: Util.escape(this.view.inputFileId.value),
+            deskripsi_panjang: Util.escape(desc),
+            deskripsi: Util.escape(this.view.deskripsiInput.value),
+            // file_id: Util.escape(this.view.inputFileId.value),
             harga: Util.escape(this.view.hargaBarangInput.value),
-            id: Util.escape(this.view.postIdInput.value),
+            // id: Util.escape(this.view.postIdInput.value),
             nama: Util.escape(this.view.namaInput.value),
             wa: Util.escape(this.view.wa.value),
             publish: publish,
             last_view: this.buatDate(),
-            lapak_id: this.view.lapakIdInput.value
+            lapak_id: window.sessionStorage.getItem(Util.sLapakId)
         };
     }
     editFotoClick() {
@@ -229,6 +212,9 @@ class View extends BaseComponent {
     get namaInput() {
         return this.getEl('form input#nama-barang');
     }
+    get deskripsiInput() {
+        return this.getEl('form input#deskripsi-barang');
+    }
     get deskripsiPanjangInput() {
         return this.getEl('form textarea#deskripsi-barang-panjang');
     }
@@ -244,9 +230,9 @@ class View extends BaseComponent {
     get draftTbl() {
         return this.getEl('button.draft');
     }
-    get inputFileId() {
-        return this.getEl('input[type="hidden"].file_id');
-    }
+    // get inputFileId(): HTMLInputElement {
+    // 	return this.getEl('input[type="hidden"].file_id') as HTMLInputElement;
+    // }
     get fotoCont() {
         return this.getEl('div.foto-cont');
     }
@@ -256,17 +242,11 @@ class View extends BaseComponent {
     get gambarHtml() {
         return this.getEl('img.foto');
     }
-    get postIdInput() {
-        return this.getEl('input[type="hidden"].post_id');
-    }
+    // get postIdInput(): HTMLInputElement {
+    // 	return this.getEl('input[type="hidden"].post_id') as HTMLInputElement;
+    // }
     get tutupTbl() {
         return this.getEl('button.tutup');
-    }
-    get lapakInput() {
-        return this.getEl('input.lapak');
-    }
-    get lapakIdInput() {
-        return this.getEl('input.lapak_id');
     }
 }
 export var form = new FormBarangPage();

@@ -147,3 +147,8 @@ div.flex {
 div.grow {
 	flex-grow: 1;
 }
+
+button.tbl-blok {
+	display: block;
+	margin-bottom: 8px;
+}

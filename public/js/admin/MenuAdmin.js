@@ -1,4 +1,4 @@
-import { anggotaDaftar } from "./AnggotaDaftar.js";
+import { anggotaDaftar } from "./anggota/AnggotaDaftar.js";
 import { BaseComponent } from "../BaseComponent.js";
 import { data } from "../Data.js";
 import { Util } from "../Util.js";

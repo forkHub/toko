@@ -12,8 +12,8 @@ import { data } from "../Data.js";
 import { dialog } from "../Dialog.js";
 import { HalTemplate } from "../template/HalTemplate.js";
 import { Util } from "../Util.js";
-import { anggotaDetail } from "./AnggotaDetail.js";
-import { AnggotaItem } from "./AnggotaItem.js";
+import { anggotaDetailPage } from "./anggota/AnggotaDetailPage.js";
+import { AnggotaItem } from "./anggota/AnggotaItem.js";
 class AnggotaNonAktif {
     constructor() {
         this._view = new View();
@@ -57,9 +57,9 @@ class AnggotaNonAktif {
                 };
                 view.lihat.onclick = () => {
                     this._view.hal.detach();
-                    anggotaDetail.view.attach(data.cont);
-                    anggotaDetail.tampil(item);
-                    anggotaDetail.selesai = () => {
+                    anggotaDetailPage.view.attach(data.cont);
+                    anggotaDetailPage.tampil(view.id, false);
+                    anggotaDetailPage.selesai = () => {
                         this._view.hal.attach(data.cont);
                     };
                 };
@@ -73,7 +73,7 @@ class AnggotaNonAktif {
 class View extends BaseComponent {
     constructor() {
         super();
-        this._hal = new HalTemplate();
+        this._hal = new HalTemplate('Daftar anggtoa non aktif');
         this._template = `
 			<div class='anggota non-aktif'>
 
