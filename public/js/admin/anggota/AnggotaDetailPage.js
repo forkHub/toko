@@ -4,6 +4,7 @@ import { HalTemplate } from "../../template/HalTemplate.js";
 import { Util } from "../../Util.js";
 import { anggotaDetailFragment } from "./AnggotaDetailFragment.js";
 import { editProfile } from "./EditProfilePage.js";
+import { gantiPasswordPage } from "./GantiPasswordPAge.js";
 class AnggotaDetailPage {
     constructor() {
         this._view = new HalTemplate('Info Detail Anggota');
@@ -22,10 +23,6 @@ class AnggotaDetailPage {
                 this._view.attach(data.cont);
             };
         };
-        this.tombolFragment.passwordTbl.onclick = () => {
-            this._view.detach();
-            //TODO:
-        };
     }
     tampil(id, edit) {
         console.log('AnggotaDetailPage.tampil ' + id);
@@ -38,6 +35,12 @@ class AnggotaDetailPage {
         else {
             this.tombolFragment.elHtml.style.display = 'initial';
         }
+        this.tombolFragment.passwordTbl.onclick = () => {
+            this._view.detach();
+            gantiPasswordPage.tampil(id, () => {
+                this._view.attach(data.cont);
+            });
+        };
     }
     set selesai(f) {
         this._selesai = f;

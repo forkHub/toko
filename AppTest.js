@@ -24,39 +24,6 @@ async function testRead(pool) {
         });
     });
 }
-// async function testBaca(): Promise<void> {
-// 	return new Promise((resolve, reject) => {
-// 		Connection.pool.query("select * from barang limit 1", (err: MysqlError, rows) => {
-// 			if (err) {
-// 				reject(err.sqlMessage + '/' + err.message);
-// 			}
-// 			else {
-// 				resolve(rows);
-// 			}
-// 		})
-// 	});
-// }
-// app.get("/connect", (_req: express.Request, resp: express.Response) => {
-// 	try {
-// 		Connection.connect2();
-// 		resp.status(200).send('ok');
-// 	}
-// 	catch (e) {
-// 		logT.log(e);
-// 		resp.status(500).send(e.message);
-// 	}
-// })
-// app.get("/baca", (_req: express.Request, resp: express.Response) => {
-// 	try {
-// 		Connection.connect2();
-// 		testBaca().then().catch();
-// 		resp.status(200).send('ok');
-// 	}
-// 	catch (e) {
-// 		logT.log(e);
-// 		resp.status(500).send(e.message);
-// 	}
-// })
 app.get("/test1", (_req, resp) => {
     try {
         Connection_1.Connection.getPool()

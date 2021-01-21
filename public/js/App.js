@@ -69,10 +69,7 @@ class App {
                 }
                 else {
                     console.error(e);
-                    dialog.tampil2(e.message);
-                    dialog.okTbl.onclick = () => {
-                        window.top.location.reload();
-                    };
+                    dialog.tampil2(e.message, true);
                 }
             }
         });

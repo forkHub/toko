@@ -3,7 +3,7 @@ import { BaseComponent } from "../BaseComponent.js";
 import { data } from "../Data.js";
 import { Util } from "../Util.js";
 import { setuju } from "./Setuju.js";
-import { anggotaNonAktif } from "./AnggotaNonAktif.js";
+import { anggotaNonAktif } from "./anggota/AnggotaNonAktif.js";
 export class MenuAdmin extends BaseComponent {
     constructor() {
         super();

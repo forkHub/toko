@@ -106,7 +106,27 @@ exports.router.post("/update", Auth_1.checkAuth, (req, resp) => {
         resp.status(500).send(error.message);
     }
 });
-//TODO: di rubah ke update
+exports.router.post("/update/password", Auth_1.checkAuth, (req, resp) => {
+    try {
+        let opt = {
+            password: req.body.password,
+            id: req.body.id
+        };
+        //validate 
+        if (!opt.password || opt.password == '') {
+            resp.status(500).send('Password tidak boleh kosong');
+            return;
+        }
+        Anggota_1.anggota.update(opt, opt.id).then(() => {
+            resp.status(200).end();
+        }).catch((e) => {
+            resp.status(500).send(e.message);
+        });
+    }
+    catch (error) {
+        resp.status(500).send(error.message);
+    }
+});
 exports.router.post("/update/id/:id/setuju/:setuju", Auth_1.checkAuth, (req, resp) => {
     try {
         let opt = {

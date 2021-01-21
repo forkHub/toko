@@ -16,16 +16,13 @@ export class HalTemplate extends BaseComponent {
 			`;
         this.build();
         this.nav.attach(this.navCont);
-        this.nav.judulP.innerHTML = judul;
+        this.setting(judul);
     }
     get nav() {
         return this._nav;
     }
-    setting(judul, selesai) {
+    setting(judul) {
         this.nav.judulP.innerHTML = judul;
-        this.nav.tutupTbl.onclick = () => {
-            selesai();
-        };
     }
     get navCont() {
         return this.getEl('div.nav-cont');

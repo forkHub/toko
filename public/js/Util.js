@@ -117,6 +117,7 @@ Util.urlAnggotaEdit = '/anggota/edit';
 Util.urlAnggotaUpdateSetuju = '/anggota/update/id/:id/setuju/:setuju';
 Util.urlAnggotaBaca = '/anggota/baca';
 Util.urlAnggotaUpdate = '/anggota/update';
+Util.urlAnggotaUpdatePassword = '/anggota/update/password';
 Util.urlLoginStatus = '/auth/status';
 Util.urlLogin = '/auth/login';
 Util.urlLogout = '/auth/logout';
