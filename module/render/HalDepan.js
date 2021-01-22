@@ -33,9 +33,10 @@ class HalDepan {
         header = header.replace("{{motto}}", "");
         cari = cari.replace("{{lapak}}", opt.lapakId);
         index = index.replace("{{cari}}", cari);
-        index = index.replace("{{nav_hal_utama}}", this._util.renderNavTokoUtama(opt.lapakId));
-        index = index.replace("{{nav_beranda}}", this.renderNavBeranda(opt));
-        index = index.replace("{{nav_daftar_lapak}}", this.renderNavDaftarLapak(opt));
+        //nav
+        index = index.replace("{{nav_hal_utama}}", this._util.renderNavTokoUtama(opt.lapakId) + " ");
+        index = index.replace("{{nav_beranda}}", "");
+        index = index.replace("{{nav_daftar_lapak}}", this._util.renderNavDaftarLapak(opt.lapakId));
         index = index.replace("{{header}}", header);
         index = index.replace("{{content}}", barang);
         index = index.replace("{{js}}", js);
@@ -46,24 +47,6 @@ class HalDepan {
         index = this._util.cache(index, Util_1.util.randId);
         console.log('render beranda selesai');
         return index;
-    }
-    renderNavBeranda(opt) {
-        let url = "/";
-        if (opt.lapakId != '') {
-            url = '/lapak/' + opt.lapakId;
-        }
-        else {
-            url = '/';
-        }
-        return `<a href="${url}">BERANDA</a>`;
-    }
-    renderNavDaftarLapak(opt) {
-        //lapak
-        let lapakUrl = "/lapak/daftar";
-        if (opt.lapakId != '') {
-            lapakUrl = `/lapak/${opt.lapakId}/daftar`;
-        }
-        return ` | <a href="${lapakUrl}">LAPAK</a>`;
     }
     //
     async renderHalaman1(hal, jml, kataKunci) {

@@ -29,7 +29,7 @@ class HalBarang {
         index = index.replace("{{cari}}", "");
         index = index.replace("{{nav_hal_utama}}", this._util.renderNavTokoUtama(lapak));
         index = index.replace("{{nav_beranda}}", this._util.renderNavBeranda(lapak));
-        index = index.replace("{{nav_daftar_lapak}}", this._util.renderNavDaftarLapak(lapak));
+        index = index.replace("{{nav_daftar_lapak}}", "");
         index = index.replace("{{content}}", barangStr);
         index = index.replace("{{js}}", js);
         index = index.replace("{{halaman}}", "");

@@ -17,14 +17,14 @@ class RenderUtil {
         else {
             url = '/';
         }
-        return `<a href="${url}">BERANDA</a> | `;
+        return `<a href="${url}">BERANDA</a> `;
     }
     renderNavDaftarLapak(lapakId) {
         let lapakUrl = "/lapak/daftar";
         if (lapakId != '') {
             lapakUrl = `/lapak/${lapakId}/daftar`;
         }
-        return `<a href="${lapakUrl}">LAPAK</a>`;
+        return `<a href="${lapakUrl}">LAPAK</a> `;
     }
     cache(index, rand) {
         index = index.replace("{{cache}}", rand);
