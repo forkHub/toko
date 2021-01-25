@@ -1,7 +1,7 @@
 import { BaseComponent } from "../../BaseComponent.js";
 import { data } from "../../Data.js";
 import { HalTemplate } from "../../template/HalTemplate.js";
-import { Util } from "../../Util.js";
+// import { Util } from "../../Util.js";
 import { anggotaDetailFragment } from "./AnggotaDetailFragment.js";
 import { editProfile } from "./EditProfilePage.js";
 import { gantiPasswordPage } from "./GantiPasswordPAge.js";
@@ -18,15 +18,23 @@ class AnggotaDetailPage {
         this.tombolFragment.attach(this._view.bodyCont);
         this.tombolFragment.editTbl.onclick = () => {
             this._view.detach();
-            editProfile.tampil(true, window.sessionStorage.getItem(Util.sLapakId));
+            editProfile.tampil(true, this.id);
             editProfile.selesai = () => {
                 this._view.attach(data.cont);
+                anggotaDetailFragment.reload(this.id);
             };
+        };
+        this.tombolFragment.passwordTbl.onclick = () => {
+            this._view.detach();
+            gantiPasswordPage.tampil(this.id, () => {
+                anggotaDetailFragment.reload(this.id);
+                this._view.attach(data.cont);
+            });
         };
     }
     tampil(id, edit) {
         console.log('AnggotaDetailPage.tampil ' + id);
-        console.log(JSON.stringify(this));
+        this.id = id;
         this._view.attach(data.cont);
         anggotaDetailFragment.tampil(id);
         if (!edit) {
@@ -35,12 +43,6 @@ class AnggotaDetailPage {
         else {
             this.tombolFragment.elHtml.style.display = 'initial';
         }
-        this.tombolFragment.passwordTbl.onclick = () => {
-            this._view.detach();
-            gantiPasswordPage.tampil(id, () => {
-                this._view.attach(data.cont);
-            });
-        };
     }
     set selesai(f) {
         this._selesai = f;

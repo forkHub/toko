@@ -29,7 +29,6 @@ class Connection {
     }
     static connect() {
         TokoLog_1.logT.log('create connection 1');
-        ConfigDB_1.configDB;
         try {
             TokoLog_1.logT.log('create connection start');
             Connection._pool = mysql_1.default.createPool({

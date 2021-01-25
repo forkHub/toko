@@ -16,7 +16,7 @@ class EditProfile {
     constructor() {
         this._view = new HalTemplate('Form Edit Profile');
         this.editFragment = new EditFragement();
-        this.editMode = false;
+        this.editMode = false; //TODO: depecreated, selalu edit
         this.editFragment.attach(this._view.bodyCont);
         this._view.nav.tutupTbl.onclick = () => {
             this._view.detach();
@@ -123,7 +123,7 @@ class EditFragement extends BaseComponent {
 				<form action="">
 					<div class="form-group">
 						<label for="user-name">UserName:</label>
-						<input type="text" class="form-control user-name" name="user-name" id="user-name" required />
+						<input type="text" class="form-control user-name" name="user-name" id="user-name" required readonly/>
 					</div>
 
 					<div class="form-group">

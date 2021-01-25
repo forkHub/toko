@@ -9,26 +9,19 @@ const BarangSql_1 = require("../entity/BarangSql");
 const Connection_1 = require("../Connection");
 const Renderer_1 = require("../render/Renderer");
 const TokoLog_1 = require("../TokoLog");
-// import { barangController } from "../controller/Barang";
 const Auth_1 = require("../Auth");
 const Util_1 = require("../Util");
-const SessionData_1 = require("../SessionData");
-// import { config } from "process";
 const Config_1 = require("../Config");
-// import { IPengguna } from "../Type";
-// import { anggota } from "../entity/Anggota";
-// import { table } from "../../Table";
-// import { IPengguna } from "../Type";
+const Beranda_1 = require("../controller/Beranda");
 exports.berandaRouter = express_1.default.Router();
 exports.berandaRouter.get("/cari/:kunci/hal/:hal", (_req, resp) => {
     try {
         BarangSql_1.barangSql
             .baca({
-            // lapak_id: _req.params.id,
             kataKunci: decodeURI(_req.params.kunci),
             publish: 1,
             offset: parseInt(_req.params.hal),
-            orderDateDesc: 1,
+            orderDateAsc: 1,
             limit: 25
         })
             .then((data) => {
@@ -69,31 +62,18 @@ exports.berandaRouter.get("/cari/:kunci/hal/:hal", (_req, resp) => {
 });
 exports.berandaRouter.get("/", (_req, resp) => {
     try {
-        BarangSql_1.barangSql.baca({
-            publish: 1,
-            orderDateDesc: 1,
-        })
+        Beranda_1.berandaController.beranda()
             .then((data) => {
-            return Renderer_1.render.halDepan.render({
-                barangData: data,
-                lapakId: '',
-                hal: 0,
-                jml: 0,
-                kataKunci: ''
-            });
-        })
-            .then((data) => {
-            SessionData_1.session(_req).lapak = '';
             resp.status(200).send(data);
         })
             .catch((err) => {
             TokoLog_1.logT.log(err);
-            resp.status(500).send('Error');
+            resp.status(500).send(err.message);
         });
     }
     catch (err) {
         TokoLog_1.logT.log(err);
-        resp.status(500).send('Error');
+        resp.status(500).send(err.message);
     }
 });
 exports.berandaRouter.get("/daftar", (_req, resp) => {

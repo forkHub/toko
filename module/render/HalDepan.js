@@ -15,6 +15,7 @@ class HalDepan {
         let cari = await Util_1.util.getFile("view/cari.html");
         let barang = await this.renderBerandaBarang(opt.barangData, opt.lapakId);
         let halaman = await this.renderHalaman1(opt.hal, opt.jml, opt.kataKunci);
+        // configController.ambilDariDbSemua();
         //OG
         if (opt.lapakId && opt.lapakId != '') {
             let lapak = await Anggota_1.anggota.baca({ id: opt.lapakId });
@@ -31,12 +32,43 @@ class HalDepan {
         }
         header = header.replace("{{nama_toko}}", Config_1.config.getNilai(Config_1.Config.NAMA_TOKO));
         header = header.replace("{{motto}}", "");
-        cari = cari.replace("{{lapak}}", opt.lapakId);
-        index = index.replace("{{cari}}", cari);
-        //nav
-        index = index.replace("{{nav_hal_utama}}", this._util.renderNavTokoUtama(opt.lapakId) + " ");
-        index = index.replace("{{nav_beranda}}", "");
-        index = index.replace("{{nav_daftar_lapak}}", this._util.renderNavDaftarLapak(opt.lapakId));
+        if (Config_1.config.getNilai(Config_1.Config.NAV_CARI) == '1') {
+            cari = cari.replace("{{lapak}}", opt.lapakId);
+            index = index.replace("{{cari}}", cari);
+        }
+        else {
+            index = index.replace("{{cari}}", "");
+        }
+        //navigasi
+        if (opt.kataKunci && opt.kataKunci != '') {
+            index = index.replace("{{nav_hal_utama}}", "");
+        }
+        else {
+            index = index.replace("{{nav_hal_utama}}", this._util.renderNavTokoUtama(opt.lapakId) + " ");
+        }
+        if (opt.kataKunci && opt.kataKunci != '') {
+            index = index.replace("{{nav_beranda}}", this._util.renderNavBeranda(opt.lapakId));
+        }
+        else {
+            index = index.replace("{{nav_beranda}}", "");
+        }
+        if (Config_1.config.getNilai(Config_1.Config.NAV_LAPAK) == '1') {
+            if (opt.kataKunci && opt.kataKunci != '') {
+                index = index.replace("{{nav_daftar_lapak}}", "");
+            }
+            else {
+                index = index.replace("{{nav_daftar_lapak}}", this._util.renderNavDaftarLapak(opt.lapakId));
+            }
+        }
+        else {
+            index = index.replace("{{nav_daftar_lapak}}", "");
+        }
+        if (Config_1.config.getNilai(Config_1.Config.NAV_LOGIN) == "1") {
+            index = index.replace("{{nav_login}}", `<a href='/admin'>LOGIN</a>`);
+        }
+        else {
+            index = index.replace("{{nav_login}}", ``);
+        }
         index = index.replace("{{header}}", header);
         index = index.replace("{{content}}", barang);
         index = index.replace("{{js}}", js);

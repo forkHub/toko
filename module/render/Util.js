@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 class RenderUtil {
     renderNavTokoUtama(lapakId) {
         if (lapakId != '') {
-            return `<a href="/">TOKO UTAMA </a> | `;
+            return `<a href="/">HAL DEPAN </a> | `;
         }
         else {
             return '';
@@ -24,7 +24,7 @@ class RenderUtil {
         if (lapakId != '') {
             lapakUrl = `/lapak/${lapakId}/daftar`;
         }
-        return `<a href="${lapakUrl}">LAPAK</a> `;
+        return `<a href="${lapakUrl}">DAFTAR LAPAK</a> `;
     }
     cache(index, rand) {
         index = index.replace("{{cache}}", rand);

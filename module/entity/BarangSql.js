@@ -69,8 +69,11 @@ class BarangSql {
         else if (opt.orderNamaAsc) {
             orderQuery = 'ORDER BY BARANG.nama ASC ';
         }
+        else if (opt.orderDateAsc) {
+            orderQuery = 'ORDER BY last_view ASC ';
+        }
         let query = `SELECT BARANG.*, FILE.thumb, FILE.gbr FROM BARANG LEFT JOIN FILE ON BARANG.file_id = FILE.id ${whereQuery} ${orderQuery} ${limitQuery}  ${offsetQuery}`;
-        // console.log(query);
+        console.log(query);
         // console.log(data);
         return new Promise((resolve, reject) => {
             Connection_1.Connection.pool.query(query, data, (_err, _rows) => {

@@ -72,19 +72,11 @@ class FormBarangPage {
         this.view.form.onsubmit = (e) => {
             try {
                 e.stopPropagation();
-                this.kirim(1).then(() => {
-                    dialog.tampil2("sukses");
-                    dialog.okTbl.onclick = () => {
-                        dialog.detach();
-                        this._selesai();
-                        window.top.location.reload();
-                    };
-                }).catch((e) => {
-                    dialog.tampil2(e.message);
-                });
+                this.formKirim(1);
                 return false;
             }
             catch (e) {
+                console.error(e);
                 dialog.tampil2(e.message);
                 return false;
             }
@@ -92,7 +84,7 @@ class FormBarangPage {
         };
         this.view.draftTbl.onclick = () => {
             console.group('click draft button');
-            this.kirim(0);
+            this.formKirim(0);
             console.groupEnd();
         };
         this.view.editFotoTbl.onclick = () => {
@@ -101,6 +93,19 @@ class FormBarangPage {
         this.view.tutupTbl.onclick = () => {
             window.top.location.href = Util.urlAdmin;
         };
+    }
+    formKirim(publish) {
+        this.kirim(publish).then(() => {
+            dialog.tampil2("sukses");
+            dialog.okTbl.onclick = () => {
+                dialog.detach();
+                this._selesai();
+                window.top.location.reload();
+            };
+        }).catch((e) => {
+            console.error(e);
+            dialog.tampil2(e.message);
+        });
     }
     kirim(publish) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -116,9 +121,12 @@ class FormBarangPage {
             if (this.upload && this.upload.statusUpload) {
                 let id = yield this.upload.upload();
                 barang.file_id = id;
-                yield Util.Ajax('post', Util.getUrl(Util.urlFileHapus, [this.dataLama.file_id]), '').catch((e) => {
-                    console.log(e.message);
-                });
+                if (this._editMode) {
+                    yield Util.Ajax('post', Util.getUrl(Util.urlFileHapus, [this.dataLama.file_id]), '').catch((e) => {
+                        console.log(e);
+                        console.log(e.message);
+                    });
+                }
             }
             else if (this._editMode) {
                 barang.file_id = this.dataLama.file_id;
@@ -145,8 +153,6 @@ class FormBarangPage {
         this.view.deskripsiPanjangInput.value = data.deskripsi_panjang;
         this.view.hargaBarangInput.value = data.harga + '';
         this.view.wa.value = data.wa;
-        // this.view.inputFileId.value = data.file_id;
-        // this.view.lapakIdInput.value = data.lapak_id;
         console.log('obj to form');
     }
     buatDate() {
@@ -154,13 +160,10 @@ class FormBarangPage {
         return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
     }
     formToObj(publish) {
-        let desc = this._view.deskripsiPanjangInput.value;
         return {
-            deskripsi_panjang: Util.escape(desc),
+            deskripsi_panjang: tinymce.activeEditor.getContent(),
             deskripsi: Util.escape(this.view.deskripsiInput.value),
-            // file_id: Util.escape(this.view.inputFileId.value),
             harga: Util.escape(this.view.hargaBarangInput.value),
-            // id: Util.escape(this.view.postIdInput.value),
             nama: Util.escape(this.view.namaInput.value),
             wa: Util.escape(this.view.wa.value),
             publish: publish,

@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const Util_1 = require("../Util");
 const Config_1 = require("../Config");
+// import { configController } from "../ConfigController";
 class HalDaftarLapak {
     async render(opt) {
         console.log('render halaman daftar lapak');
@@ -22,9 +23,10 @@ class HalDaftarLapak {
         }
         header = header.replace("{{nama_toko}}", Config_1.config.getNilai(Config_1.Config.NAMA_TOKO));
         header = header.replace("{{motto}}", "");
-        index = index.replace("{{nav_hal_utama}}", this._renderUtil.renderNavTokoUtama(opt.lapakId));
+        index = index.replace("{{nav_hal_utama}}", '');
         index = index.replace("{{nav_beranda}}", this._renderUtil.renderNavBeranda(opt.lapakId));
         index = index.replace("{{nav_daftar_lapak}}", "");
+        index = index.replace("{{nav_login}}", ``);
         index = index.replace("{{cari}}", "");
         index = index.replace("{{header}}", header);
         index = index.replace("{{content}}", lapakStr);

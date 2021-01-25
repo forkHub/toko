@@ -80,7 +80,7 @@ router.get("/:id", (_req, resp) => {
             .baca({
             lapak_id: _req.params.id,
             publish: 1,
-            orderDateDesc: 1
+            orderDateAsc: 1
         })
             .then((data) => {
             return Renderer_1.render.halDepan
@@ -114,7 +114,7 @@ router.get("/:id/cari/:kunci/hal/:hal", (_req, resp) => {
             kataKunci: decodeURI(_req.params.kunci),
             publish: 1,
             offset: parseInt(_req.params.hal),
-            orderDateDesc: 1,
+            orderDateAsc: 1,
             limit: 25
         })
             .then((data) => {
@@ -143,7 +143,6 @@ router.get("/:id/barang/:barangId", (_req, resp) => {
     try {
         Renderer_1.render.halBarang.render(_req.params.barangId, _req.params.id)
             .then((data) => {
-            // session(_req).lapak = _req.params.id;
             resp.status(200).send(data);
         })
             .catch((err) => {

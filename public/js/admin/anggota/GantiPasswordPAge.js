@@ -59,7 +59,6 @@ class GantiPasswordPage {
                 id: this._id,
                 password: md5(this._form.password1.value)
             };
-            //TODO: server
             yield Util.Ajax('post', Util.urlAnggotaUpdatePassword, JSON.stringify(data));
         });
     }
@@ -87,7 +86,7 @@ class FormFragment extends BaseComponent {
 						<label for="password2">Password 2:</label>
 						<input type="password" class="form-control password2" name="password2" id="password2" required />
 					</div>
-					<button type='submit'>Ok</button>
+					<button type='submit' class='btn btn-sm btn-primary'>Ok</button>
 				</form>
 			</div>`;
         this.build();

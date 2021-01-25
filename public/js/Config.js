@@ -2,7 +2,8 @@
 export class Config {
     constructor() {
         this.settingAr = [];
-        this.settingAr = [{
+        this.settingAr = [
+            {
                 kunci: Config.NAV_LAPAK,
                 nilai: '0',
                 deskripsi: 'Tampilkan navigasi lapak di halaman depan'
@@ -10,7 +11,7 @@ export class Config {
             {
                 kunci: Config.TERKAIT,
                 nilai: '0',
-                deskripsi: 'Tampilkan barang terkait'
+                deskripsi: 'Aktifkan barang terkait'
             },
             {
                 kunci: Config.NAMA_TOKO,
@@ -28,9 +29,19 @@ export class Config {
                 deskripsi: 'Footer'
             },
             {
-                kunci: Config.MODE_SINGLE,
-                nilai: '1',
-                deskripsi: 'Mode single atau multiple'
+                kunci: Config.NAV_LOGIN,
+                nilai: `1`,
+                deskripsi: 'Tampilkan menu login'
+            },
+            {
+                kunci: Config.NAV_CARI,
+                nilai: `1`,
+                deskripsi: 'Tampilkan menu Pencarian'
+            },
+            {
+                kunci: Config.FIRE_BASE_CONFIG,
+                nilai: ``,
+                deskripsi: 'firebase config'
             }
         ];
     }
@@ -58,9 +69,11 @@ export class Config {
     }
 }
 Config.NAV_LAPAK = 'nav_lapak';
+Config.NAV_LOGIN = 'nav_login';
+Config.NAV_CARI = 'nav_cari';
 Config.TERKAIT = 'terkait';
 Config.NAMA_TOKO = 'nama_toko';
 Config.JML_PER_HAL = 'jml_per_hal';
 Config.FOOTER = 'footer';
-Config.MODE_SINGLE = 'mode_single';
+Config.FIRE_BASE_CONFIG = 'firebase_config';
 export var config = new Config();

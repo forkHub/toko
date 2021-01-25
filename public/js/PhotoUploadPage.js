@@ -44,14 +44,18 @@ export class PhotoUploadPage {
     init() {
         this._view.uploadTbl.style.display = 'none';
         this._view.input.onchange = () => {
-            this._view.uploadTbl.style.display = 'initial';
             this._view.fotoCont.innerHTML = '';
             this._view.thumbCont.innerHTML = '';
+            this._view.uploadTbl.style.display = 'none';
             this.loadImage(this._view.input).then(() => {
                 loading.detach();
+                this._statusUpload = true;
+                this._view.uploadTbl.style.display = 'initial';
             }).catch((e) => {
+                console.log(e);
                 dialog.p.innerHTML = e.message;
-                dialog.tampil();
+                this._statusUpload = false;
+                dialog.tampil2('gagal dalam memproses gambar');
             });
         };
         this._view.tutupTbl.onclick = () => {
@@ -59,12 +63,6 @@ export class PhotoUploadPage {
             this._selesai();
         };
         this.view.form.onsubmit = () => {
-            try {
-                this._statusUpload = true;
-            }
-            catch (e) {
-                return false;
-            }
             this._selesai();
             return false;
         };

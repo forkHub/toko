@@ -19,6 +19,10 @@ const Beranda_1 = require("./module/router/Beranda");
 // import { routerApiBarang } from "./module/admin/router/Barang";
 const Util_1 = require("./module/Util");
 const Config_1 = require("./module/router/Config");
+const ConfigController_1 = require("./module/ConfigController");
+// import { configSql } from "./module/entity/ConfigSql";
+// import { config } from "./module/Config";
+// import { configController } from "./module/ConfigController";
 Util_1.util.buatRandom();
 const app = express_1.default();
 const port = 3000;
@@ -65,6 +69,7 @@ process.on('SIGTERM', () => {
     }
 });
 Connection_1.Connection.connect();
+ConfigController_1.configController.ambilDariDbSemua();
 exports.server = app.listen(port, () => {
     TokoLog_1.logT.log("app started");
 });
