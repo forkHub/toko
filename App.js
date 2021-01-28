@@ -69,7 +69,14 @@ process.on('SIGTERM', () => {
     }
 });
 Connection_1.Connection.connect();
-ConfigController_1.configController.ambilDariDbSemua();
+ConfigController_1.configController.ambilDariDbSemua().catch((e) => {
+    console.log(e);
+}).then(() => {
+    ConfigController_1.configController.update2DbSemua();
+    console.log('ok');
+}).catch((e) => {
+    console.log(e);
+});
 exports.server = app.listen(port, () => {
     TokoLog_1.logT.log("app started");
 });

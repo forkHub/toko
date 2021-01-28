@@ -7,7 +7,8 @@ const express_1 = __importDefault(require("express"));
 const Auth_1 = require("../Auth");
 const Config_1 = require("../Config");
 const ConfigController_1 = require("../ConfigController");
-const ConfigSql_1 = require("../entity/ConfigSql");
+const ConfigDisk_1 = require("../entity/ConfigDisk");
+// import { configSql } from "../entity/ConfigSql";
 const TokoLog_1 = require("../TokoLog");
 exports.configRouter = express_1.default.Router();
 var router = exports.configRouter;
@@ -35,7 +36,7 @@ router.post("/baca", Auth_1.checkAuth, (req, resp) => {
 });
 router.post("/update/:id", Auth_1.checkAuth, (req, resp) => {
     try {
-        ConfigSql_1.configSql.update(req.body, req.params.id)
+        ConfigDisk_1.configDisk.update(req.body)
             .then(() => {
             resp.status(200).send('');
         }).catch((err) => {

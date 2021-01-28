@@ -186,7 +186,7 @@ exports.router.post("/terkait", (_req, resp) => {
             resp.status(200).send([]);
             return;
         }
-        BarangSql_1.barangSql.query(BarangSql_1.barangSql.bacaBarangTerkait, [])
+        BarangSql_1.barangSql.query(BarangSql_1.barangSql.bacaBarangTerkait, [Config_1.config.getNilai(Config_1.Config.TOKO_ID)])
             .then((hasil) => {
             resp.status(200).send(hasil);
         }).catch((e) => {

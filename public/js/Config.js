@@ -49,7 +49,14 @@ export class Config {
         return this.settingAr;
     }
     updateNilai(key, nilai) {
-        this.getSetting(key).nilai = nilai;
+        try {
+            this.getSetting(key).nilai = nilai;
+        }
+        catch (e) {
+            console.log('key ' + key);
+            console.log('nilai ' + nilai);
+            console.log(e);
+        }
     }
     getSetting(key) {
         for (let i = 0; i < this.settingAr.length; i++) {

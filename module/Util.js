@@ -44,6 +44,18 @@ class Util {
     hapusCache() {
         this.caches = [];
     }
+    async getFileNoCache(file) {
+        return new Promise((resolve, reject) => {
+            fs_1.default.readFile(file, (err, content) => {
+                if (err) {
+                    reject(err.message);
+                }
+                else {
+                    resolve(content.toString());
+                }
+            });
+        });
+    }
     async getFile(file) {
         return new Promise((resolve, reject) => {
             let cache;

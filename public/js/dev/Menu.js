@@ -1,4 +1,5 @@
 import { BaseComponent } from "../BaseComponent.js";
+// import { config } from "../Config.js";
 import { data } from "../Data.js";
 import { Nav } from "../template/Nav.js";
 import { Util } from "../Util.js";
@@ -30,6 +31,9 @@ export class Menu extends BaseComponent {
                 this.attach(data.cont);
             };
             configForm.tampil();
+        };
+        configForm.selesai = () => {
+            this.attach(data.cont);
         };
     }
     get nav() {

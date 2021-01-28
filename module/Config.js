@@ -44,6 +44,11 @@ class Config {
                 kunci: Config.FIRE_BASE_CONFIG,
                 nilai: ``,
                 deskripsi: 'firebase config'
+            },
+            {
+                kunci: Config.TOKO_ID,
+                nilai: '1',
+                deskripsi: 'id dari toko applikasi'
             }
         ];
     }
@@ -79,4 +84,5 @@ Config.NAMA_TOKO = 'nama_toko';
 Config.JML_PER_HAL = 'jml_per_hal';
 Config.FOOTER = 'footer';
 Config.FIRE_BASE_CONFIG = 'firebase_config';
+Config.TOKO_ID = 'toko_id';
 exports.config = new Config();

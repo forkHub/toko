@@ -1,14 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const Config_1 = require("./Config");
-const ConfigSql_1 = require("./entity/ConfigSql");
+const ConfigDisk_1 = require("./entity/ConfigDisk");
+// import { IConfigDb } from "./Type";
 class ConfigController {
     constructor() {
     }
     async update2DbSemua() {
         let items = Config_1.config.bacaSemua();
         for (let i = 0; i < items.length; i++) {
-            await this.update2Db(items[i]);
+            await this.updateDb(items[i]);
         }
     }
     async ambilDariDbSemua() {
@@ -18,32 +19,19 @@ class ConfigController {
         }
     }
     async ambilDariDb(key) {
-        let item = await ConfigSql_1.configSql.bacaKey(key);
-        if (item.length > 0) {
+        let item = await ConfigDisk_1.configDisk.bacaKey(key);
+        if (item) {
             let konfig = Config_1.config.getSetting(key);
-            konfig.deskripsi = item[0].deskripsi;
-            konfig.nilai = item[0].nilai;
+            konfig.deskripsi = item.deskripsi;
+            konfig.nilai = item.nilai;
         }
     }
-    async update2Db(item) {
-        let ada = await ConfigSql_1.configSql.bacaKey(item.kunci);
-        // console.log('update2db');
-        // console.log(item);
-        // console.log(ada);
-        if (ada.length > 0) {
-            await ConfigSql_1.configSql.update({
-                deskripsi: item.deskripsi,
-                kunci: item.kunci,
-                nilai: item.nilai
-            }, ada[0].id);
-        }
-        else {
-            await ConfigSql_1.configSql.insert({
-                deskripsi: item.deskripsi,
-                kunci: item.kunci,
-                nilai: item.nilai
-            });
-        }
+    async updateDb(item) {
+        await ConfigDisk_1.configDisk.update({
+            deskripsi: item.deskripsi,
+            kunci: item.kunci,
+            nilai: item.nilai
+        });
     }
 }
 exports.configController = new ConfigController();

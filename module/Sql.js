@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 class SqlBuilder {
     build(sql) {
         let hasil = '';
@@ -21,6 +22,8 @@ class SqlBuilder {
                 }
             });
         }
+        if (sql.where) {
+        }
         if (sql.limit) {
             hasil += ` limit ${sql.limit} `;
         }
@@ -30,3 +33,4 @@ class SqlBuilder {
         return hasil;
     }
 }
+exports.sqlBuilder = new SqlBuilder();

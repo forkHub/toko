@@ -10,7 +10,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import { BaseComponent } from "../BaseComponent.js";
 import { dialog } from "../Dialog.js";
 import { Nav } from "../template/Nav.js";
-// import { IConfigDb } from "./Type";
 import { Util } from "../Util.js";
 class ConfigForm {
     constructor() {
@@ -19,10 +18,20 @@ class ConfigForm {
         this.settingViews = [];
         this.formInit();
     }
+    set selesai(value) {
+        this._selesai = value;
+    }
     formInit() {
         this._view.form.onsubmit = () => {
             try {
-                this.simpanKeServer();
+                this.simpanKeServer().then(() => {
+                    dialog.tampil2('OK');
+                    dialog.okTbl.onclick = () => {
+                        this._view.detach();
+                        dialog.detach();
+                        this._selesai();
+                    };
+                }).catch();
                 return false;
             }
             catch (e) {
@@ -87,6 +96,7 @@ class View extends BaseComponent {
 		`;
         this.build();
         this.nav.attach(this.navCont);
+        this.nav.judulP.innerHTML = 'Edit Konfigurasi';
     }
     get navCont() {
         return this.getEl('div.nav-cont');

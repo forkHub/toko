@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const Config_1 = require("../Config");
 const Connection_1 = require("../Connection");
 const File_1 = require("./File");
-// import { Config, config } from "../Config";
 class BarangSql {
     constructor() {
         this.bacaBarangTerkait = `
@@ -10,7 +10,9 @@ class BarangSql {
 		FROM BARANG
 		LEFT JOIN FILE
 		ON BARANG.file_id = File.id
-		WHERE BARANG.publish = 1
+		WHERE 
+			BARANG.publish = 1
+			AND BARANG.toko_id = ?
 		ORDER BY BARANG.last_view
 		LIMIT 5 
 	`;
@@ -55,6 +57,8 @@ class BarangSql {
             whereQuery += `AND BARANG.publish = ? `;
             data.push(opt.publish);
         }
+        whereQuery += ' AND BARANG.toko_id = ? ';
+        data.push(Config_1.config.getNilai(Config_1.Config.TOKO_ID));
         if (!isNaN(opt.limit)) {
             limitQuery = 'LIMIT ? ';
             data.push(opt.limit);
@@ -72,7 +76,11 @@ class BarangSql {
         else if (opt.orderDateAsc) {
             orderQuery = 'ORDER BY last_view ASC ';
         }
-        let query = `SELECT BARANG.*, FILE.thumb, FILE.gbr FROM BARANG LEFT JOIN FILE ON BARANG.file_id = FILE.id ${whereQuery} ${orderQuery} ${limitQuery}  ${offsetQuery}`;
+        let query = `
+			SELECT BARANG.*, FILE.thumb, FILE.gbr 
+			FROM BARANG 
+			LEFT JOIN FILE ON BARANG.file_id = FILE.id 
+			${whereQuery} ${orderQuery} ${limitQuery}  ${offsetQuery}`;
         console.log(query);
         // console.log(data);
         return new Promise((resolve, reject) => {
@@ -160,6 +168,7 @@ class BarangSql {
     async baru(data) {
         console.log('barang baru');
         console.log(data);
+        data.toko_id = Config_1.config.getNilai(Config_1.Config.TOKO_ID);
         return new Promise((resolve, reject) => {
             Connection_1.Connection.pool.query(this.baruSql, data, (_err, _rows) => {
                 if (_err) {

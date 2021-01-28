@@ -9,18 +9,12 @@ const BarangSql_1 = require("../entity/BarangSql");
 const Renderer_1 = require("../render/Renderer");
 const Config_1 = require("../Config");
 const SessionData_1 = require("../SessionData");
-// import { anggota } from "../entity/Anggota";
-// import { table } from "../../Table";
+const Anggota_1 = require("../entity/Anggota");
 exports.lapakRouter = express_1.default.Router();
 var router = exports.lapakRouter;
 router.get("/daftar", (_req, resp) => {
     try {
-        BarangSql_1.barangSql.query(`
-			SELECT id, lapak, deskripsi
-			FROM pengguna
-			WHERE level = 'user'
-			AND setuju = 1
-		`, [])
+        Anggota_1.anggota.query(Anggota_1.anggota.daftarLapak, [Config_1.config.getNilai(Config_1.Config.TOKO_ID)])
             .then((data) => {
             return Renderer_1.render.halDaftarLapak.render({
                 lapakData: data,
@@ -45,12 +39,7 @@ router.get("/daftar", (_req, resp) => {
 });
 router.get("/:id/daftar", (req, resp) => {
     try {
-        BarangSql_1.barangSql.query(`
-			SELECT id, lapak, deskripsi
-			FROM pengguna
-			WHERE level = 'user'
-			AND setuju = 1
-		`, [])
+        Anggota_1.anggota.query(Anggota_1.anggota.daftarLapak, [Config_1.config.getNilai(Config_1.Config.TOKO_ID)])
             .then((data) => {
             return Renderer_1.render.halDaftarLapak.render({
                 lapakData: data,
@@ -60,7 +49,6 @@ router.get("/:id/daftar", (req, resp) => {
             });
         })
             .then((data) => {
-            // session(req).lapak = '';
             resp.status(200).send(data);
         })
             .catch((err) => {
