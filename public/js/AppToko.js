@@ -8,6 +8,9 @@ class AppToko {
         window.onresize = () => {
             this.atur();
         };
+        setTimeout(() => {
+            this.atur();
+        }, 100);
         this.atur();
         this.formCari.onsubmit = () => {
             return this.cariBarangGet();
@@ -247,6 +250,6 @@ class Item extends BaseComponent {
     }
 }
 window.onload = () => {
+    new AppToko();
     console.log('window on load');
 };
-new AppToko();

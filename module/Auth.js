@@ -38,6 +38,16 @@ function checkAuth(req, resp, next) {
     }
 }
 exports.checkAuth = checkAuth;
+//check auth middle ware
+function checkDev(req, resp, next) {
+    if (!SessionData_1.session(req).statusLogin) {
+        resp.status(401).send('belum login');
+    }
+    else {
+        next();
+    }
+}
+exports.checkDev = checkDev;
 function setCache(_req, resp, next) {
     resp.header("Cache-Control", "max-age=7201");
     next();

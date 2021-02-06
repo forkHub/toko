@@ -42,6 +42,21 @@ export class Config {
                 kunci: Config.FIRE_BASE_CONFIG,
                 nilai: ``,
                 deskripsi: 'firebase config'
+            },
+            {
+                kunci: Config.TOKO_ID,
+                nilai: '1',
+                deskripsi: 'id dari toko applikasi'
+            },
+            {
+                kunci: Config.MODE_DEV,
+                nilai: '0',
+                deskripsi: 'mode development atau produksi'
+            },
+            {
+                kunci: Config.WEBSITE,
+                nilai: 'http://warungwa.hagarden.xyz',
+                deskripsi: 'web site buat share'
             }
         ];
     }
@@ -49,14 +64,7 @@ export class Config {
         return this.settingAr;
     }
     updateNilai(key, nilai) {
-        try {
-            this.getSetting(key).nilai = nilai;
-        }
-        catch (e) {
-            console.log('key ' + key);
-            console.log('nilai ' + nilai);
-            console.log(e);
-        }
+        this.getSetting(key).nilai = nilai;
     }
     getSetting(key) {
         for (let i = 0; i < this.settingAr.length; i++) {
@@ -83,4 +91,7 @@ Config.NAMA_TOKO = 'nama_toko';
 Config.JML_PER_HAL = 'jml_per_hal';
 Config.FOOTER = 'footer';
 Config.FIRE_BASE_CONFIG = 'firebase_config';
+Config.TOKO_ID = 'toko_id';
+Config.MODE_DEV = 'mode development';
+Config.WEBSITE = 'website_url';
 export var config = new Config();

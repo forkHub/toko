@@ -49,6 +49,16 @@ class Config {
                 kunci: Config.TOKO_ID,
                 nilai: '1',
                 deskripsi: 'id dari toko applikasi'
+            },
+            {
+                kunci: Config.MODE_DEV,
+                nilai: '0',
+                deskripsi: 'mode development atau produksi'
+            },
+            {
+                kunci: Config.WEBSITE,
+                nilai: 'http://warungwa.hagarden.xyz',
+                deskripsi: 'web site buat share'
             }
         ];
     }
@@ -85,4 +95,6 @@ Config.JML_PER_HAL = 'jml_per_hal';
 Config.FOOTER = 'footer';
 Config.FIRE_BASE_CONFIG = 'firebase_config';
 Config.TOKO_ID = 'toko_id';
+Config.MODE_DEV = 'mode development';
+Config.WEBSITE = 'website_url';
 exports.config = new Config();

@@ -10,13 +10,14 @@ class HalDepan {
     async render(opt) {
         console.log('render beranda');
         let index = await Util_1.util.getFile("view/index.html");
-        let header = await Util_1.util.getFile("view/header.html");
+        let header = await Util_1.util.getFile("view/header_comp.html");
         let js = await Util_1.util.getFile("view/js.html");
-        let cari = await Util_1.util.getFile("view/cari.html");
+        let cari = await Util_1.util.getFile("view/cari_comp.html");
         let barang = await this.renderBerandaBarang(opt.barangData, opt.lapakId);
         let halaman = await this.renderHalaman1(opt.hal, opt.jml, opt.kataKunci);
-        // configController.ambilDariDbSemua();
         //OG
+        index = index.replace("{{og_site_name}}", Config_1.config.getNilai(Config_1.Config.NAMA_TOKO));
+        index = index.replace("{{judul_web}}", Config_1.config.getNilai(Config_1.Config.NAMA_TOKO));
         if (opt.lapakId && opt.lapakId != '') {
             let lapak = await Anggota_1.anggota.baca({ id: opt.lapakId });
             index = index.replace("{{og_deskripsi}}", lapak[0].deskripsi);
@@ -69,6 +70,27 @@ class HalDepan {
         else {
             index = index.replace("{{nav_login}}", ``);
         }
+        //info jika data kosong
+        if (opt.barangData.length == 0) {
+            if (opt.kataKunci == '') {
+                index = index.replace("{{info}}", "Belum ada barang yang dijual");
+                index = index.replace("{{class_info}}", "isi");
+            }
+            else {
+                index = index.replace("{{info}}", "Pencarian tidak menemukan hasil");
+                index = index.replace("{{class_info}}", "isi");
+            }
+        }
+        else {
+            if (opt.kataKunci != '') {
+                index = index.replace("{{info}}", "Hasil pencarian dengan kata kunci: " + opt.kataKunci);
+                index = index.replace("{{class_info}}", "isi");
+            }
+            else {
+                index = index.replace("{{info}}", "");
+                index = index.replace("{{class_info}}", "");
+            }
+        }
         index = index.replace("{{header}}", header);
         index = index.replace("{{content}}", barang);
         index = index.replace("{{js}}", js);
@@ -104,7 +126,7 @@ class HalDepan {
         return halaman;
     }
     async renderBerandaBarang(barangData, lapak) {
-        let view = await Util_1.util.getFile("view/item.html");
+        let view = await Util_1.util.getFile("view/item_comp.html");
         let hasil = '';
         barangData.forEach((item) => {
             let url = '/barang/' + item.id;

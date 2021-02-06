@@ -3,9 +3,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <head>
-	<title>Auni Store </title>
+	<title>{{judul_web}}</title>
 
-	<meta property="og:site_name" content="Auni Store">
+	<meta property="og:site_name" content="{{og_site_name}}">
 	<meta property="og:title" content="{{og_title}}" />
 	<!-- Belanja Mudah, Murah dari Rumah -->
 	<meta property="og:description" content="{{og_deskripsi}}" />
@@ -20,9 +20,11 @@
 	<link rel='stylesheet' href="/css/item.css?r={{cache}}" />
 	<link rel='stylesheet' href="/css/hal-item.css?r={{cache}}" />
 	<link rel='stylesheet' href="/css/media.css?r={{cache}}" />
+	{{js}}
 </head>
 
 <body>
+
 	<nomodule style='display:none'>
 		<h1>Maaf, sepertinya browser Anda tidak didukung oleh applikasi ini. Silahkan upgrade browser Anda.</h1>
 	</nomodule>
@@ -44,6 +46,10 @@
 	</div>
 	<hr />
 
+	<div class='info {{class_info}}'>
+		{{info}}
+	</div>
+
 	<div class="{{daftar-barang-cont-class}}">
 		{{content}}
 	</div>
@@ -54,7 +60,6 @@
 		{{footer}}
 	</div>
 
-	{{js}}
 </body>
 
 </html>

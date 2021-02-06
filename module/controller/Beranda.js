@@ -19,5 +19,34 @@ class BerandaController {
             kataKunci: ''
         });
     }
+    async cariBarang(kataKunci, hal, lapakId) {
+        let daftarBarang;
+        let jumlahData;
+        let jumlah;
+        let hal2 = parseInt(hal) * parseInt(Config_1.config.getNilai(Config_1.Config.JML_PER_HAL));
+        jumlahData = await BarangSql_1.barangSql.baca({
+            kataKunci: decodeURI(kataKunci),
+            publish: 1,
+            lapak_id: lapakId
+        });
+        jumlah = jumlahData.length;
+        daftarBarang = await BarangSql_1.barangSql
+            .baca({
+            kataKunci: decodeURI(kataKunci),
+            publish: 1,
+            offset: hal2,
+            orderDateAsc: 1,
+            limit: parseInt(Config_1.config.getNilai(Config_1.Config.JML_PER_HAL)),
+            lapak_id: lapakId
+        });
+        let html = await Renderer_1.render.halDepan.render({
+            barangData: daftarBarang,
+            hal: parseInt(hal),
+            jml: jumlah,
+            kataKunci: kataKunci,
+            lapakId: lapakId
+        });
+        return html;
+    }
 }
 exports.berandaController = new BerandaController();

@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { BaseComponent } from "../BaseComponent.js";
-import { config } from "../Config.js";
+import { Config, config } from "../Config.js";
 import { data } from "../Data.js";
 import { dialog } from "../Dialog.js";
 import { form } from "./FormBarangPage.js";
@@ -70,6 +70,11 @@ class DaftarBarangPage extends BaseComponent {
                     label: 'Logout',
                     f: () => {
                         window.top.location.href = Util.urlLogout;
+                    }
+                }, {
+                    label: 'Share Lapak',
+                    f: () => {
+                        window.top.location.href = Util.buatWaLapak(window.sessionStorage.getItem(Util.sLapakId));
                     }
                 }
             ]);
@@ -133,8 +138,6 @@ class DaftarBarangPage extends BaseComponent {
     }
     load2() {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log('load barang ');
-            console.log(config);
             let lapak = window.sessionStorage.getItem(Util.sLapakId);
             let obj = {};
             if (lapak && lapak != '') {
@@ -150,7 +153,7 @@ class DaftarBarangPage extends BaseComponent {
                 barangAr.forEach((data) => {
                     let view = new ItemBarangView();
                     let item = (data);
-                    view.namaP.innerHTML = item.nama + " (" + (item.publish ? "dipublish" : "draft") + ")";
+                    view.namaP.innerHTML = item.nama + " " + (item.publish ? "" : "(draft)") + " ";
                     view.gbr.src = item.thumb;
                     view.attach(this.cont);
                     view.editTbl.onclick = () => {
@@ -160,7 +163,7 @@ class DaftarBarangPage extends BaseComponent {
                         this.barangHapusClick(item);
                     };
                     let lapakId = window.sessionStorage.getItem(Util.sLapakId);
-                    view.shareTbl.href = "whatsapp://send?text=http://aunistore.com/lapak/" + lapakId + '/barang/' + item.id;
+                    view.shareTbl.href = "whatsapp://send?text=" + config.getNilai(Config.WEBSITE) + "/" + lapakId + '/barang/' + item.id;
                 });
             }).catch((e) => {
                 if (Util.resp.code == 401) {

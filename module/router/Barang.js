@@ -10,6 +10,7 @@ const Auth_1 = require("../Auth");
 const Util_1 = require("../Util");
 const Config_1 = require("../Config");
 const Renderer_1 = require("../render/Renderer");
+const SessionData_1 = require("../SessionData");
 exports.router = express_1.default.Router();
 exports.router.get("/:id", (_req, resp) => {
     try {
@@ -115,6 +116,10 @@ exports.router.post("/update/lastview/:id", (req, resp) => {
 });
 exports.router.post("/update/:id", Auth_1.checkAuth, (req, resp) => {
     try {
+        if (SessionData_1.session(req).id != req.body.lapak_id && (SessionData_1.session(req).level == 'user')) {
+            resp.status(404).send('Invalid');
+            return;
+        }
         BarangSql_1.barangSql.update({
             nama: req.body.nama,
             deskripsi_panjang: req.body.deskripsi_panjang,
@@ -123,8 +128,7 @@ exports.router.post("/update/:id", Auth_1.checkAuth, (req, resp) => {
             wa: req.body.wa,
             file_id: req.body.file_id,
             publish: req.body.publish,
-            // lapak: req.body.lapak,
-            last_view: Util_1.util.buatDate(),
+            last_view: Util_1.util.buatDateLama(),
             lapak_id: req.body.lapak_id
         }, req.params.id)
             .then(() => {

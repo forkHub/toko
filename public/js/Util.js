@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { config } from "./Config.js";
+import { Config, config } from "./Config.js";
 import { data } from "./Data.js";
 // import { dialog } from "./Dialog.js";
 import { loading } from "./Loading.js";
@@ -21,6 +21,9 @@ export class Util {
             console.log('url ' + urlHasil);
         });
         return urlHasil;
+    }
+    static buatWaLapak(lapakId) {
+        return "whatsapp://send?text=" + config.getNilai(Config.WEBSITE) + "/lapak/" + lapakId;
     }
     static escape(str) {
         let hasil = str;
@@ -115,14 +118,14 @@ Util.urlAnggotaHapus = "/anggota/hapus/:id";
 Util.urlAnggotaBacaBerdasarPersetujuan = '/anggota/baca/setuju/:setuju';
 Util.urlAnggotaEdit = '/anggota/edit';
 Util.urlAnggotaUpdateSetuju = '/anggota/update/id/:id/setuju/:setuju';
-Util.urlAnggotaBaca = '/anggota/baca';
+Util.urlAnggotaBaca = '/anggota/baca'; //TODO: diganti
 Util.urlAnggotaUpdate = '/anggota/update';
 Util.urlAnggotaUpdatePassword = '/anggota/update/password';
 Util.urlLoginStatus = '/auth/status';
 Util.urlLogin = '/auth/login';
 Util.urlLogout = '/auth/logout';
 Util.urlFileHapus = '/file/hapus/:id';
-Util.urlBarangBaca = '/barang/baca/';
+Util.urlBarangBaca = '/barang/baca/'; //TODO: diganti
 Util.urlBarangBaru = '/barang/baru/';
 Util.urlBarangUpdate = '/barang/update/:id';
 Util.urlBarangCariPost = '/barang/cari';

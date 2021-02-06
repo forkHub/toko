@@ -8,7 +8,7 @@ class HalDaftarLapak {
         console.log('render halaman daftar lapak');
         console.log(opt);
         let index = await Util_1.util.getFile("view/index.html");
-        let header = await Util_1.util.getFile("view/header.html");
+        let header = await Util_1.util.getFile("view/header_comp.html");
         let lapakStr = await this.renderLapak(opt.lapakData);
         lapakStr = `<h2>Daftar Lapak: </h2>` + lapakStr;
         if (opt.lapakId && opt.lapakId != '') {
@@ -27,6 +27,8 @@ class HalDaftarLapak {
         index = index.replace("{{nav_beranda}}", this._renderUtil.renderNavBeranda(opt.lapakId));
         index = index.replace("{{nav_daftar_lapak}}", "");
         index = index.replace("{{nav_login}}", ``);
+        //info jika data kosong
+        index = index.replace("{{info}}", "");
         index = index.replace("{{cari}}", "");
         index = index.replace("{{header}}", header);
         index = index.replace("{{content}}", lapakStr);
@@ -39,7 +41,7 @@ class HalDaftarLapak {
         return index;
     }
     async renderLapak(lapakAr) {
-        let view = await Util_1.util.getFile("view/daftar_lapak.html");
+        let view = await Util_1.util.getFile("view/daftar_lapak_comp.html");
         let hasil = '';
         lapakAr.forEach((item) => {
             let view2 = view;

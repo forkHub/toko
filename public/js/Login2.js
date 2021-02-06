@@ -11,10 +11,9 @@ class Login2 extends BaseComponent {
         this.form.onsubmit = () => {
             return this.formOnSubmit();
         };
-        // this.lapakInput.value = "";
-        // this.lapakInput.readOnly = false;
-        // this.lapakInput.type = 'text';
-        // this.lapakLabel.style.visibility = 'visible'; 
+        this.lihatTokoBtn.onclick = () => {
+            window.top.location.href = '/';
+        };
     }
     formOnSubmit() {
         try {
@@ -49,6 +48,9 @@ class Login2 extends BaseComponent {
     }
     get password() {
         return this.getEl('input.password');
+    }
+    get lihatTokoBtn() {
+        return this.getEl('button.toko');
     }
 }
 export var login = new Login2();

@@ -14,15 +14,18 @@ const Util_1 = require("../Util");
 const Config_1 = require("../Config");
 const Beranda_1 = require("../controller/Beranda");
 exports.berandaRouter = express_1.default.Router();
+//TODO: disatukan dengan lapak cari dengan parameter
+//ambil dari controller
 exports.berandaRouter.get("/cari/:kunci/hal/:hal", (_req, resp) => {
     try {
+        Beranda_1.berandaController.cariBarang(decodeURI(_req.params.kunci), _req.params.hal, '');
         BarangSql_1.barangSql
             .baca({
             kataKunci: decodeURI(_req.params.kunci),
             publish: 1,
             offset: parseInt(_req.params.hal),
             orderDateAsc: 1,
-            limit: 25
+            limit: parseInt(Config_1.config.getNilai(Config_1.Config.JML_PER_HAL))
         })
             .then((data) => {
             return Renderer_1.render.halDepan.render({
@@ -45,20 +48,6 @@ exports.berandaRouter.get("/cari/:kunci/hal/:hal", (_req, resp) => {
         TokoLog_1.logT.log(err);
         resp.status(500).send(err.message);
     }
-    // try {
-    // 	barangController.cariBarangGet(decodeURI(_req.params.kataKunci), parseInt(_req.params.hal), '')
-    // 		.then((hal: string) => {
-    // 			resp.status(200).send(hal);
-    // 		})
-    // 		.catch((err) => {
-    // 			logT.log(err);
-    // 			resp.status(500).send('Error');
-    // 		});
-    // }
-    // catch (err) {
-    // 	logT.log(err);
-    // 	resp.status(500).send(err.message);
-    // }
 });
 exports.berandaRouter.get("/", (_req, resp) => {
     try {
@@ -78,7 +67,7 @@ exports.berandaRouter.get("/", (_req, resp) => {
 });
 exports.berandaRouter.get("/daftar", (_req, resp) => {
     try {
-        Util_1.util.getFile('view/daftar.html').then((h) => {
+        Util_1.util.getFile('view/anggota_daftar.html').then((h) => {
             h = h.replace("{{cache}}", Util_1.util.randId);
             resp.status(200).send(h);
         }).catch((e) => {

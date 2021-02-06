@@ -38,8 +38,15 @@ class BarangSql {
         let limitQuery = '';
         let orderQuery = '';
         let data = [];
-        console.log('Barang baca ');
-        console.log(opt);
+        let kolom = '';
+        // console.log('Barang baca ');
+        // console.log(opt);
+        if (opt.kolom) {
+            kolom = opt.kolom;
+        }
+        else {
+            kolom = " BARANG.*, FILE.thumb, FILE.gbr ";
+        }
         if (opt.id) {
             whereQuery += 'AND BARANG.id = ? ';
             data.push(opt.id);
@@ -77,12 +84,11 @@ class BarangSql {
             orderQuery = 'ORDER BY last_view ASC ';
         }
         let query = `
-			SELECT BARANG.*, FILE.thumb, FILE.gbr 
+			SELECT ${kolom}
 			FROM BARANG 
 			LEFT JOIN FILE ON BARANG.file_id = FILE.id 
 			${whereQuery} ${orderQuery} ${limitQuery}  ${offsetQuery}`;
-        console.log(query);
-        // console.log(data);
+        // console.log(query);
         return new Promise((resolve, reject) => {
             Connection_1.Connection.pool.query(query, data, (_err, _rows) => {
                 if (_err) {
@@ -149,8 +155,8 @@ class BarangSql {
         });
     }
     async update(data, id) {
-        console.log('barang update');
-        console.log(data);
+        // console.log('barang update');
+        // console.log(data);
         return new Promise((resolve, reject) => {
             Connection_1.Connection.pool.query(this.updateSql, [
                 data,

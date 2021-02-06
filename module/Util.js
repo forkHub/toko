@@ -4,6 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs_1 = __importDefault(require("fs"));
+const Config_1 = require("./Config");
+// import { config } from "process";
 class Util {
     constructor() {
         this.caches = [];
@@ -11,6 +13,10 @@ class Util {
     }
     buatDate() {
         let date = new Date();
+        return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+    }
+    buatDateLama() {
+        let date = new Date(1900, 1, 1);
         return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
     }
     arr2String(ar) {
@@ -59,9 +65,14 @@ class Util {
     async getFile(file) {
         return new Promise((resolve, reject) => {
             let cache;
-            cache = this.ambilDariCache(file);
+            if (Config_1.config.getNilai(Config_1.Config.MODE_DEV) == "1") {
+                cache = '';
+            }
+            else {
+                cache = this.ambilDariCache(file);
+            }
             if (cache != '') {
-                console.log('ambil dari cache ' + file);
+                // console.log('ambil dari cache ' + file);
                 resolve(cache);
             }
             fs_1.default.readFile(file, (err, content) => {

@@ -124,6 +124,17 @@ form.cari input.cari {
 	margin-right: 8px;
 }
 
+/* info */
+div.info {
+    text-align: center;
+}
+
+div.info.isi {
+    text-align: center;
+    padding: 16px;
+    border: 1px solid;	
+}
+
 /* daftar barang */
 div.daftar-barang-cont,
 div.daftar-barang-cont-lapak {

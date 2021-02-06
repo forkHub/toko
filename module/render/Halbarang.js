@@ -11,10 +11,12 @@ class HalBarang {
         };
         let barang = await BarangSql_1.barangSql.baca(opt);
         let index = await Util_1.util.getFile("view/index.html");
-        let header = await Util_1.util.getFile("view/header.html");
+        let header = await Util_1.util.getFile("view/header_comp.html");
         let barangStr = await this.renderBarangDetail(barang[0]);
         let js = await Util_1.util.getFile("view/item-page/js_hal_item.html");
         index = index.replace("{{og_deskripsi}}", barang[0].deskripsi);
+        index = index.replace("{{og_site_name}}", Config_1.config.getNilai(Config_1.Config.NAMA_TOKO));
+        index = index.replace("{{judul_web}}", Config_1.config.getNilai(Config_1.Config.NAMA_TOKO));
         if (lapak && lapak != '') {
             index = index.replace("{{og_url}}", "http://aunistore.com/barang/lapak/" + lapak + "/barang/" + barang[0].id);
             index = index.replace("{{og_gambar}}", "http://aunistore.com" + barang[0].thumb);
@@ -28,6 +30,8 @@ class HalBarang {
         index = index.replace("{{header}}", header);
         index = index.replace("{{cari}}", "");
         index = this.renderNav(index, lapak);
+        //info jika data kosong
+        index = index.replace("{{info}}", "");
         index = index.replace("{{content}}", barangStr);
         index = index.replace("{{js}}", js);
         index = index.replace("{{halaman}}", "");
