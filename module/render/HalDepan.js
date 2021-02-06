@@ -72,7 +72,7 @@ class HalDepan {
         }
         //info jika data kosong
         if (opt.barangData.length == 0) {
-            if (opt.kataKunci == '') {
+            if (!opt.kataKunci || opt.kataKunci == '') {
                 index = index.replace("{{info}}", "Belum ada barang yang dijual");
                 index = index.replace("{{class_info}}", "isi");
             }
@@ -82,7 +82,7 @@ class HalDepan {
             }
         }
         else {
-            if (opt.kataKunci != '') {
+            if (opt.kataKunci && opt.kataKunci != '') {
                 index = index.replace("{{info}}", "Hasil pencarian dengan kata kunci: " + opt.kataKunci);
                 index = index.replace("{{class_info}}", "isi");
             }

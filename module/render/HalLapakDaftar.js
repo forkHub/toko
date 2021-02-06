@@ -6,11 +6,14 @@ const Config_1 = require("../Config");
 class HalDaftarLapak {
     async render(opt) {
         console.log('render halaman daftar lapak');
-        console.log(opt);
+        // console.log(opt);
         let index = await Util_1.util.getFile("view/index.html");
         let header = await Util_1.util.getFile("view/header_comp.html");
         let lapakStr = await this.renderLapak(opt.lapakData);
         lapakStr = `<h2>Daftar Lapak: </h2>` + lapakStr;
+        //OG
+        index = index.replace("{{og_site_name}}", Config_1.config.getNilai(Config_1.Config.NAMA_TOKO));
+        index = index.replace("{{judul_web}}", Config_1.config.getNilai(Config_1.Config.NAMA_TOKO));
         if (opt.lapakId && opt.lapakId != '') {
             index = index.replace("{{og_deskripsi}}", "Belanja Mudah, Murah dari Rumah");
             index = index.replace("{{og_gambar}}", "");
