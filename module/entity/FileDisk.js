@@ -17,6 +17,7 @@ class FileDisk {
             });
         });
     }
+    //TODO: depecreated diganti firebase storage
     async hapusFile(url) {
         console.log('hapus file ' + url);
         return new Promise((resolve, reject) => {

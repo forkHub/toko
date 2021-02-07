@@ -83,15 +83,15 @@ export class Config {
         throw new Error('key tidak ketemu: ' + key);
     }
 }
-Config.NAV_LAPAK = 'nav_lapak';
-Config.NAV_LOGIN = 'nav_login';
-Config.NAV_CARI = 'nav_cari';
-Config.TERKAIT = 'terkait';
-Config.NAMA_TOKO = 'nama_toko';
-Config.JML_PER_HAL = 'jml_per_hal';
-Config.FOOTER = 'footer';
-Config.FIRE_BASE_CONFIG = 'firebase_config';
-Config.TOKO_ID = 'toko_id';
-Config.MODE_DEV = 'mode development';
-Config.WEBSITE = 'website_url';
+Config.NAV_LAPAK = 'NODE_NAV_LAPAK';
+Config.NAV_LOGIN = 'NODE_NAV_LOGIN';
+Config.NAV_CARI = 'NODE_NAV_CARI';
+Config.TERKAIT = 'NODE_TERKAIT';
+Config.NAMA_TOKO = 'NODE_NAMA_TOKO';
+Config.JML_PER_HAL = 'NODE_JML_PER_HAL';
+Config.FOOTER = 'NODE_FOOTER';
+Config.FIRE_BASE_CONFIG = 'NODE_FIRE_BASE_CONFIG';
+Config.TOKO_ID = 'NODE_TOKO_ID';
+Config.MODE_DEV = 'NODE_MODE_DEV';
+Config.WEBSITE = 'NODE_WEB_SITE';
 export var config = new Config();

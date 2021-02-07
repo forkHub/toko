@@ -125,7 +125,7 @@ class BarangSql {
         let barang = await this.baca({
             id: id
         });
-        await File_1.file.hapus(barang[0].file_id).catch((e) => {
+        await File_1.fileSql.hapus(barang[0].file_id).catch((e) => {
             console.log(e.message);
         });
         return new Promise((resolve, reject) => {

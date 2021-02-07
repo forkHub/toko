@@ -1,10 +1,8 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const Connection_1 = require("../Connection");
-const fs_1 = __importDefault(require("fs"));
+const FStorage_1 = require("../FStorage");
+// import fs from 'fs';
 const TokoLog_1 = require("../TokoLog");
 const FileDisk_1 = require("./FileDisk");
 // import { barangSql } from "./BarangSql";
@@ -30,24 +28,13 @@ class File {
             });
         });
     }
-    async baru(gbrBesarData, gbrBesarNama, gbrKecilData, gbrKecilNama) {
+    async baru(gbrBesarNama, gbrKecilNama) {
         return new Promise((resolve, reject) => {
-            let buf;
-            let folderUnggah = './public/upload/';
-            let folderUrlUnggah = '/upload/';
-            //simpan gambar besar;
-            buf = Buffer.from(gbrBesarData, 'base64');
-            fs_1.default.writeFileSync(folderUnggah + gbrBesarNama, buf);
-            TokoLog_1.logT.log('file written ' + folderUnggah + gbrBesarNama);
-            //simpan gambar kecil
-            buf = Buffer.from(gbrKecilData, 'base64');
-            fs_1.default.writeFileSync(folderUnggah + gbrKecilNama, buf);
-            TokoLog_1.logT.log('file written ' + folderUnggah + gbrKecilNama);
             //simpan ke database
             Connection_1.Connection.pool.query(`INSERT INTO FILE SET ?
 				`, {
-                thumb: folderUrlUnggah + gbrKecilNama,
-                gbr: folderUrlUnggah + gbrBesarNama
+                thumb: gbrKecilNama,
+                gbr: gbrBesarNama
             }, (_err, _rows) => {
                 if (_err) {
                     TokoLog_1.logT.log(_err.code + '/' + _err.message);
@@ -130,12 +117,14 @@ class File {
         let file = await this.bacaId(id);
         console.log('hapus file');
         console.log(file);
-        console.log('hapus db id ' + id);
+        console.log('hapus file db, id ' + id);
         await this.hapusDb(id);
         console.log('hapus file, thumb ' + file.thumb);
         await FileDisk_1.fileDisk.hapusFile('./public' + file.thumb);
+        await FStorage_1.fstorage.hapus(file.thumb);
         console.log('hapus file, gbr ' + file.gbr);
         await FileDisk_1.fileDisk.hapusFile('./public' + file.gbr);
+        await FStorage_1.fstorage.hapus(file.gbr);
     }
     async bacaDiskKosong() {
         let files = await FileDisk_1.fileDisk.bacaFile('./public/upload');
@@ -180,4 +169,4 @@ class File {
         });
     }
 }
-exports.file = new File();
+exports.fileSql = new File();

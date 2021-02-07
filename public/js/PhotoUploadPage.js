@@ -115,13 +115,7 @@ export class PhotoUploadPage {
             console.log('upload file');
             let hasil = yield Util.Ajax('post', Util.urlFileUpload, this.populateJson());
             console.log(hasil);
-            return JSON.parse(hasil).baris_info.insertId;
-            // let hasilObj: any = JSON.parse(hasil);
-            // this._insertedId = hasilObj.baris_info.insertId;
-            // this._gbrUrl = hasilObj.gbr_url;
-            //TODO: dipindah ke parent
-            // console.log('hapus file lama ' + this._idLama);
-            // await this.hapusFileLama(this._idLama);
+            return JSON.parse(hasil).baris.insertId;
         });
     }
     get view() {

@@ -6,19 +6,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const Auth_1 = require("../Auth");
 const Config_1 = require("../Config");
-const ConfigController_1 = require("../ConfigController");
+// import { configController } from "../ConfigController";
 const ConfigDisk_1 = require("../entity/ConfigDisk");
 // import { configSql } from "../entity/ConfigSql";
 const TokoLog_1 = require("../TokoLog");
 exports.configRouter = express_1.default.Router();
 var router = exports.configRouter;
+//TOOD: dep
 router.get("/simpan", Auth_1.checkAuth, (req, resp) => {
     try {
-        ConfigController_1.configController.update2DbSemua().then(() => {
-            resp.status(200).send('ok');
-        }).catch((e) => {
-            resp.status(500).send(e.message);
-        });
+        resp.status(200).send('ok');
     }
     catch (err) {
         TokoLog_1.logT.log(err);
@@ -49,14 +46,10 @@ router.post("/update/:id", Auth_1.checkAuth, (req, resp) => {
         resp.status(500).send(err.message);
     }
 });
+//TOOD: dep
 router.post("/reload", Auth_1.checkAuth, (req, resp) => {
     try {
-        ConfigController_1.configController.ambilDariDbSemua().then(() => {
-            resp.status(200).send();
-        }).catch((e) => {
-            TokoLog_1.logT.log(e);
-            resp.status(500).send(e.message);
-        });
+        resp.status(200).send('');
     }
     catch (e) {
         TokoLog_1.logT.log(e);

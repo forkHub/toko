@@ -16,13 +16,11 @@ const Lapak_1 = require("./module/router/Lapak");
 const TokoLog_1 = require("./module/TokoLog");
 const cookie_session_1 = __importDefault(require("cookie-session"));
 const Beranda_1 = require("./module/router/Beranda");
-// import { routerApiBarang } from "./module/admin/router/Barang";
 const Util_1 = require("./module/Util");
 const Config_1 = require("./module/router/Config");
 const ConfigController_1 = require("./module/ConfigController");
-// import { configSql } from "./module/entity/ConfigSql";
-// import { config } from "./module/Config";
-// import { configController } from "./module/ConfigController";
+const FStorage_1 = require("./module/FStorage");
+// import { fstorage } from "./module/FStorage";
 Util_1.util.buatRandom();
 const app = express_1.default();
 const port = 3000;
@@ -34,7 +32,7 @@ app.use(cookie_session_1.default({
 }));
 app.use(helmet_1.default.contentSecurityPolicy({
     directives: {
-        defaultSrc: ["'self'", "'unsafe-eval'", "'unsafe-inline'", "data:", "blob:"]
+        defaultSrc: ["'self'", "'unsafe-eval'", "'unsafe-inline'", "data:", "blob:", "*"],
     }
 }));
 app.use("/barang", Barang_1.router);
@@ -69,17 +67,13 @@ process.on('SIGTERM', () => {
     }
 });
 Connection_1.Connection.connect();
-ConfigController_1.configController.ambilDariDbSemua().catch((e) => {
-    console.log(e);
-}).then(() => {
-    ConfigController_1.configController.update2DbSemua();
-    console.log('ok');
-}).catch((e) => {
+ConfigController_1.configController.updateDariEnv().catch((e) => {
     console.log(e);
 });
 exports.server = app.listen(port, () => {
     TokoLog_1.logT.log("app started");
 });
-// beranda.init(app);
-/*
-*/
+FStorage_1.fstorage.init();
+// fstorage.uploadFile('./firebase.json', 'firebase.json').then((h) => {
+// 	console.log(h);
+// })
