@@ -18,12 +18,12 @@ class HalBarang {
         index = index.replace("{{og_site_name}}", Config_1.config.getNilai(Config_1.Config.NAMA_TOKO));
         index = index.replace("{{judul_web}}", Config_1.config.getNilai(Config_1.Config.NAMA_TOKO));
         if (lapak && lapak != '') {
-            index = index.replace("{{og_url}}", "http://aunistore.com/barang/lapak/" + lapak + "/barang/" + barang[0].id);
-            index = index.replace("{{og_gambar}}", "http://aunistore.com" + barang[0].thumb);
+            index = index.replace("{{og_url}}", Config_1.config.getNilai(Config_1.Config.WEBSITE) + "/barang/lapak/" + lapak + "/barang/" + barang[0].id);
+            index = index.replace("{{og_gambar}}", Config_1.config.getNilai(Config_1.Config.WEBSITE) + "/" + barang[0].thumb);
             index = index.replace("{{og_title}}", barang[0].nama);
         }
         else {
-            index = index.replace("{{og_url}}", "http://aunistore.com/barang/" + barang[0].id);
+            index = index.replace("{{og_url}}", Config_1.config.getNilai(Config_1.Config.WEBSITE) + "/barang/" + barang[0].id);
         }
         header = header.replace("{{nama_toko}}", Config_1.config.getNilai(Config_1.Config.NAMA_TOKO));
         header = header.replace("{{motto}}", "");

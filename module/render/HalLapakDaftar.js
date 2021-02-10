@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const Util_1 = require("../Util");
 const Config_1 = require("../Config");
-// import { configController } from "../ConfigController";
 class HalDaftarLapak {
     async render(opt) {
         console.log('render halaman daftar lapak');
@@ -15,14 +14,14 @@ class HalDaftarLapak {
         index = index.replace("{{og_site_name}}", Config_1.config.getNilai(Config_1.Config.NAMA_TOKO));
         index = index.replace("{{judul_web}}", Config_1.config.getNilai(Config_1.Config.NAMA_TOKO));
         if (opt.lapakId && opt.lapakId != '') {
-            index = index.replace("{{og_deskripsi}}", "Belanja Mudah, Murah dari Rumah");
+            index = index.replace("{{og_deskripsi}}", opt.lapakData[parseInt(opt.lapakId)].deskripsi); //TODO:
             index = index.replace("{{og_gambar}}", "");
-            index = index.replace("{{og_url}}", "http://aunistore.com/lapak/" + opt.lapakId);
+            index = index.replace("{{og_url}}", Config_1.config.getNilai(Config_1.Config.WEBSITE) + "/lapak/" + opt.lapakId);
         }
         else {
-            index = index.replace("{{og_deskripsi}}", "Belanja Mudah, Murah dari Rumah");
+            index = index.replace("{{og_deskripsi}}", Config_1.config.getNilai(Config_1.Config.DESKRIPSI_TOKO));
             index = index.replace("{{og_gambar}}", "");
-            index = index.replace("{{og_url}}", "http://aunistore.com");
+            index = index.replace("{{og_url}}", Config_1.config.getNilai(Config_1.Config.WEBSITE));
         }
         header = header.replace("{{nama_toko}}", Config_1.config.getNilai(Config_1.Config.NAMA_TOKO));
         header = header.replace("{{motto}}", "");

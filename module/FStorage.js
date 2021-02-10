@@ -6,6 +6,7 @@ class FStorage {
         this.serviceAccount = require("../firebase.json");
     }
     init() {
+        //TODO: storage bucket di taruh di environment
         this.admin.initializeApp({
             credential: this.admin.credential.cert(this.serviceAccount),
             storageBucket: "blog-1513057469147.appspot.com"
