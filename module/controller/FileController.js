@@ -18,7 +18,6 @@ class FileController {
         let downloadUrlKecil;
         //simpan gbr besar
         buf = Buffer.from(dataBesar, 'base64');
-        // fs.writeFileSync(folderUnggah + gbrBesarNama, buf);
         await this.tulisFile("./" + folderUnggah + gbrBesarNama, buf);
         downloadUrlBesar = await FStorage_1.fstorage.uploadFile(folderUnggah + gbrBesarNama, folderUnggah + gbrBesarNama);
         FileDisk_1.fileDisk.hapusFile("./" + folderUnggah + gbrBesarNama);

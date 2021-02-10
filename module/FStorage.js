@@ -14,11 +14,13 @@ class FStorage {
         console.log(this.admin.storage().bucket().upload);
     }
     async hapus(filename) {
+        console.log('hapus file ' + filename);
         await this.admin.storage().bucket().file(filename).delete().catch(() => {
             console.error;
         });
     }
     async uploadFile(filename, destination) {
+        console.log('upload file ' + filename + '/destination: ' + destination);
         // Uploads a local file to the bucket
         await this.admin.storage().bucket().upload(filename, {
             // By setting the option `destination`, you can change the name of the
