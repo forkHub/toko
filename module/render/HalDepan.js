@@ -26,7 +26,7 @@ class HalDepan {
             index = index.replace("{{og_title}}", lapak[0].lapak);
         }
         else {
-            index = index.replace("{{og_deskripsi}}", "Belanja Mudah, Murah dari Rumah");
+            index = index.replace("{{og_deskripsi}}", Config_1.config.getNilai(Config_1.Config.DESKRIPSI_TOKO));
             index = index.replace("{{og_gambar}}", "");
             index = index.replace("{{og_url}}", Config_1.config.getNilai(Config_1.Config.WEBSITE));
             index = index.replace("{{og_title}}", Config_1.config.getNilai(Config_1.Config.NAMA_TOKO));

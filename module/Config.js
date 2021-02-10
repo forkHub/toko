@@ -59,6 +59,11 @@ class Config {
                 kunci: Config.WEBSITE,
                 nilai: 'http://warungwa.hagarden.xyz',
                 deskripsi: 'web site buat share'
+            },
+            {
+                kunci: Config.DESKRIPSI_TOKO,
+                nilai: 'Warungnya kita kita',
+                deskripsi: 'deskripsi toko'
             }
         ];
     }
