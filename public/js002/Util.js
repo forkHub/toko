@@ -52,6 +52,10 @@ export class Util {
             return hasil;
         });
     }
+    //TODO: belum selesai
+    static checkWa(value) {
+        return value;
+    }
     static updateConfigDariServer() {
         return __awaiter(this, void 0, void 0, function* () {
             let hasil = yield Util.Ajax('post', Util.urlConfigBaca, '');

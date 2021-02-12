@@ -14,7 +14,7 @@ SET NODE_FOOTER=Warung WA - Warungnya kita kita
 SET NODE_FIRE_BASE_CONFIG=1
 SET NODE_TOKO_ID=2
 SET NODE_MODE_DEV=0
-SET NODE_WEB_SITE=http://warungwa.hagarden.xyz
+SET NODE_WEB_SITE=localhost:3000
 
 node App
 pause

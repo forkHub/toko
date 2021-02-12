@@ -18,35 +18,45 @@ class AnggotaBaru extends BaseComponent {
         this._template = `
 			<div class='anggota-baru'>
 				<div class='error'></div>
-				<h1>Anggota Baru</h1>
 				<form action="">
 					<div class="form-group">
-						<label for="user_name">User Name:</label>
+						<label for="user_name">User Name (buat login):</label>
 						<input type="text" class="form-control user_name" name="user_name" id="user_name" required />
 					</div>
 
 					<div class="form-group">
-						<label for="user_name">Lapak:</label>
+						<label for="user_name">Nama Lapak:</label>
 						<input type="text" class="form-control lapak" name="lapak" id="lapak" required />
 					</div>
 
 					<div class="form-group">
-						<label for="deskripsi">Deskripsi:</label>
+						<label for="deskripsi">Deskripsi Lapak:</label>
 						<textarea type="text" class="form-control deskripsi" name="dekripsi" id="dekripsi" required maxlength=100/></textarea>
 					</div>
 
 					<div class="form-group">
+						<label for="alamat">Alamat (Alamat fisik toko/Alamat rumah):</label>
+						<input type="text" class="form-control alamat" name="alamat" id="alamat" required maxlength=100/>
+					</div>
+
+					<div class="form-group">
+						<label for="wa">No WA:</label>
+						<input type="text" class="form-control wa" name="wa" id="wa" required maxlength=20 placeholder="62xxx"/>
+					</div>
+
+
+					<div class="form-group">
 						<label for="password_anggota">Password 1:</label>
-						<input type="password" class="form-control password_anggota" name="password_anggota" id="password_anggota" required />
+						<input type="password" class="form-control password_anggota" autocomplete name="password_anggota" id="password_anggota" required />
 					</div>
 
 					<div class="form-group">
 						<label for="password_anggota2">Password 2:</label>
-						<input type="password" class="form-control password_anggota2" name="password_anggota2" id="password_anggota2" required />
+						<input type="password" class="form-control password_anggota2" autocomplete name="password_anggota2" id="password_anggota2" required />
 					</div>
 
 					<button type="submit" class="btn btn-primary submit">Simpan</button>
-					<button type="button" class="btn btn-danger tutup">Tutup</button>
+					<button type="button" class="btn btn-danger tutup">Batal</button>
 				</form>		
 			</div>
 		`;
@@ -66,14 +76,28 @@ class AnggotaBaru extends BaseComponent {
             try {
                 //validasi
                 if (this.password.value != this.password2.value) {
-                    this.kotakGalat.innerHTML += "<p>Password tidak sama</p>";
+                    //this.kotakGalat.innerHTML += "<p>Password tidak sama</p>";
+                    dialog.tampil2('Password tidak sama');
+                    return false;
+                }
+                //validasi wa
+                if (this.wa.value.slice(0, 2) != '62') {
+                    // this.kotakGalat.innerHTML += "";
+                    dialog.tampil2('<p>No WA dimulai dengan 62</p>');
+                    return false;
+                }
+                //validasi wa
+                let reg = /[0-9]+/;
+                let match = this.wa.value.match(reg);
+                if (!match || match[0] != this.wa.value) {
+                    // this.kotakGalat.innerHTML += "<p></p>";
+                    dialog.tampil2('No WA tidak valid');
                     return false;
                 }
                 this.daftar().then(() => {
-                    dialog.tampil2('Terima kasih. Silahkan konfirmasi di group agar pendaftaran disetujui');
+                    dialog.tampil2('Terima kasih. Pendaftaran akan diperiksa. Silahkan konfirmasi di group bila pendaftaran belum disetujui setelah 3 x 24 jam');
                     dialog.okTbl.onclick = () => {
-                        // this._selesai();
-                        window.top.location.href = '/';
+                        // window.top.location.href = '/';
                     };
                 }).catch(() => {
                     dialog.tampil2(Util.resp.message);
@@ -99,7 +123,9 @@ class AnggotaBaru extends BaseComponent {
             password: md5(this.password.value),
             level: 'user',
             lapak: Util.escape(this.lapak.value),
-            deskripsi: Util.escape(this.deskripsi.value)
+            deskripsi: Util.escape(this.deskripsi.value),
+            wa: this.wa.value,
+            alamat: Util.escape(this.alamat.value)
         };
         return JSON.stringify(obj);
     }
@@ -114,6 +140,12 @@ class AnggotaBaru extends BaseComponent {
     }
     get nama() {
         return this.getEl('input.user_name');
+    }
+    get wa() {
+        return this.getEl('input.wa');
+    }
+    get alamat() {
+        return this.getEl('input.alamat');
     }
     get password() {
         return this.getEl('input.password_anggota');

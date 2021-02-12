@@ -3,36 +3,49 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// import { Connection } from "../Connection";
 const TokoLog_1 = require("../TokoLog");
 const fs_1 = __importDefault(require("fs"));
 const FStorage_1 = require("../FStorage");
-const FileDisk_1 = require("../entity/FileDisk");
 const File_1 = require("../entity/File");
-// import { file } from "../entity/File";
 class FileController {
     async baru(gbrBesarNama, gbrKecilNama, dataBesar, dataKecil) {
         let buf;
-        let folderUnggah = 'public/upload/';
+        let folderUnggah = './public/upload/';
         let downloadUrlBesar;
         let downloadUrlKecil;
+        downloadUrlBesar = '/upload/' + gbrBesarNama;
+        downloadUrlKecil = '/upload/' + gbrKecilNama;
         //simpan gbr besar
         buf = Buffer.from(dataBesar, 'base64');
-        await this.tulisFile("./" + folderUnggah + gbrBesarNama, buf);
-        downloadUrlBesar = await FStorage_1.fstorage.uploadFile(folderUnggah + gbrBesarNama, folderUnggah + gbrBesarNama);
-        FileDisk_1.fileDisk.hapusFile("./" + folderUnggah + gbrBesarNama);
+        await this.tulisFile(folderUnggah + gbrBesarNama, buf);
         TokoLog_1.logT.log('file written ' + folderUnggah + gbrBesarNama);
         //simpan gambar kecil
         buf = Buffer.from(dataKecil, 'base64');
-        fs_1.default.writeFileSync(folderUnggah + gbrKecilNama, buf);
-        await this.tulisFile("./" + folderUnggah + gbrKecilNama, buf);
-        downloadUrlKecil = await FStorage_1.fstorage.uploadFile(folderUnggah + gbrKecilNama, folderUnggah + gbrKecilNama);
-        FileDisk_1.fileDisk.hapusFile("./" + folderUnggah + gbrKecilNama);
+        await this.tulisFile(folderUnggah + gbrKecilNama, buf);
         TokoLog_1.logT.log('file written ' + folderUnggah + gbrKecilNama);
         let _rows = await File_1.fileSql.baru(downloadUrlBesar, downloadUrlKecil);
         return {
             baris: _rows
         };
+    }
+    async uploadDiulang(gbrBesar, gbrKecil) {
+        let hasil = '';
+        let ulang = 0;
+        while (ulang <= 3) {
+            await FStorage_1.fstorage.uploadFile(gbrBesar, gbrKecil)
+                .then((url) => {
+                hasil = url;
+                ulang = 10;
+            })
+                .catch((e) => {
+                ulang++;
+                console.error;
+                if (ulang > 3) {
+                    throw Error(e.message);
+                }
+            });
+        }
+        return hasil;
     }
     async tulisFile(p, data) {
         console.log('tulis file');

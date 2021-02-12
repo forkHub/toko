@@ -72,19 +72,19 @@ class Util {
                 cache = this.ambilDariCache(file);
             }
             if (cache != '') {
-                // console.log('ambil dari cache ' + file);
+                cache = cache.replace('{{revisi}}', Util.revisi);
                 resolve(cache);
             }
             fs_1.default.readFile(file, (err, content) => {
                 if (err) {
-                    reject(err.message);
+                    reject(err);
                 }
                 else {
                     this.caches.push({
                         url: file,
                         string: content.toString()
                     });
-                    resolve(content.toString());
+                    resolve(content.toString().replace('{{revisi}}', Util.revisi));
                 }
             });
         });
@@ -108,4 +108,5 @@ class Util {
         return this._randId;
     }
 }
+Util.revisi = '002';
 exports.util = new Util();

@@ -1,11 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const Connection_1 = require("../Connection");
-const FStorage_1 = require("../FStorage");
-// import fs from 'fs';
-const TokoLog_1 = require("../TokoLog");
 const FileDisk_1 = require("./FileDisk");
-// import { barangSql } from "./BarangSql";
 class File {
     constructor() {
         this.qsemua = ``;
@@ -18,30 +14,28 @@ class File {
             console.log('baca file by id ' + id);
             Connection_1.Connection.pool.query(`SELECT * FROM file WHERE id = ?`, [id], (_err, _rows) => {
                 if (_err) {
-                    TokoLog_1.logT.log(_err.code + '/' + _err.message);
-                    reject(_err);
+                    console.error;
+                    reject(_err.message);
                 }
                 else {
-                    TokoLog_1.logT.log('ok');
                     resolve(_rows[0]);
                 }
             });
         });
     }
-    async baru(gbrBesarNama, gbrKecilNama) {
+    async baru(gbrBesarRelUrl, gbrKecilRelurl) {
         return new Promise((resolve, reject) => {
-            //simpan ke database
+            //simpan ke database 
             Connection_1.Connection.pool.query(`INSERT INTO FILE SET ?
 				`, {
-                thumb: gbrKecilNama,
-                gbr: gbrBesarNama
+                thumb: gbrKecilRelurl,
+                gbr: gbrBesarRelUrl
             }, (_err, _rows) => {
                 if (_err) {
-                    TokoLog_1.logT.log(_err.code + '/' + _err.message);
+                    console.error;
                     reject(_err);
                 }
                 else {
-                    TokoLog_1.logT.log('ok');
                     resolve(_rows);
                 }
             });
@@ -65,11 +59,11 @@ class File {
             console.log('baca file berdasar thumb ' + thumb);
             Connection_1.Connection.pool.query(`SELECT id FROM file WHERE thumb = ?`, thumb, (_err, _rows) => {
                 if (_err) {
-                    TokoLog_1.logT.log(_err.code + '/' + _err.message);
+                    console.error;
                     reject(_err);
                 }
                 else {
-                    TokoLog_1.logT.log('ok');
+                    // logT.log('ok');
                     resolve(_rows[0]);
                 }
             });
@@ -80,11 +74,10 @@ class File {
             console.log('baca file berdasar gbr ' + gbr);
             Connection_1.Connection.pool.query(`SELECT id FROM file WHERE gbr = ?`, gbr, (_err, _rows) => {
                 if (_err) {
-                    TokoLog_1.logT.log(_err.code + '/' + _err.message);
-                    reject(_err);
+                    console.error;
+                    reject(_err.message);
                 }
                 else {
-                    TokoLog_1.logT.log('ok');
                     resolve(_rows[0]);
                 }
             });
@@ -121,10 +114,10 @@ class File {
         await this.hapusDb(id);
         console.log('hapus file, thumb ' + file.thumb);
         await FileDisk_1.fileDisk.hapusFile('./public' + file.thumb);
-        await FStorage_1.fstorage.hapus(file.thumb);
+        // await fstorage.hapus(file.thumb);
         console.log('hapus file, gbr ' + file.gbr);
         await FileDisk_1.fileDisk.hapusFile('./public' + file.gbr);
-        await FStorage_1.fstorage.hapus(file.gbr);
+        // await fstorage.hapus(file.gbr);
     }
     async bacaDiskKosong() {
         let files = await FileDisk_1.fileDisk.bacaFile('./public/upload');
@@ -157,10 +150,11 @@ class File {
     }
     async hapusDb(id) {
         return new Promise((resolve, reject) => {
-            TokoLog_1.logT.log('hapus file db, id ' + id);
+            console.log('hapus file db, id ' + id);
             Connection_1.Connection.pool.query(`DELETE FROM file WHERE ID = ?`, [id], (_err, _rows) => {
                 if (_err) {
-                    reject(_err);
+                    console.error;
+                    reject(_err.message);
                 }
                 else {
                     resolve(_rows);

@@ -17,6 +17,8 @@ class AnggotaDetailFragment {
             this._view.userNameP.innerHTML = hasilObj.user_id;
             this._view.lapakP.innerHTML = hasilObj.lapak;
             this._view.deskripsiP.innerHTML = hasilObj.deskripsi != '' ? hasilObj.deskripsi : 'Belum ada deskripsi';
+            this._view.waP.innerHTML = hasilObj.wa != '' ? hasilObj.wa : 'WA Belum diisi';
+            this._view.alamatP.innerHTML = hasilObj.alamat != '' ? hasilObj.alamat : 'Alamat belum diisi';
         }).catch((e) => {
             dialog.tampil2(e.message);
         });
@@ -39,6 +41,10 @@ class View extends BaseComponent {
 				<p class='lapak'></p>
 				<small>deskripsi:</small>
 				<p class='deskripsi'></p>
+				<small>wa:</small>
+				<p class='wa'></p>
+				<small>alamat:</small>
+				<p class='alamat'></p>
 			</div>
 		`;
         this.build();
@@ -51,6 +57,12 @@ class View extends BaseComponent {
     }
     get deskripsiP() {
         return this.getEl('p.deskripsi');
+    }
+    get waP() {
+        return this.getEl('p.wa');
+    }
+    get alamatP() {
+        return this.getEl('p.alamat');
     }
 }
 export var anggotaDetailFragment = new AnggotaDetailFragment();

@@ -12,12 +12,17 @@ class FStorage {
             storageBucket: "blog-1513057469147.appspot.com"
         });
         console.log(this.admin.storage().bucket().upload);
+        //TODO: test file awal
+        //test hapus juga
     }
     async hapus(filename) {
-        console.log('hapus file ' + filename);
-        await this.admin.storage().bucket().file(filename).delete().catch(() => {
+        console.log('fstorage hapus file ' + filename);
+        await this.admin.storage().bucket().file(filename).delete().then((data) => {
+            console.log(data);
+        }).catch(() => {
             console.error;
         });
+        console.log('fstorage hapus file selesai ');
     }
     async uploadFile(filename, destination) {
         console.log('upload file ' + filename + '/destination: ' + destination);

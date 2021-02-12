@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const Config_1 = require("../Config");
 const Connection_1 = require("../Connection");
-// import { util } from "../Util";
 const BarangSql_1 = require("./BarangSql");
 class Anggota {
     constructor() {
@@ -27,11 +26,29 @@ class Anggota {
             });
         });
     }
+    async bacaId(id) {
+        let hasil;
+        hasil = await this.baca({
+            id: id
+        });
+        if (hasil)
+            return hasil[0];
+        return null;
+    }
     async baca(opt) {
-        console.log(opt);
         let whereQuery = 'WHERE 1 ';
         let data = [];
-        let kolom = '* ';
+        let kolom = `
+			pengguna.id, 
+			pengguna.user_id, 
+			pengguna.level, 
+			pengguna.lapak, 
+			pengguna.deskripsi, 
+			pengguna.setuju,
+			pengguna.toko_id,
+			pengguna.wa,
+			pengguna.alamat,
+			pengguna.email `;
         if (opt.id) {
             whereQuery += 'AND pengguna.id = ? ';
             data.push(opt.id);
@@ -52,17 +69,15 @@ class Anggota {
             whereQuery += 'AND pengguna.level = ? ';
             data.push(opt.level);
         }
-        // whereQuery += ' AND pengguna.toko_id = ? ';
-        // data.push(config.getNilai(Config.TOKO_ID));
+        whereQuery += ' AND pengguna.toko_id = ? ';
+        data.push(Config_1.config.getNilai(Config_1.Config.TOKO_ID));
         let query = ` SELECT ${kolom} FROM pengguna ${whereQuery}`;
-        console.log(query);
         return new Promise((resolve, reject) => {
             Connection_1.Connection.pool.query(query, data, (_err, _rows) => {
                 if (_err) {
                     reject(_err);
                 }
                 else {
-                    // console.log(_rows);
                     resolve(_rows);
                 }
             });
@@ -123,4 +138,4 @@ class Anggota {
         });
     }
 }
-exports.anggota = new Anggota();
+exports.anggotaSql = new Anggota();

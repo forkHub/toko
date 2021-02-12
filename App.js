@@ -19,7 +19,7 @@ const Beranda_1 = require("./module/router/Beranda");
 const Util_1 = require("./module/Util");
 const Config_1 = require("./module/router/Config");
 const ConfigController_1 = require("./module/ConfigController");
-const FStorage_1 = require("./module/FStorage");
+// import { fstorage } from "./module/FStorage";
 // import { fstorage } from "./module/FStorage";
 Util_1.util.buatRandom();
 const app = express_1.default();
@@ -73,7 +73,7 @@ ConfigController_1.configController.updateDariEnv().catch((e) => {
 exports.server = app.listen(port, () => {
     TokoLog_1.logT.log("app started");
 });
-FStorage_1.fstorage.init();
+// fstorage.init();
 // fstorage.uploadFile('./firebase.json', 'firebase.json').then((h) => {
 // 	console.log(h);
 // })

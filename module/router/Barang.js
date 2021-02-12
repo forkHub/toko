@@ -5,38 +5,40 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const BarangSql_1 = require("../entity/BarangSql");
-const TokoLog_1 = require("../TokoLog");
 const Auth_1 = require("../Auth");
 const Util_1 = require("../Util");
 const Config_1 = require("../Config");
-const Renderer_1 = require("../render/Renderer");
+// import { render } from "../render/Renderer";
 const SessionData_1 = require("../SessionData");
 exports.router = express_1.default.Router();
-exports.router.get("/:id", (_req, resp) => {
+//TODO: depecreated
+/*
+router.get("/:id", (_req: express.Request, resp: express.Response) => {
     try {
-        Renderer_1.render.halBarang.render(_req.params.id, '')
-            .then((data) => {
-            // session(_req).lapak = _req.params.id;
-            resp.status(200).send(data);
-        })
+        render.halBarang.render(_req.params.id, '')
+            .then((data: string) => {
+                resp.status(200).send(data);
+            })
             .catch((err) => {
-            TokoLog_1.logT.log(err);
-            resp.status(500).send('Error');
-        });
+                console.error;
+                resp.status(500).send(err.message);
+            });
+
+    } catch (err) {
+        console.error;
+        resp.status(500).send(err.message);
     }
-    catch (err) {
-        TokoLog_1.logT.log(err);
-        resp.status(500).send('Error');
-    }
-});
+})
+*/
 exports.router.post("/hapus/:id", Auth_1.checkAuth, (req, resp) => {
     try {
         BarangSql_1.barangSql.hapus(req.params.id)
             .then(() => {
             resp.status(200).end();
         }).catch((e) => {
-            TokoLog_1.logT.log(e);
-            resp.status(500).send(e);
+            // logT.log(e);
+            console.error;
+            resp.status(500).send(e.message);
         });
     }
     catch (err) {
@@ -62,8 +64,9 @@ exports.router.post("/baru", Auth_1.checkAuth, (req, resp) => {
             .then(() => {
             resp.status(200).end();
         }).catch((e) => {
-            TokoLog_1.logT.log(e);
-            resp.status(500).send(e);
+            // logT.log(e);
+            console.error;
+            resp.status(500).send(e.message);
         });
     }
     catch (e) {
@@ -102,15 +105,17 @@ exports.router.post("/clone/:id", Auth_1.checkAuth, (req, resp) => {
 });
 exports.router.post("/update/lastview/:id", (req, resp) => {
     try {
-        TokoLog_1.logT.log('update terakhir dilihat, id ' + req.params.id);
+        // logT.log('update terakhir dilihat, id ' + req.params.id);
         BarangSql_1.barangSql.updateLastViewDate(req.params.id)
             .then(() => {
             resp.status(200).end();
         }).catch((e) => {
+            console.error;
             resp.status(500).send(e.message);
         });
     }
     catch (error) {
+        console.error;
         resp.status(500).send(error.message);
     }
 });
@@ -151,8 +156,9 @@ exports.router.post("/baca/lapak/:lapak/publish/:publish", Auth_1.checkAuth, (re
             resp.status(200).send(rows);
         })
             .catch((e) => {
-            TokoLog_1.logT.log(e);
-            resp.status(500).send(e);
+            // logT.log(e);
+            console.error;
+            resp.status(500).send(e.message);
         });
     }
     catch (e) {
@@ -176,8 +182,9 @@ exports.router.post("/baca/", Auth_1.checkAuth, (req, resp) => {
             resp.status(200).send(rows);
         })
             .catch((e) => {
-            TokoLog_1.logT.log(e);
-            resp.status(500).send(e);
+            // logT.log(e);
+            console.error;
+            resp.status(500).send(e.message);
         });
     }
     catch (e) {

@@ -3,10 +3,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const TokoLog_1 = require("./TokoLog");
 const SessionData_1 = require("./SessionData");
 const Anggota_1 = require("./entity/Anggota");
+const Config_1 = require("./Config");
 class Auth {
     async login(userId, password) {
         TokoLog_1.logT.log('Auth: login ');
-        let hasil = await Anggota_1.anggota.baca({ user_id: userId, password: password, setuju: 1 });
+        let hasil = await Anggota_1.anggotaSql.baca({
+            user_id: userId,
+            password: password,
+            setuju: 1,
+            toko_id: Config_1.config.getNilai(Config_1.Config.TOKO_ID)
+        });
         if (hasil.length == 0) {
             TokoLog_1.logT.log('login gagal ' + userId + '/' + password);
             return null;

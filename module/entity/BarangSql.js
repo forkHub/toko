@@ -32,6 +32,16 @@ class BarangSql {
             });
         });
     }
+    async bacaById(id) {
+        let hasil;
+        hasil = await this.baca({
+            id: id
+        });
+        if (hasil && hasil.length > 0) {
+            return hasil[0];
+        }
+        return null;
+    }
     async baca(opt) {
         let whereQuery = 'WHERE 1 ';
         let offsetQuery = '';
@@ -172,12 +182,11 @@ class BarangSql {
         });
     }
     async baru(data) {
-        console.log('barang baru');
-        console.log(data);
         data.toko_id = Config_1.config.getNilai(Config_1.Config.TOKO_ID);
         return new Promise((resolve, reject) => {
             Connection_1.Connection.pool.query(this.baruSql, data, (_err, _rows) => {
                 if (_err) {
+                    console.error;
                     reject(_err);
                 }
                 else {

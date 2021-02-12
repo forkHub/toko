@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const TokoLog_1 = require("../TokoLog");
+// import { logT } from "../TokoLog";
 const BarangSql_1 = require("../entity/BarangSql");
 const Renderer_1 = require("../render/Renderer");
 const Config_1 = require("../Config");
@@ -14,7 +14,7 @@ exports.lapakRouter = express_1.default.Router();
 var router = exports.lapakRouter;
 router.get("/daftar", (_req, resp) => {
     try {
-        Anggota_1.anggota.query(Anggota_1.anggota.daftarLapak, [Config_1.config.getNilai(Config_1.Config.TOKO_ID)])
+        Anggota_1.anggotaSql.query(Anggota_1.anggotaSql.daftarLapak, [Config_1.config.getNilai(Config_1.Config.TOKO_ID)])
             .then((data) => {
             return Renderer_1.render.halDaftarLapak.render({
                 lapakData: data,
@@ -28,18 +28,20 @@ router.get("/daftar", (_req, resp) => {
             resp.status(200).send(data);
         })
             .catch((err) => {
-            TokoLog_1.logT.log(err);
-            resp.status(500).send('Error');
+            // logT.log(err);
+            console.error;
+            resp.status(500).send(err.message);
         });
     }
     catch (err) {
-        TokoLog_1.logT.log(err);
-        resp.status(500).send('Error');
+        // logT.log(err);
+        console.error;
+        resp.status(500).send(err.message);
     }
 });
 router.get("/:id/daftar", (req, resp) => {
     try {
-        Anggota_1.anggota.query(Anggota_1.anggota.daftarLapak, [Config_1.config.getNilai(Config_1.Config.TOKO_ID)])
+        Anggota_1.anggotaSql.query(Anggota_1.anggotaSql.daftarLapak, [Config_1.config.getNilai(Config_1.Config.TOKO_ID)])
             .then((data) => {
             return Renderer_1.render.halDaftarLapak.render({
                 lapakData: data,
@@ -52,13 +54,15 @@ router.get("/:id/daftar", (req, resp) => {
             resp.status(200).send(data);
         })
             .catch((err) => {
-            TokoLog_1.logT.log(err);
-            resp.status(500).send('Error');
+            // logT.log(err);
+            console.error;
+            resp.status(500).send(err.message);
         });
     }
     catch (err) {
-        TokoLog_1.logT.log(err);
-        resp.status(500).send('Error');
+        // logT.log(err);
+        console.error;
+        resp.status(500).send(err.message);
     }
 });
 router.get("/:id", (_req, resp) => {
@@ -85,13 +89,19 @@ router.get("/:id", (_req, resp) => {
             resp.status(200).send(data);
         })
             .catch((err) => {
-            TokoLog_1.logT.log(err);
-            resp.status(500).send('Error');
+            // logT.log(err);
+            console.log('error 1');
+            console.log(err);
+            console.error;
+            resp.status(500).send(err.message);
         });
     }
     catch (err) {
-        TokoLog_1.logT.log(err);
-        resp.status(500).send('Error');
+        // logT.log(err);
+        console.log('error 2');
+        console.log(err);
+        console.error;
+        resp.status(500).send(err.message);
     }
 });
 router.get("/:id/cari/:kunci/hal/:hal", (_req, resp) => {
@@ -118,12 +128,14 @@ router.get("/:id/cari/:kunci/hal/:hal", (_req, resp) => {
             resp.status(200).send(data);
         })
             .catch((err) => {
-            TokoLog_1.logT.log(err);
+            // logT.log(err);
+            console.error;
             resp.status(500).send(err.message);
         });
     }
     catch (err) {
-        TokoLog_1.logT.log(err);
+        // logT.log(err);
+        console.error;
         resp.status(500).send(err.message);
     }
 });
@@ -134,12 +146,14 @@ router.get("/:id/barang/:barangId", (_req, resp) => {
             resp.status(200).send(data);
         })
             .catch((err) => {
-            TokoLog_1.logT.log(err);
-            resp.status(500).send('Error');
+            // logT.log(err);/
+            console.error;
+            resp.status(500).send(err.message);
         });
     }
     catch (err) {
-        TokoLog_1.logT.log(err);
-        resp.status(500).send('Error');
+        // logT.log(err);
+        console.error;
+        resp.status(500).send(err.message);
     }
 });

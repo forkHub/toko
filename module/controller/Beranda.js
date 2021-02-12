@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 // import { config } from "winston";
 const Config_1 = require("../Config");
+// import { anggotaSql } from "../entity/Anggota";
 const BarangSql_1 = require("../entity/BarangSql");
 const Renderer_1 = require("../render/Renderer");
 class BerandaController {
@@ -11,6 +12,7 @@ class BerandaController {
             limit: parseInt(Config_1.config.getNilai(Config_1.Config.JML_PER_HAL)),
             orderDateAsc: 1
         });
+        // let lapak: IPengguna = await anggotaSql.bacaId()
         return Renderer_1.render.halDepan.render({
             barangData: data,
             lapakId: '',
