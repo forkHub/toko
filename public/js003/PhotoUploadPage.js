@@ -69,7 +69,7 @@ export class PhotoUploadPage {
     }
     loadImage(file) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield this.loadImage2(file, 800, 800, "gbr_besar", this.view.fotoCont);
+            yield this.loadImage2(file, 640, 640, "gbr_besar", this.view.fotoCont);
             yield this.loadImage2(file, 128, 128, "thumb", this.view.thumbCont);
         });
     }

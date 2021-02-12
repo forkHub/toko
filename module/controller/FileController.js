@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const TokoLog_1 = require("../TokoLog");
 const fs_1 = __importDefault(require("fs"));
-const FStorage_1 = require("../FStorage");
 const File_1 = require("../entity/File");
 class FileController {
     async baru(gbrBesarNama, gbrKecilNama, dataBesar, dataKecil) {
@@ -27,25 +26,6 @@ class FileController {
         return {
             baris: _rows
         };
-    }
-    async uploadDiulang(gbrBesar, gbrKecil) {
-        let hasil = '';
-        let ulang = 0;
-        while (ulang <= 3) {
-            await FStorage_1.fstorage.uploadFile(gbrBesar, gbrKecil)
-                .then((url) => {
-                hasil = url;
-                ulang = 10;
-            })
-                .catch((e) => {
-                ulang++;
-                console.error;
-                if (ulang > 3) {
-                    throw Error(e.message);
-                }
-            });
-        }
-        return hasil;
     }
     async tulisFile(p, data) {
         console.log('tulis file');
