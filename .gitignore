@@ -1,7 +1,6 @@
 node_modules
 setenv.bat
 *.log
-Config.js
 index.html
 /public/admin/js/IConfig.js
 upload
