@@ -50,7 +50,7 @@ class HalBarang {
             index = index.replace("{{og_url}}", Config_1.config.getNilai(Config_1.Config.WEBSITE) + "/barang/" + barang[0].id);
         }
         index = index.replace("{{og_title}}", barang[0].nama);
-        index = index.replace("{{og_gambar}}", Config_1.config.getNilai(Config_1.Config.WEBSITE) + barang[0].thumb);
+        index = index.replace("{{og_gambar}}", Config_1.config.getNilai(Config_1.Config.WEBSITE) + barang[0].gbr);
         return index;
     }
     renderNav(index, lapak) {
