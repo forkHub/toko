@@ -1,18 +1,16 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
+// import winston from "winston";
 Object.defineProperty(exports, "__esModule", { value: true });
-const winston_1 = __importDefault(require("winston"));
 //NOTE: final
-const logW = winston_1.default.createLogger({
-    level: 'info',
-    format: winston_1.default.format.simple(),
-    transports: [
-        new winston_1.default.transports.File({ filename: ('./public/error.log'), level: 'error' }),
-        new winston_1.default.transports.File({ filename: ('./public/combined.log') })
-    ]
-});
+//TODO: d
+// const logW: winston.Logger = winston.createLogger({
+// 	level: 'info',
+// 	format: winston.format.simple(),
+// 	transports: [
+// 		new winston.transports.File({ filename: ('./public/error.log'), level: 'error' }),
+// 		new winston.transports.File({ filename: ('./public/combined.log') })
+// 	]
+// });
 class LogM {
     constructor() {
         this._logs = [];
@@ -32,13 +30,10 @@ class LogM {
 }
 exports.logM = new LogM();
 class LogT {
-    constructor() {
-        this.logWStatus = false;
-    }
+    // private logWStatus: boolean = false;
     log(msg) {
         exports.logM.log(msg);
-        if (this.logWStatus)
-            logW.info('test info');
+        // if (this.logWStatus) logW.info('test info');
         console.log(msg);
     }
     ambil() {

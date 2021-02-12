@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const helmet_1 = __importDefault(require("helmet"));
+// import helmet from "helmet";
 const Connection_1 = require("./module/Connection");
 const Barang_1 = require("./module/router/Barang");
 const File_1 = require("./module/router/File");
@@ -30,11 +30,11 @@ app.use(cookie_session_1.default({
     name: 'toko_session',
     keys: ['Auni_202002_cookie_session']
 }));
-app.use(helmet_1.default.contentSecurityPolicy({
-    directives: {
-        defaultSrc: ["'self'", "'unsafe-eval'", "'unsafe-inline'", "data:", "blob:", "*"],
-    }
-}));
+// app.use(helmet.contentSecurityPolicy({
+// 	directives: {
+// 		defaultSrc: ["'self'", "'unsafe-eval'", "'unsafe-inline'", "data:", "blob:", "*"],
+// 	}
+// }))
 app.use("/barang", Barang_1.router);
 app.use("/file", File_1.router);
 app.use("/auth", Auth_1.router);
