@@ -21,10 +21,12 @@ class HalDaftarLapak {
         index = index.replace("{{judul_web}}", Config_1.config.getNilai(Config_1.Config.NAMA_TOKO));
         if (opt.lapakId && opt.lapakId != '') {
             index = index.replace("{{og_deskripsi}}", lapakDeskripsi);
+            index = index.replace("{{og_deskripsi}}", lapakDeskripsi);
             index = index.replace("{{og_gambar}}", "");
             index = index.replace("{{og_url}}", Config_1.config.getNilai(Config_1.Config.WEBSITE) + "/lapak/" + opt.lapakId);
         }
         else {
+            index = index.replace("{{og_deskripsi}}", Config_1.config.getNilai(Config_1.Config.DESKRIPSI_TOKO));
             index = index.replace("{{og_deskripsi}}", Config_1.config.getNilai(Config_1.Config.DESKRIPSI_TOKO));
             index = index.replace("{{og_gambar}}", "");
             index = index.replace("{{og_url}}", Config_1.config.getNilai(Config_1.Config.WEBSITE));

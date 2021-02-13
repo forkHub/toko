@@ -41,6 +41,7 @@ class HalBarang {
     }
     renderOg(index, lapakId, barang) {
         index = index.replace("{{og_deskripsi}}", barang[0].deskripsi);
+        index = index.replace("{{og_deskripsi}}", barang[0].deskripsi);
         index = index.replace("{{og_site_name}}", Config_1.config.getNilai(Config_1.Config.NAMA_TOKO));
         index = index.replace("{{judul_web}}", Config_1.config.getNilai(Config_1.Config.NAMA_TOKO));
         index = index.replace("{{og_url}}", Config_1.config.getNilai(Config_1.Config.WEBSITE) + "/lapak/" + lapakId + "/barang/" + barang[0].id);
