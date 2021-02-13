@@ -139,6 +139,23 @@ router.get("/:id/cari/:kunci/hal/:hal", (_req, resp) => {
         resp.status(500).send(err.message);
     }
 });
+//TODO: digabung di controller
+router.get("/:id/barang/:barangId/ref/:ref", (_req, resp) => {
+    try {
+        Renderer_1.render.halBarang.render(_req.params.barangId, _req.params.id)
+            .then((data) => {
+            resp.status(200).send(data);
+        })
+            .catch((err) => {
+            console.error;
+            resp.status(500).send(err.message);
+        });
+    }
+    catch (err) {
+        console.error;
+        resp.status(500).send(err.message);
+    }
+});
 router.get("/:id/barang/:barangId", (_req, resp) => {
     try {
         Renderer_1.render.halBarang.render(_req.params.barangId, _req.params.id)
@@ -146,13 +163,11 @@ router.get("/:id/barang/:barangId", (_req, resp) => {
             resp.status(200).send(data);
         })
             .catch((err) => {
-            // logT.log(err);/
             console.error;
             resp.status(500).send(err.message);
         });
     }
     catch (err) {
-        // logT.log(err);
         console.error;
         resp.status(500).send(err.message);
     }
