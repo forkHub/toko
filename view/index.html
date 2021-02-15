@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<head>
+	<title>{{judul_web}}</title>
+
+	<meta property="og:site_name" content="{{og_site_name}}">
+	<meta property="og:title" content="{{og_title}}" />
+	<meta property="og:description" content="{{og_deskripsi}}" />
+	<meta name="description" content="{{og_deskripsi}}" />
+	<meta property="og:image" itemprop="image" content="{{og_gambar}}">
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="{{og_url}}">
+	<meta property="og:updated_time" content="1440432930" />
+
+	<link rel='stylesheet' href="/css/css.css?r={{cache}}" />
+	<link rel='stylesheet' href="/css/item.css?r={{cache}}" />
+	<link rel='stylesheet' href="/css/hal-item.css?r={{cache}}" />
+	<link rel='stylesheet' href="/css/media.css?r={{cache}}" />
+	{{js}}
+</head>
+
+<body>
+
+	<nomodule style='display:none'>
+		<h1>Maaf, sepertinya browser Anda tidak didukung oleh applikasi ini. Silahkan upgrade browser Anda.</h1>
+	</nomodule>
+
+	<div class='header-cont'>
+		{{header}}
+		{{cari}}
+	</div>
+
+	<div class='nav-cont flex'>
+		<div class='grow'>
+			{{nav_hal_utama}}
+			{{nav_beranda}}
+			{{nav_daftar_lapak}}
+		</div>
+		<div>
+			{{nav_login}}
+		</div>
+	</div>
+	<hr />
+
+	<div class='info {{class_info}}'>
+		{{info}}
+	</div>
+
+	{{info-lapak}}
+
+	<div class="{{daftar-barang-cont-class}}">
+		{{content}}
+	</div>
+
+	{{halaman}}
+
+	<div class='footer'>
+		{{footer}}
+	</div>
+
+</body>
+
+</html>

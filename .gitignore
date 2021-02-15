@@ -1,0 +1,9 @@
+node_modules
+setenv.bat
+*.log
+index.html
+/public/admin/js/IConfig.js
+upload
+ConfigDB.js
+/config.json
+firebase.json

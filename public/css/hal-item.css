@@ -1,0 +1,74 @@
+/* focused item */
+div.daftar-barang-cont div.item-fokus {
+	margin: 0px;
+	padding: 32px;
+	display: block;
+	background-color: white;
+	text-align: center;
+	width: 100%;
+}
+
+div.daftar-barang-cont div.item-fokus p.nama-barang {
+	color: chocolate;
+	/* font-weight: bold; */
+	font-size: x-large;
+}
+
+
+div.daftar-barang-cont div.item-fokus div.cont {
+	background-color: white;
+	padding: 8px;
+	max-width: 900px;
+	margin: auto;
+}
+
+div.daftar-barang-cont div.item-fokus img.kecil {
+	display: none;
+}
+
+div.daftar-barang-cont div.item-fokus p.harga {
+	color: orangered;
+	/* font-weight: bold; */
+	font-size: large;
+}
+
+
+div.daftar-barang-cont div.item-fokus img.besar {
+	display: inline-block;
+	max-width: 75%;
+	min-height: 512px;
+}
+
+/* div.daftar-barang-cont div.item-fokus p.deskripsi-singkat {
+	display: none;
+} */
+
+div.daftar-barang-cont div.item-fokus div.deskripsi-panjang {
+	display: block;
+	text-align: left;
+	font-size: 12px;
+	/* font-size: medium; */
+}
+
+
+/* div.daftar-barang-cont item.fokus div.cont p.tutup {
+	text-align: right;
+	margin: 0px;
+	font-size: xx-large;
+	padding: 8px;
+	display: block;
+} */
+
+/* div.daftar-barang-cont item.fokus div.cont p.tutup button {
+	text-align: right;
+	margin: 0px;
+	font-size: xx-large;
+	border: 0px;
+	background-color: white;
+} */
+
+div.daftar-barang-cont div.item-fokus a.chat img {
+	width: 200px;
+	max-width: 75%;
+	/* min-width: 300px; */
+}

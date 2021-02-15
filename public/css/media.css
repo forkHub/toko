@@ -1,0 +1,43 @@
+
+@media only screen and (max-width: 600px) {
+	div.daftar-barang-cont div.kolom {
+		width: 25%;
+	}	
+
+	div.daftar-barang-cont div.item-fokus {
+		padding: 16px;
+	}
+
+	header p.deskripsi {
+		font-size: small;
+	}
+
+}
+
+
+@media only screen and (max-width: 400px) {
+	div.daftar-barang-cont div.kolom {
+		width: 33%;
+	}
+	
+	div.daftar-barang-cont div.item-fokus {
+		padding: 16px;
+	}	
+
+	header {
+		text-align: center;
+	}
+
+	header p.deskripsi {
+		font-size: small;
+		text-align: center;
+		position: static;
+	}
+
+
+	div.footer h1 {
+		font-size: small;
+	}
+	
+	
+}

@@ -1,0 +1,240 @@
+html {
+	font-size: 11px;
+}
+
+html, body, div, header {
+	box-sizing: border-box;
+	padding: 0px;
+	font-family: sans-serif;
+	color: #111111;
+}
+
+body {
+	max-width: 960px;
+}
+
+
+/* dialog */
+div.dialog {
+	position: fixed;
+	box-sizing: border-box;
+	top:0px;
+	left:0px;
+	bottom: 0px;
+	right: 0px;;
+	background-color: rgba(0, 0, 0, .1);
+	z-index: 1000;
+	display:none;
+}
+
+div.dialog div.box {
+	display: flex;
+	flex-direction: column;
+	padding: 16px;
+	width: 100%;
+	min-height: 200px;
+	background-color: white;
+	text-align: center;
+}
+
+div.dialog div.box p {
+	flex-grow: 1;
+}
+
+/* loading */
+div.loading {
+	display: flex;
+	position: fixed;
+	top:0px;
+	left:0px;
+	right:0px;
+	bottom: 0px;
+	background-color: rgba(0, 0, 0, .1);
+	z-index: 100;
+	text-align: center;
+}
+
+div.loading div.box {
+	width: 80%;
+	margin: auto;
+	text-align: center;
+}
+
+h1.judul-toko {
+	margin: 16px;
+	margin-top: 0px;
+	color: white;
+	text-align:center;
+}
+
+div.nav-cont {
+	margin: 8px;
+}
+
+body {
+	max-width: 960px;
+	margin: auto;
+	padding-top: 0px;
+	margin-top: 0px;
+	-webkit-box-shadow: 0px 0px 16px 1px rgba(0,0,0,0.75);
+	-moz-box-shadow: 0px 0px 16px 1px rgba(0,0,0,0.75);
+	box-shadow: 0px 0px 16px 1px rgba(0,0,0,0.75);
+}
+
+header {
+	width: 100%;
+	padding: 16px;
+	padding-top:8px;
+	padding-bottom:8px;
+	background-color: #111111;
+	position: relative;
+}
+
+header p.deskripsi {
+	font-size: small;
+	color: white;
+	text-align: right;
+	font-style: italic;
+	margin-bottom: 0px;
+}
+
+header button.share {
+	position: absolute;
+	top:32px;
+	right: 32px;
+	width: 32px;
+	height: 32px;
+	border: none;
+	background-color: transparent;
+	padding:0px;
+	display:none;
+}
+
+header button.share img {
+	width: 32px;
+	height: 32px;
+	display:none;
+}
+
+form.cari {
+	display: flex;
+	background-color: black;
+	padding: 8px;
+}
+
+form.cari input.cari {
+	flex-grow: 1;
+	margin-right: 8px;
+}
+
+/* info */
+div.info {
+    text-align: center;
+}
+
+div.info.isi {
+    text-align: center;
+    padding: 16px;
+    border: 1px solid;	
+}
+
+/*info lapak*/
+div.info-lapak-comp {
+	text-align:center;
+}
+
+/* daftar barang */
+div.daftar-barang-cont,
+div.daftar-barang-cont-lapak {
+	text-align: center;
+	display: table;
+	width: 100%;
+}
+
+div.daftar-barang-cont {
+	visibility: hidden;
+}
+
+div.daftar-barang-cont div.kolom,
+div.daftar-barang-cont-lapak div.kolom {
+	display:table-cell;
+	width: 20%;
+	vertical-align:top;
+	padding: 4px;
+}
+
+div.halaman {
+	display: none;
+	/*display: block;*/
+}
+
+div.halaman div.content {
+	margin: auto;
+	font-size: large;
+	text-align: center;
+}
+
+div.footer {
+	width: 100%;
+	height: auto;
+	background-color: #111111;
+	color: white;
+	padding: 8px;
+	font-size: small;
+}
+
+div.footer h1 {
+	margin: 0px;
+}
+
+div.footer p {
+	margin: 0px;
+}
+
+
+div.clear {
+	float: none;
+	clear: both;
+}
+
+/*halaman daftar lapak */
+div.daftar-barang-cont-lapak {
+	text-align: left;
+	padding: 8px;
+}
+
+div.daftar-barang-cont-lapak div.item-lapak {
+	padding: 8px;
+	border-bottom: 1px solid lightgray;
+}
+
+div.daftar-barang-cont-lapak 
+div.item-lapak 
+small.nama {
+	font-weight: bolder;
+}
+
+div.daftar-barang-cont-lapak 
+div.item-lapak 
+div.panah {
+	margin-top: 8px;
+	font-size: xx-large;
+}
+
+
+div.daftar-barang-cont-lapak a {
+	text-decoration: none;
+}
+
+div.flex {
+	display: flex;
+}
+
+div.grow {
+	flex-grow: 1;
+}
+
+button.tbl-blok {
+	display: block;
+	margin-bottom: 8px;
+}
