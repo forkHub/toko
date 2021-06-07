@@ -1,0 +1,171 @@
+/* dialog */
+div.dialog {
+	position: fixed;
+	box-sizing: border-box;
+	top:0px;
+	left:0px;
+	bottom: 0px;
+	right: 0px;;
+	background-color: rgba(0, 0, 0, .1);
+	z-index: 1000;
+	display:none;
+}
+
+div.dialog div.box {
+	display: flex;
+	flex-direction: column;
+	padding: 16px;
+	width: 100%;
+	min-height: 200px;
+	background-color: white;
+	text-align: center;
+}
+
+div.dialog div.box p {
+	flex-grow: 1;
+}
+
+/* loading */
+div.loading {
+	display: flex;
+	position: fixed;
+	top:0px;
+	left:0px;
+	right:0px;
+	bottom: 0px;
+	background-color: rgba(0, 0, 0, .1);
+	z-index: 100;
+	text-align: center;
+}
+
+div.loading div.box {
+	width: 80%;
+	margin: auto;
+	text-align: center;
+}
+
+/* form barang */
+div.form-barang div.foto-cont img {
+	min-width: 128px;
+	min-height: 128px;
+	border: 1px solid;
+}
+
+div.form-barang div.form-group.lapak_id,
+div.form-barang div.form-group.lapak
+{
+	display:none;
+}
+
+
+/* Daftar barang page */
+div.daftar-barang-page 
+div.item-barang  {
+	display: block;
+}
+
+div.daftar-barang-page 
+div.item-barang  
+img.gbr {
+	max-width: 100px;
+	max-height: 100px;
+	margin: 4px;
+}
+
+
+div.daftar-barang-page 
+div.item-barang  
+div.atas {
+	display: flex;
+}
+
+div.daftar-barang-page 
+div.atas 
+div.deskripsi {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+}
+
+div.daftar-barang-page 
+div.atas 
+div.deskripsi 
+div.bawah {
+	text-align: right;
+}
+
+div.daftar-barang-page 
+div.deskripsi 
+p.nama {
+	flex-grow: 1;
+}
+
+/* foto upload */
+div.foto-page {
+	position: fixed;
+	top:0px;
+	left:0px;
+	right: 0px;
+	bottom: 0px;
+	background-color: rgba(0,0,0,.1);
+	z-index: 1000;
+}
+
+div.foto-page div.cont {
+	margin: 32px;
+	padding: 16px;
+	background-color: white;
+}
+
+
+div.foto-page form div.foto-cont canvas {
+	display:none;
+}
+
+div.foto-page form p.foto {
+	display:none;
+}
+
+div.nav-cont {
+	display: flex;
+	padding: 8px;
+	box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.52);
+}
+
+div.nav-cont
+p.judul {
+	margin: 8px;
+	font-weight: bold;
+}
+
+div.list-cont {
+	padding: 8px;
+}
+
+div.daftar-anggota-baru 
+div.item {
+	display: flex;
+	border-bottom: 1px solid lightgray;
+	padding-bottom: 8px;
+	padding-top: 8px;
+}
+
+div.daftar-anggota-baru 
+div.item 
+span.nama {
+	flex-grow: 1;
+}
+
+/*umum*/
+div.flex {
+	display: flex;
+}
+
+div.grow {
+	flex-grow: 1;
+}
+
+button.tbl-blok {
+	display: block;
+	margin-bottom: 8px;
+}

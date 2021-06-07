@@ -1,0 +1,47 @@
+div.detail-barang-cont div.item-fokus {
+	margin: auto;
+	padding: 32px;
+	display: block;
+	background-color: white;
+	text-align: center;
+	width: 100%;
+	max-width: 512px;
+}
+
+div.detail-barang-cont div.item-fokus p.nama-barang {
+	color: chocolate;
+	font-size: x-large;
+}
+
+
+div.detail-barang-cont div.item-fokus div.cont {
+	background-color: white;
+	padding: 8px;
+	max-width: 900px;
+	margin: auto;
+}
+
+div.detail-barang-cont div.item-fokus img.kecil {
+	display: none;
+}
+
+div.detail-barang-cont div.item-fokus p.harga {
+	color: orangered;
+	font-size: large;
+}
+
+
+div.detail-barang-cont div.item-fokus img.besar {
+	display: inline-block;
+	max-width: 75%;
+	min-height: 512px;
+}
+
+div.daftar-barang-cont div.item-fokus div.deskripsi-panjang {
+	display: block;
+	text-align: left;
+}
+
+div.daftar-barang-cont div.item-fokus a.chat img {
+	background-color: green;
+}
