@@ -4,76 +4,43 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-// import helmet from "helmet";
-const Connection_1 = require("./module/Connection");
-const Barang_1 = require("./module/router/Barang");
-const File_1 = require("./module/router/File");
-const Auth_1 = require("./module/router/Auth");
-const Install_1 = require("./module/router/Install");
-const TokoTest_1 = require("./module/router/TokoTest");
-const Anggota_1 = require("./module/router/Anggota");
-const Lapak_1 = require("./module/router/Lapak");
-const TokoLog_1 = require("./module/TokoLog");
+const Connection_1 = require("./wwa/module/Connection");
 const cookie_session_1 = __importDefault(require("cookie-session"));
-const Beranda_1 = require("./module/router/Beranda");
-const Util_1 = require("./module/Util");
-const Config_1 = require("./module/router/Config");
-const ConfigController_1 = require("./module/ConfigController");
-// import { fstorage } from "./module/FStorage";
-// import { fstorage } from "./module/FStorage";
+const Util_1 = require("./wwa/module/Util");
+const AppClodinary_1 = require("./cloudinary_module/AppClodinary");
+const AppToko_1 = require("./wwa/AppToko");
+const Kons_1 = require("./wwa/module/Kons");
 Util_1.util.buatRandom();
+Util_1.util.baseDir = __dirname;
 const app = express_1.default();
 const port = 3000;
-app.use(express_1.default.static(__dirname + "/public"));
+app.use(express_1.default.static(__dirname + Kons_1.kons.folder_public));
 app.use(express_1.default.json({ limit: '5mb' }));
 app.use(cookie_session_1.default({
     name: 'toko_session',
     keys: ['Auni_202002_cookie_session']
 }));
-// app.use(helmet.contentSecurityPolicy({
-// 	directives: {
-// 		defaultSrc: ["'self'", "'unsafe-eval'", "'unsafe-inline'", "data:", "blob:", "*"],
-// 	}
-// }))
-app.use("/barang", Barang_1.router);
-app.use("/file", File_1.router);
-app.use("/auth", Auth_1.router);
-app.use("/sys", Install_1.router);
-app.use("/toko_test", TokoTest_1.router);
-app.use("/anggota", Anggota_1.router);
-app.use("/lapak", Lapak_1.lapakRouter);
-app.use("/konfig", Config_1.configRouter);
-app.use("/", Beranda_1.berandaRouter);
+AppToko_1.appToko.router(app);
+AppClodinary_1.appCloudinary.router(app);
 app.use((_req, _resp, _next) => {
-    TokoLog_1.logT.log(_req.path);
-    TokoLog_1.logT.log('404');
-    _resp.status(404).send('Halaman Tidak Ditemukan');
+    console.log(_req.path);
+    _resp.status(404).send(`<html><head><title></title></head><body>Halaman Tidak Ditemukan</body></html>`);
 });
 process.on('SIGTERM', () => {
     try {
-        TokoLog_1.logT.log('shutdown');
         Connection_1.Connection.pool.end((err) => {
             if (err) {
-                TokoLog_1.logT.log('sql shutdown error');
-                TokoLog_1.logT.log(err.sqlMessage);
+                console.error;
             }
             else {
-                TokoLog_1.logT.log('connection tutup');
             }
         });
     }
     catch (e) {
-        TokoLog_1.logT.log(e);
+        console.error;
     }
 });
 Connection_1.Connection.connect();
-ConfigController_1.configController.updateDariEnv().catch((e) => {
-    console.log(e);
-});
 exports.server = app.listen(port, () => {
-    TokoLog_1.logT.log("app started");
+    console.log('app started');
 });
-// fstorage.init();
-// fstorage.uploadFile('./firebase.json', 'firebase.json').then((h) => {
-// 	console.log(h);
-// })
