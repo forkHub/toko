@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const AdminRouter_1 = require("./AdminRouter");
 const AuthRouter_1 = require("./AuthRouter");
 const PenjualRouter_1 = require("./PenjualRouter");
 const BarangRouter_1 = require("./toko/BarangRouter");
@@ -12,5 +13,6 @@ exports.router = {
         lapak: LapakRouter_1.lapakRouter
     },
     auth: AuthRouter_1.authRouter,
-    penjual: PenjualRouter_1.penjualRouter
+    penjual: PenjualRouter_1.penjualRouter,
+    admin: AdminRouter_1.adminRouter
 };

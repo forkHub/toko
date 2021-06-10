@@ -3,7 +3,7 @@ class Dialog extends BaseComponent {
     constructor() {
         super();
         this._template = `
-			<div class='dialog'>
+			<div class='comp dialog'>
 				<div class='box'>
 					<p class='deskripsi'>Contoh dialog </p>
 					<button class="btn btn-primary ok">OK</button>

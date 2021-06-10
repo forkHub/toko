@@ -7,6 +7,7 @@ const SessionData_1 = require("../../SessionData");
 const AuthSql_1 = require("../../entity/admin/AuthSql");
 const nodemailer_1 = __importDefault(require("nodemailer"));
 const Validator_1 = require("../../Validator");
+const ConfigDB_1 = require("../../ConfigDB");
 class AuthController {
     async login(userId, password) {
         let hasil = await AuthSql_1.authSql.login(userId, password);
@@ -149,11 +150,12 @@ function isAdmin(req) {
 exports.isAdmin = isAdmin;
 //check auth middle ware
 function checkAdmin(req, resp, next) {
-    if (SessionData_1.session(req).level != 'admin') {
-        resp.status(403).send('Perintah tidak diperkenankan');
-        return;
+    if (req.params.auth == ConfigDB_1.configDB.admin.pass) {
+        next();
     }
-    next();
+    else {
+        resp.status(403).send('akses tidak diperkenankan');
+    }
 }
 exports.checkAdmin = checkAdmin;
 function setCache(_req, resp, next) {
