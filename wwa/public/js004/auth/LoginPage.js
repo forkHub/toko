@@ -1,5 +1,6 @@
 import { dialog } from "../comp/Dialog.js";
 import { loading } from "../comp/Loading.js";
+import { Page2 } from "../Page.js";
 import { Util } from "../Util.js";
 let LoginPage = {
     form: () => {
@@ -13,6 +14,9 @@ let LoginPage = {
     },
     lupa: () => {
         return Util.getEl('button.lupa');
+    },
+    daftar: () => {
+        return Util.getEl(Page2.auth.login.daftar);
     }
 };
 window.onload = () => {
@@ -29,7 +33,7 @@ window.onload = () => {
                     let hasilObj = JSON.parse(req.responseText);
                     loading.detach();
                     window.sessionStorage.setItem(Util.sLapakId, hasilObj.id + '');
-                    window.top.location.href = '/penjual/beranda/' + hasilObj.id;
+                    window.top.location.href = Util.getUrl(Util.urlPenjualBeranda, [hasilObj.id + '']);
                 }
                 else {
                     console.log(req);
@@ -50,6 +54,11 @@ window.onload = () => {
         return false;
     };
     LoginPage.lupa().onclick = () => {
-        window.top.location.href = '/auth/lupa';
+        window.top.location.href = Util.urlAuthLupaPass;
+    };
+    console.log(LoginPage.daftar());
+    LoginPage.daftar().onclick = () => {
+        console.log('daftar click');
+        window.top.location.href = Util.urlAuthDaftar;
     };
 };

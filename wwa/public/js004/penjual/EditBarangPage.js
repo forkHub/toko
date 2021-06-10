@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { dialog } from "../comp/Dialog.js";
 import { Util } from "../Util.js";
+import { v } from "../Validator.js";
 import { PhotoUploadPage } from "./PhotoUploadPage.js";
 window.onload = () => {
     new BarangEditPage();
@@ -21,6 +22,9 @@ class BarangEditPage {
                 ed.on('init', (_args) => {
                     console.debug('tinymce on loaded');
                     this.init();
+                });
+                ed.on('init', () => {
+                    this.updateStatusTombolSimpan();
                 });
             },
             selector: "textarea#deskripsi-barang-panjang"
@@ -52,8 +56,36 @@ class BarangEditPage {
                 this.gambarHtml.src = this.backupData.thumb;
             }
         };
-        this.backup();
-        this.setEventPerubahan();
+        //backup data
+        this.backupData = {
+            deskripsi: barangData.deskripsi,
+            deskripsi_panjang: barangData.deskripsi_panjang,
+            harga: barangData.harga,
+            nama: barangData.nama,
+            wa: barangData.wa,
+            thumb: barangData.thumb
+        };
+        //event
+        this.namaInput.oninput = () => {
+            this.updateStatusTombolSimpan();
+        };
+        this.deskripsiInput.oninput = () => {
+            this.updateStatusTombolSimpan();
+        };
+        this.hargaBarangInput.oninput = () => {
+            this.updateStatusTombolSimpan();
+        };
+        this.tutupTbl.onclick = () => {
+            if (this.checkAdaPerubahan()) {
+                let ok = confirm('Perubahan tidak akan disimpan?');
+                if (ok) {
+                    window.top.location.href = Util.getUrl(Util.urlPenjualBeranda, [window.sessionStorage.getItem(Util.sLapakId)]);
+                }
+            }
+            else {
+                window.top.location.href = Util.getUrl(Util.urlPenjualBeranda, [window.sessionStorage.getItem(Util.sLapakId)]);
+            }
+        };
         this.updateStatusTombolSimpan();
     }
     updateStatusTombolSimpan() {
@@ -63,9 +95,6 @@ class BarangEditPage {
             this.draftTbl.disabled = false;
             this.submitTbl.disabled = false;
         }
-    }
-    setEventPerubahan() {
-        this.namaInput.oninput = this.onInput.bind(this);
     }
     onInput() {
         this.updateStatusTombolSimpan();
@@ -99,16 +128,6 @@ class BarangEditPage {
             return true;
         }
         return false;
-    }
-    backup() {
-        this.backupData = {
-            deskripsi: barangData.deskripsi,
-            deskripsi_panjang: barangData.deskripsi_panjang,
-            harga: barangData.harga,
-            nama: barangData.nama,
-            wa: barangData.wa,
-            thumb: barangData.thumb
-        };
     }
     submit(publish = 1) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -160,10 +179,10 @@ class BarangEditPage {
     formToObj() {
         return {
             deskripsi_panjang: tinymce.activeEditor.getContent(),
-            deskripsi: Util.escape(this.deskripsiInput.value),
-            harga: Util.escape(this.hargaBarangInput.value),
-            nama: Util.escape(this.namaInput.value),
-            wa: Util.escape(this.wa.value),
+            deskripsi: v.escape(this.deskripsiInput.value),
+            harga: v.escape(this.hargaBarangInput.value),
+            nama: v.escape(this.namaInput.value),
+            wa: v.escape(this.wa.value),
             publish: parseInt(this.publishStatus.value),
             last_view: this.buatDate(),
             lapak_id: parseInt(window.sessionStorage.getItem(Util.sLapakId)),
@@ -178,8 +197,8 @@ class BarangEditPage {
             this.upload.selesai = null;
             if (this.upload.statusUpload) {
                 this.gambarHtml.src = this.upload.view.thumbCont.querySelector('canvas').toDataURL();
-                this.updateStatusTombolSimpan();
             }
+            this.updateStatusTombolSimpan();
         };
     }
     get selesai() {

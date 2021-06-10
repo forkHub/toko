@@ -20,9 +20,9 @@ class Profile {
 			</head> 
 			<body>
 				<div class='container'>
-					<nav aria-label="breadcrumb">
+					<nav aria-label="breadcrumb" class="menu">
 						<ol class="breadcrumb">
-							<li class="breadcrumb-item"><a href="/penjual/beranda/${penjual.id}">Beranda</a></li>
+							<li class="breadcrumb-item"><a class="beranda" href="/penjual/beranda/${penjual.id}">Beranda</a></li>
 							<li class="breadcrumb-item active" aria-current="page">Profile</li>
 						</ol>
 					</nav>				
@@ -43,6 +43,7 @@ class Profile {
 					</div>
 					<div>
 						<button type='button' class='btn btn-primary edit'>Edit</button>
+						<button type='button' class='btn btn-primary tutup'>Tutup</button>
 					</div>				
 				</div>
 			</body>

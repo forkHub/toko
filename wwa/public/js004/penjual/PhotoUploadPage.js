@@ -16,18 +16,6 @@ export class PhotoUploadPage {
         this._selesai = null;
         this._view = new View();
         this._statusUpload = false;
-        // public get insertedId(): string {
-        // return this._insertedId;
-        // }
-        // public get gbrUrl(): string {
-        // 	return this._gbrUrl;
-        // }
-        // public get idLama(): string {
-        // 	return this._idLama;
-        // }
-        // public set idLama(value: string) {
-        // 	this._idLama = value;
-        // }
     }
     buatNama(prefix, pjg = 12) {
         let hasil = prefix;

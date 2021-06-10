@@ -37,6 +37,7 @@ class Login {
 						</div>
 						<button type="submit" class="btn btn-primary submit">Login</button>
 						<button type="button" class="btn btn-primary lupa">Lupa Password</button>
+						<button type="button" class="btn btn-primary daftar">Daftar</button>
 					</form>
 				</div>
 			</div>

@@ -26,7 +26,7 @@ class Daftar {
 
 						<div class="form-group">
 							<label for="user_id">User name (untuk login):</label>
-							<input type="text" class="form-control user_id" name="user_id" id="user_id" required value="" />
+							<input type="text" class="form-control user_id" name="user_id" autocomplete="username" id="user_id" required value="" />
 						</div>
 		
 						<div class="form-group">
@@ -40,13 +40,13 @@ class Daftar {
 						</div>
 
 						<div class="form-group">
-							<label for="alamat">Deskripsi:</label>
+							<label for="alamat">Alamat:</label>
 							<input type="tex" class="form-control alamat" name="alamat" id="alamat" required value="" />
 						</div>
 
 						<div class="form-group">
 							<label for="email">email:</label>
-							<input type="email" class="form-control email" name="email" id="email" required value="" />
+							<input type="email" class="form-control email" name="email" autocomplete="email" id="email" required value="" />
 						</div>
 
 						<div class="form-group">
@@ -56,12 +56,12 @@ class Daftar {
 
 						<div class="form-group">
 							<label for="password1">password:</label>
-							<input type="password" class="form-control password1" name="password1" id="password1" required value="" />
+							<input type="password" class="form-control password1" name="password1" id="password1" autocomplete="new-password" required value="" />
 						</div>
 
 						<div class="form-group">
 							<label for="password2">password (ulangi):</label>
-							<input type="password" class="form-control password2" name="password2" id="password2" required value="" />
+							<input type="password" class="form-control password2" name="password2" id="password2" autocomplete="new-password" required value="" />
 						</div>
 
 						<button type="submit" class="btn btn-primary submit">OK</button>

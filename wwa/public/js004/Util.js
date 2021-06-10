@@ -44,29 +44,6 @@ export class Util {
     static buatWaLapak(lapakId) {
         return "whatsapp://send?text=" + config2.website + "/lapak/" + lapakId;
     }
-    //shared
-    static escape(str) {
-        let hasil = str;
-        while (hasil.indexOf("<") > -1) {
-            hasil = hasil.replace("<", "&lt;");
-        }
-        while (hasil.indexOf(">") > -1) {
-            hasil = hasil.replace(">", "&gt;");
-        }
-        return hasil;
-    }
-    //shared
-    //TODO: belum selesai
-    static checkWa(value) {
-        value;
-        return true;
-    }
-    //shared
-    //TODO:
-    static validasiPassword(pass) {
-        pass;
-        return true;
-    }
     static AjaxLogin(type, url, dataStr, pf = null) {
         return __awaiter(this, void 0, void 0, function* () {
             let xml;
@@ -125,10 +102,11 @@ Util.urlFileUpload = '/penjual/upload';
 Util.urlPenjualProfile = '/penjual/profile/:id';
 Util.urlPenjualGetEditProfile = '/penjual/profile/edit/:id';
 Util.urlPenjualPostEditProfile = '/penjual/profile/edit/';
+Util.urlPenjualBeranda = '/penjual/beranda/:id';
 Util.urlAuthLogin = '/auth/login';
-Util.urlLogout = '/auth/logout';
-Util.urlGantiPass = '/auth/ganti';
-Util.urlLupaPass = '/auth/lupa';
+Util.urlAuthLogout = '/auth/logout';
+Util.urlAuthGantiPass = '/auth/ganti';
+Util.urlAuthLupaPass = '/auth/lupa';
 Util.urlAuthDaftar = '/auth/daftar';
 Util.urlBarangBaru = '/penjual/barang/baru';
 Util.urlBarangEditGet = '/penjual/barang/edit/:id';

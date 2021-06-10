@@ -25,8 +25,14 @@ class AuthController {
         };
     }
     async daftar(data) {
-        Validator_1.v.sanitize(data.alamat, [Validator_1.v.SAN_ESC]);
-        Validator_1.v.validate(data.alamat, [], 'alamat', 1);
+        data.alamat = Validator_1.v.escape(data.alamat).trimStart().trimEnd();
+        data.deskripsi = Validator_1.v.escape(data.deskripsi).trimStart().trimEnd();
+        data.email = Validator_1.v.escape(data.email).trimStart().trimEnd();
+        data.lapak = Validator_1.v.escape(data.lapak).trimStart().trimEnd();
+        data.wa = Validator_1.v.escape(data.wa).trimStart().trimEnd();
+        Validator_1.v.checkPassError(data.password, 'Password mengandung karakter yang tidak diperbolehkan');
+        Validator_1.v.checkWaErr(data.wa, 'no WA tidak valid');
+        Validator_1.v.checkUserNameErr(data.user_id, "user Id mengandung karakter yang tidak diperbolehkan");
         await AuthSql_1.authSql.daftar(data);
     }
     async ganti(userId, password, password2) {

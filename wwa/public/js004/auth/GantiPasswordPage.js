@@ -18,7 +18,7 @@ window.onload = () => {
             dialog.tampil('password tidak sama');
         }
         //validasi regex
-        Util.AjaxLogin('post', Util.urlGantiPass, JSON.stringify({
+        Util.AjaxLogin('post', Util.urlAuthGantiPass, JSON.stringify({
             id: window.sessionStorage.getItem(Util.sLapakId),
             password1: Page.pass1().value,
             password2: Page.pass2().value

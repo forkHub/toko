@@ -38,6 +38,15 @@ exports.authRouter.get("/lupa", (_req, resp) => {
         resp.status(500).send(e.message);
     }
 });
+exports.authRouter.get("/daftar", (_req, resp) => {
+    try {
+        resp.status(200).send(Renderer_1.renderer.auth.daftar.render());
+    }
+    catch (e) {
+        console.error(e);
+        resp.status(500).send(e.message);
+    }
+});
 exports.authRouter.get("/ganti", AuthController_1.checkAuth, (_req, resp) => {
     try {
         resp.status(200).send(Renderer_1.renderer.auth.ganti.render());
@@ -129,7 +138,7 @@ exports.authRouter.post("/ganti", AuthController_1.checkAuth, AuthController_1.c
 });
 exports.authRouter.post("/daftar", (req, resp) => {
     try {
-        AuthController_1.authController.daftar({
+        let data = {
             user_id: req.body.user_id,
             alamat: req.body.alamat,
             deskripsi: req.body.deskripsi,
@@ -140,9 +149,11 @@ exports.authRouter.post("/daftar", (req, resp) => {
             setuju: 1,
             toko_id: Config_1.config.tokoId,
             wa: req.body.wa
-        }).then(() => {
+        };
+        AuthController_1.authController.daftar(data).then(() => {
             resp.status(200).send('');
         }).catch((err) => {
+            console.log(data);
             console.error(err);
             resp.status(500).send(err.message);
         });

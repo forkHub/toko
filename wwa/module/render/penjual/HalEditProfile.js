@@ -21,10 +21,10 @@ class HalEditProfile {
 			<body>
 				<div class='container'>
 					
-					<nav aria-label="breadcrumb">
+					<nav aria-label="breadcrumb" class="menu">
 						<ol class="breadcrumb">
-							<li class="breadcrumb-item"><a href="/penjual/beranda/${penjual.id}">Beranda</a></li>
-							<li class="breadcrumb-item"><a href="/penjual/profile/${penjual.id}">Profile</a></li>
+							<li class="breadcrumb-item"><a class="beranda" href="/penjual/beranda/${penjual.id}">Beranda</a></li>
+							<li class="breadcrumb-item"><a class="profile" href="/penjual/profile/${penjual.id}">Profile</a></li>
 							<li class="breadcrumb-item active" aria-current="page">Edit</li>
 						</ol>
 					</nav>		
@@ -60,6 +60,7 @@ class HalEditProfile {
 							</div>
 							
 							<button type="submit" class="btn btn-primary btn-sm submit tbl-blok">Simpan</button>
+							<button type="batal" class="btn btn-primary btn-sm batal tbl-blok">Batal</button>
 						</form
 					</div>
 				</div>

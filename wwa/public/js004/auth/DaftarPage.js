@@ -1,5 +1,6 @@
 import { dialog } from "../comp/Dialog.js";
 import { Util } from "../Util.js";
+import { v } from "../Validator.js";
 let Page = {
     form: () => {
         return Util.getEl('form');
@@ -30,21 +31,30 @@ let Page = {
     }
 };
 window.onload = () => {
-    Page.form().submit = () => {
+    console.log(Page.form());
+    Page.form().onsubmit = () => {
+        console.log('form on submit');
         try {
             //data
             //sanitize
             let data = {
-                alamat: Util.escape(Page.alamat().value),
-                deskripsi: Util.escape(Page.deskripsi().value),
-                email: Util.escape(Page.email().value),
-                lapak: Util.escape(Page.lapak().value),
-                password: Util.escape(Page.password1().value),
-                user_id: Util.escape(Page.userId().value),
-                wa: Util.escape(Page.wa().value)
+                alamat: v.escape(Page.alamat().value).trim(),
+                deskripsi: v.escape(Page.deskripsi().value).trim(),
+                email: v.escape(Page.email().value).trim(),
+                lapak: v.escape(Page.lapak().value).trim(),
+                password: v.escape(Page.password1().value).trim(),
+                user_id: v.escape(Page.userId().value).trim(),
+                wa: v.escape(Page.wa().value).trim()
             };
-            //validasi
+            data.password = md5(data.password);
             //TODO:
+            //validasi
+            //validasi min
+            //validasi maksimal
+            if (!v.checkPassword(data.password))
+                throw Error(v.ERR_PASS);
+            if (!v.checkWa(data.wa))
+                throw Error('No WA tidak valid, format yang disarankan: 62xxx');
             Util.Ajax('post', Util.urlAuthDaftar, JSON.stringify(data)).then((xml) => {
                 if (200 == xml.status) {
                     dialog.tampil('sukses');
@@ -60,12 +70,10 @@ window.onload = () => {
                 console.error(e);
                 dialog.tampil(e.message);
             });
-            return false;
         }
         catch (e) {
             console.error(e);
             dialog.tampil(e.message);
-            return false;
         }
         return false;
     };

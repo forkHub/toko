@@ -30,7 +30,7 @@ class PenjualPage {
                 {
                     label: 'Logout',
                     f: () => {
-                        window.top.location.href = Util.urlLogout;
+                        window.top.location.href = Util.urlAuthLogout;
                     }
                 }, {
                     label: 'Share Lapak',

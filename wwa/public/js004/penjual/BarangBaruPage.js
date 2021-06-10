@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import { dialog } from "../comp/Dialog.js";
 import { PhotoUploadPage } from "./PhotoUploadPage.js";
 import { Util } from "../Util.js";
+import { v } from "../Validator.js";
 class BarangBaruPage {
     constructor() {
         this._selesai = null;
@@ -28,14 +29,6 @@ class BarangBaruPage {
         this.draftTbl.onclick = () => {
             console.group('click draft button');
             this.submit(0);
-            // this.publishStatus.value = '0';
-            // this.formKirim()
-            // 	.then(() => {
-            // 		window.location.href = "/penjual/beranda/" + window.sessionStorage.getItem(Util.sLapakId);
-            // 	}).catch((e) => {
-            // 		console.error(e);
-            // 		dialog.tampil(e.message);
-            // 	});
         };
         this.editFotoTbl.onclick = () => {
             this.editFotoClick();
@@ -96,10 +89,10 @@ class BarangBaruPage {
     formToObj() {
         return {
             deskripsi_panjang: tinymce.activeEditor.getContent(),
-            deskripsi: Util.escape(this.deskripsiInput.value),
-            harga: Util.escape(this.hargaBarangInput.value),
-            nama: Util.escape(this.namaInput.value),
-            wa: Util.escape(this.wa.value),
+            deskripsi: v.escape(this.deskripsiInput.value),
+            harga: v.escape(this.hargaBarangInput.value),
+            nama: v.escape(this.namaInput.value),
+            wa: v.escape(this.wa.value),
             publish: parseInt(this.publishStatus.value),
             last_view: this.buatDate(),
             lapak_id: parseInt(window.sessionStorage.getItem(Util.sLapakId)),

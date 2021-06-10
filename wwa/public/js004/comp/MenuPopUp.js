@@ -12,11 +12,19 @@ export class MenuPopup {
         });
         this.view.attach(document.body);
     }
-    //TODO: fungsi tambah tombol
+    buatClass(label) {
+        let hasil;
+        hasil = label.toLowerCase();
+        while (hasil.indexOf(' ') > -1) {
+            hasil = hasil.replace(' ', '-');
+        }
+        return hasil;
+    }
     buatTombol(t) {
         let button = document.createElement('button');
         button.classList.add("btn");
         button.classList.add("btn-primary");
+        button.classList.add(this.buatClass(t.label));
         button.style.display = 'block';
         button.style.margin = 'auto';
         button.style.marginBottom = '8px';
