@@ -5,16 +5,16 @@ const Connection_1 = require("../../Connection");
 const Sql_1 = require("../Sql");
 class BerandaSql {
     constructor() {
-        this.semuaBarangSql = `SELECT BARANG.*, FILE.gbr, FILE.thumb FROM BARANG 
-											LEFT JOIN FILE ON BARANG.file_id = FILE.id 
+        this.semuaBarangSql = `SELECT barang.*, file.gbr, file.thumb FROM barang 
+											LEFT JOIN file ON barang.file_id = file.id 
 											WHERE 
 											publish = 1
 											AND toko_id = ? 
-											AND BARANG.id IS NOT NULL
+											AND barang.id IS NOT NULL
 											ORDER BY last_view DESC
 											LIMIT ?
 											OFFSET ?;`.trimStart().trimEnd();
-        this.jmlBarangSql = `SELECT count(id) as jml FROM BARANG 
+        this.jmlBarangSql = `SELECT count(id) as jml FROM barang 
 											WHERE 
 											publish = 1
 											AND toko_id = ?`;

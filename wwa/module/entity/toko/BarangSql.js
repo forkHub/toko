@@ -5,11 +5,13 @@ const Connection_1 = require("../../Connection");
 class BarangSql {
     constructor() {
         this.bacaByIdSql = `
-	SELECT BARANG.*, FILE.gbr, FILE.thumb FROM BARANG
-	LEFT JOIN FILE ON BARANG.file_id = FILE.id
-	WHERE BARANG.id = ? 
-	AND BARANG.publish = 1
-	AND BARANG.toko_id = ?`;
+	SELECT barang.*, file.gbr, file.thumb, pengguna.lapak as lapak_nama
+	FROM barang
+	LEFT JOIN file ON barang.file_id = file.id
+	LEFT JOIN pengguna ON barang.lapak_id = pengguna.id
+	WHERE barang.id = ? 
+	AND barang.publish = 1
+	AND barang.toko_id = ?`;
     }
     async bacaById(id) {
         return new Promise((resolve, reject) => {

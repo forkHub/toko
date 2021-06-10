@@ -32,6 +32,7 @@ class HalDaftarLapak {
                     <div class='nav-cont flex'>
                         <div class='grow'>
                             <a href="/"> HAL UTAMA </a>
+                            <span> DAFTAR LAPAK </span>
                         </div>
                         <div>
                             <a href="/auth/login"> LOGIN </a>

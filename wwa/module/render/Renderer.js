@@ -6,6 +6,7 @@ const HalDepan_1 = require("./toko/HalDepan");
 const HalDaftarLapak_1 = require("./toko/HalDaftarLapak");
 const Auth_1 = require("./auth/Auth");
 const HalLapak_1 = require("./toko/HalLapak");
+//TODO: refactoring
 class Renderer {
     constructor() {
         this.halDepan = new HalDepan_1.HalDepan();

@@ -6,8 +6,12 @@ class LapakController {
     async renderHal(id) {
         let hasil;
         let barang;
-        barang = await Dao_1.dao.toko.lapak.bacaById(id);
-        hasil = Render_1.render.toko.lapak.render(barang);
+        let nama;
+        let lapakObj;
+        barang = await Dao_1.dao.toko.lapak.bacaBarangByLapakid(id);
+        lapakObj = await Dao_1.dao.toko.lapak.namaLapak(id);
+        nama = (lapakObj[0]).lapak;
+        hasil = Render_1.render.toko.lapak.render(barang, nama);
         return hasil;
     }
 }

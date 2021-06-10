@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Config_1 = require("../../Config");
 const Util_1 = require("../../Util");
 class HalLapak {
-    render(daftarBarang) {
+    render(daftarBarang, nama_lapak) {
         return `
             <!DOCTYPE html>
             <html lang="id">
@@ -40,17 +40,11 @@ class HalLapak {
                     <div class='header header-cont'>
                         <h1 class='judul-toko'>${Config_1.config.namaToko}</h1>
                     </div>
-
-                    <div class='cari-cont'>
-                        <form class='cari'>
-                            <input type='text' class='cari' name='cari' required placeholder="cari barang">
-                            <input type='submit' value='🔍' placeholder="cari barang">
-                        </form>
-                    </div>
             
                     <div class='nav-cont flex'>
                         <div class='grow'>
-                            <a href="/"> BERANDA </a>
+                            <a href="/"> BERANDA </a> /
+                            <span> Lapak ${nama_lapak} </span>
                         </div>
                         <div>
                             <a href="/auth/login"> LOGIN </a>

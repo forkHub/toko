@@ -42,9 +42,9 @@ class HalBarang {
 
                     <div class='nav-cont flex'>
                         <div class='grow'>
-                            <a class='beranda' href="/"> BERANDA </a> | 
-                            <a class='lapak' href="/lapak/${barang.lapak_id}"> LAPAK  </a> |
-							<span>${barang.nama.toUpperCase}</span>
+                            <a class='beranda' href="/"> BERANDA </a> /
+                            <a class='lapak' href="/lapak/${barang.lapak_id}"> Lapak ${barang.lapak_nama}  </a> /
+							<span>${barang.nama.toUpperCase()}</span>
                         </div>
 
                         <div>
